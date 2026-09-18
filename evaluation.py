@@ -34,6 +34,7 @@ class EvaluationRow:
     dataset_type: str = "TEST"
     source_group_id: str | None = None
     source_invoice_distribution_id: str | None = None
+    invoice_date: str | None = None
 
 
 def load_evaluation_rows(
@@ -77,6 +78,7 @@ def load_evaluation_rows(
                 dataset_type=dataset_type,
                 source_group_id=source_group_id,
                 source_invoice_distribution_id=source_invoice_distribution_id,
+                invoice_date=str(values.get("INVOICE_DATE") or "").strip() or None,
             )
         )
     validate_split_groups(rows)
