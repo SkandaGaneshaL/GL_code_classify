@@ -8,6 +8,7 @@ from evaluation import (
     format_percentage,
     validate_no_cross_split_leakage,
     load_evaluation_rows,
+    run_evaluation,
 )
 
 
@@ -70,7 +71,7 @@ def test_calibration_metrics_ignore_non_calibrated_confidence():
     ]
     predictions = [
         {"account_type": "Supplies", "segment3": "60520", "confidence": 0.99, "confidence_source": "diagnostic_only"},
-        {"account_type": "Meals", "segment3": "60521", "calibrated_confidence": 0.8, "confidence_source": "calibrated_logprob"},
+        {"account_type": "Meals", "segment3": "60521", "calibrated_confidence": 0.8, "confidence_source": "calibrated_ranker"},
     ]
     metrics = evaluate_predictions(rows, predictions)
     assert metrics["calibration_metrics"]["evidence_count"] == 1
@@ -132,3 +133,35 @@ def test_evaluation_reports_ranked_retrieval_and_input_quality_metrics():
     assert metrics["retrieval_ndcg_at_3"] == pytest.approx((1 / 1.584962500721156 + 1) / 2)
     assert metrics["input_quality_metrics"]["insufficient_count"] == 1
     assert metrics["input_quality_metrics"]["review_reason_counts"]["missing_vendor"] == 1
+
+
+def test_certification_metrics_use_only_real_valid_segment3_predictions():
+    rows = [
+        EvaluationRow("r1", "paper", "Supplies", False),
+        EvaluationRow("s1", "paper", "Supplies", True),
+    ]
+    predictions = [
+        {"account_type": "Supplies", "segment3": "60520", "decision_band": "REVIEW"},
+        {"account_type": "Supplies", "segment3": "99999", "decision_band": "REVIEW"},
+    ]
+
+    metrics = evaluate_predictions(rows, predictions)
+
+    assert metrics["real_filled_cell_accuracy_metric"]["percent"] == "100.00%"
+    assert metrics["invalid_code_rate"]["correct"] == 1
+    assert metrics["coverage"]["total"] == 2
+    assert metrics["coverage"]["correct"] == 1
+
+
+def test_run_evaluation_wires_retrieval_candidates_into_metric_contract():
+    rows = [EvaluationRow("r1", "paper", "Supplies", False)]
+
+    def classifier(_row):
+        return {
+            "account_type": "Supplies",
+            "segment3": "60520",
+            "ranked_candidates": [{"account_type": "Supplies"}],
+        }
+
+    metrics = run_evaluation(rows, classifier, "unit")["metrics"]
+    assert metrics["retrieval_type_recall_at_1_metric"]["percent"] == "100.00%"

@@ -33,3 +33,12 @@ def test_synthetic_rows_do_not_count_toward_release_evidence():
 
     assert gate["accepted_real_count"] == 0
     assert "insufficient_real_accepted_evidence" in gate["reasons"]
+
+
+def test_excel_n_flag_is_real_release_evidence():
+    gate = evaluate_release_gate(
+        [{"correct": True, "is_synthetic": "N", "accepted": True}] * 200,
+        finance_approved=True,
+        review_first=False,
+    )
+    assert gate["accepted_real_count"] == 200

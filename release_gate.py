@@ -29,10 +29,20 @@ def evaluate_release_gate(
     minimum_real_accepted: int = DEFAULT_MIN_REAL_ACCEPTED,
 ) -> dict[str, Any]:
     """Assess only approved, real, accepted held-out predictions."""
+    def is_synthetic(value: Any) -> bool:
+        if isinstance(value, str):
+            return value.strip().upper() in {"Y", "YES", "TRUE", "1"}
+        return bool(value)
+
+    def is_true(value: Any) -> bool:
+        if isinstance(value, str):
+            return value.strip().upper() in {"Y", "YES", "TRUE", "1"}
+        return bool(value)
+
     accepted = [
         record
         for record in records
-        if bool(record.get("accepted")) and not bool(record.get("is_synthetic"))
+        if is_true(record.get("accepted")) and not is_synthetic(record.get("is_synthetic"))
     ]
     correct = sum(bool(record.get("correct")) for record in accepted)
     count = len(accepted)

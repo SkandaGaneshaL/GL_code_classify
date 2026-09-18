@@ -1,6 +1,7 @@
 from types import SimpleNamespace
 
 from classification import classify_invoice
+from segment3_ranker import RankerCalibrationArtifact
 
 
 class FakeEmbedder:
@@ -156,3 +157,47 @@ def test_compound_extracted_line_is_routed_to_review_without_llm_call():
     assert result["decision"] == "REVIEW_REQUIRED"
     assert "compound_account_nature" in result["review_reasons"]
     assert result["llm_called"] is False
+    assert result["split_suggestions"]["status"] == "split_suggested"
+    assert [child["segment3"] for child in result["split_suggestions"]["children"]] == [None, None, None]
+
+
+def test_retrieval_candidates_are_limited_to_valid_top_three_review_suggestions():
+    result = classify_invoice(
+        {"VendorName": "Acme", "LineItems": [{"LineDescription": "office paper", "LineType": "ITEM"}]},
+        FakeEmbedder(),
+        db_module=FakeDB(
+            cases=[
+                {"id": 1, "account_type": "Supplies", "rrf_score": 0.9},
+                {"id": 2, "account_type": "Meals", "rrf_score": 0.8},
+                {"id": 3, "account_type": "Invented Account", "rrf_score": 1.0},
+            ]
+        ),
+        llm_client_factory=lambda: FakeLLM("Supplies"),
+    )["lines"][0]
+
+    assert [candidate["account_type"] for candidate in result["ranked_candidates"]] == ["Supplies", "Meals"]
+    assert result["ranker_confidence_status"] == "unavailable"
+
+
+def test_compatible_ranker_artifact_is_only_source_of_live_percentage():
+    result = classify_invoice(
+        {"VendorName": "Acme", "LineItems": [{"LineDescription": "office paper", "LineType": "ITEM"}]},
+        FakeEmbedder(),
+        db_module=FakeDB(cases=[{"id": 1, "account_type": "Supplies", "rrf_score": 0.9}]),
+        classification_context={
+            "ranker_calibration_artifact": RankerCalibrationArtifact(
+                ranker_version="ranker-v1",
+                feature_schema_version="segment3-features-v1",
+                coa_version="segment3-demo-16-v1",
+                dataset_version="finance-v1",
+                calibration_version="cal-v1",
+                intercept=0.0,
+                retrieval_weight=1.0,
+            )
+        },
+    )["lines"][0]
+
+    assert result["confidence_source"] == "calibrated_ranker"
+    assert result["confidence_status"] == "calibrated"
+    assert result["calibrated_correctness_probability"] == result["ranked_candidates"][0]["calibrated_probability"]
+    assert result["decision"] == "REVIEW_REQUIRED"

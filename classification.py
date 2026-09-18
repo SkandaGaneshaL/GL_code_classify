@@ -1,9 +1,7 @@
 from __future__ import annotations
 
 import math
-import re
 import time
-import unicodedata
 from dataclasses import replace
 from typing import Any, Callable, Mapping
 
@@ -15,6 +13,10 @@ try:
         AUTO_MIN_ACCEPTED_VALIDATION,
         AUTO_PRECISION_TARGET,
         AUTO_REQUIRE_CALIBRATION,
+        COA_COMBINATION_RULES_PATH,
+        COA_VALUE_SET_PATH,
+        COA_VERSION as CONFIG_COA_VERSION,
+        SEGMENT3_TAXONOMY_PATH,
         CANDIDATE_TOP_K,
         validate_classifier_configuration,
         DEFAULT_TOP_K,
@@ -22,6 +24,7 @@ try:
         IDENTITY_MIN_REAL_POSTS,
         LLM_LOGPROBS_SATURATION_THRESHOLD,
         LLM_LOGPROBS_CALIBRATION_PATH,
+        SEGMENT3_RANKER_CALIBRATION_PATH,
         MIN_SIMILARITY_SCORE,
         REVIEW_CONFIDENCE_THRESHOLD,
         RRF_K,
@@ -35,12 +38,16 @@ try:
     from .capability_probe import probe_logprobs_capability
     from .calibration import load_calibrator
     from .logprobs import analyze_logprobs, apply_candidate_scores
+    from .line_atomizer import atomize_line_description
     from .prompt_builder import build_decision_prompt
     from .quality_gate import assess_line_quality
     from .result_contract import apply_result_contract
     from .provider_response import COMPACT_CODE_MAP_VERSION, normalize_provider_response
     from .response_parser import parse_account_type_response
     from .retrieval import apply_soft_boosts, one_case_per_account_type, retrieval_summary
+    from .segment3_ranker import load_ranker_calibration, rank_candidates
+    from .segment3_taxonomy import ACCOUNT_TYPE_TO_SEGMENT3, load_taxonomy_artifact, normalize_account_type
+    from .coa_validation import COAValidator, validate_mapping_with_optional_artifact
     from .usage import TokenUsage, normalize_provider_usage, summarize_usage
 except ImportError:  # Supports running the files directly from this folder.
     import db_utils
@@ -50,6 +57,10 @@ except ImportError:  # Supports running the files directly from this folder.
         AUTO_MIN_ACCEPTED_VALIDATION,
         AUTO_PRECISION_TARGET,
         AUTO_REQUIRE_CALIBRATION,
+        COA_COMBINATION_RULES_PATH,
+        COA_VALUE_SET_PATH,
+        COA_VERSION as CONFIG_COA_VERSION,
+        SEGMENT3_TAXONOMY_PATH,
         CANDIDATE_TOP_K,
         validate_classifier_configuration,
         DEFAULT_TOP_K,
@@ -57,6 +68,7 @@ except ImportError:  # Supports running the files directly from this folder.
         IDENTITY_MIN_REAL_POSTS,
         LLM_LOGPROBS_SATURATION_THRESHOLD,
         LLM_LOGPROBS_CALIBRATION_PATH,
+        SEGMENT3_RANKER_CALIBRATION_PATH,
         MIN_SIMILARITY_SCORE,
         REVIEW_CONFIDENCE_THRESHOLD,
         RRF_K,
@@ -70,35 +82,41 @@ except ImportError:  # Supports running the files directly from this folder.
     from capability_probe import probe_logprobs_capability
     from calibration import load_calibrator
     from logprobs import analyze_logprobs, apply_candidate_scores
+    from line_atomizer import atomize_line_description
     from prompt_builder import build_decision_prompt
     from quality_gate import assess_line_quality
     from result_contract import apply_result_contract
     from provider_response import COMPACT_CODE_MAP_VERSION, normalize_provider_response
     from response_parser import parse_account_type_response
     from retrieval import apply_soft_boosts, one_case_per_account_type, retrieval_summary
+    from segment3_ranker import load_ranker_calibration, rank_candidates
+    from segment3_taxonomy import ACCOUNT_TYPE_TO_SEGMENT3, load_taxonomy_artifact, normalize_account_type
+    from coa_validation import COAValidator, validate_mapping_with_optional_artifact
     from usage import TokenUsage, normalize_provider_usage, summarize_usage
 
 
-ACCOUNT_TYPE_TO_SEGMENT3 = {
-    "Accounts Payable Clearing": "22190",
-    "Accrued Expenses": "24220",
-    "Accrued Receipts": "22210",
-    "Airfare": "60512",
-    "Asset Clearing": "15910",
-    "Car Mileage": "60514",
-    "Contractor Expenses": "65600",
-    "Hotel / Accomodation": "60530",
-    "Meals": "60521",
-    "Miscellaneous": "60540",
-    "Operating Lease Expense - Company Labor": "63611",
-    "Operating Lease Expense - Equipment Rental": "63612",
-    "Operating Lease Expense - Electricity": "63613",
-    "Project Labor Cost": "59110",
-    "Supplies": "60520",
-    "Withholding Tax Payable": "25400",
-}
-TAXONOMY = tuple(ACCOUNT_TYPE_TO_SEGMENT3)
 REVIEW_ONLY_TYPES = frozenset({"Asset Clearing", "Miscellaneous"})
+COA_VERSION = CONFIG_COA_VERSION
+
+try:
+    ACCOUNT_TYPE_TO_SEGMENT3 = load_taxonomy_artifact(SEGMENT3_TAXONOMY_PATH)
+except (OSError, ValueError):
+    # Keep the demo fallback for local regression tests, but expose the
+    # failure through the unavailable COA validation status below.
+    ACCOUNT_TYPE_TO_SEGMENT3 = dict(ACCOUNT_TYPE_TO_SEGMENT3)
+
+try:
+    ACTIVE_COA_VALIDATOR = COAValidator.from_files(
+        COA_VALUE_SET_PATH,
+        COA_COMBINATION_RULES_PATH,
+        coa_version=COA_VERSION,
+    )
+except (OSError, ValueError):
+    # A malformed artifact must never silently certify a suggestion. The
+    # result contract will surface validation as unavailable/review-required.
+    ACTIVE_COA_VALIDATOR = None
+
+TAXONOMY = tuple(ACCOUNT_TYPE_TO_SEGMENT3)
 
 PENALTY_WEIGHTS = {
     "identity_conflict": (0.20, "Identity history contains conflicting account types."),
@@ -110,13 +128,6 @@ PENALTY_WEIGHTS = {
     "asset_misc_ambiguity": (0.20, "Asset Clearing and Miscellaneous evidence is ambiguous."),
     "numeric_inconsistency": (0.08, "Amount, unit price, and quantity are inconsistent."),
 }
-
-
-def normalize_account_type(account_type: str) -> str:
-    value = unicodedata.normalize("NFKC", str(account_type or ""))
-    value = value.replace("\ufffd", "-").replace("\u2013", "-").replace("\u2014", "-")
-    value = re.sub(r"\s*[-]\s*", " - ", value)
-    return re.sub(r"\s+", " ", value).strip()
 
 
 def _empty_confidence_breakdown(final_confidence: float = 0.0, *, mode: str = "standard") -> dict[str, Any]:
@@ -270,6 +281,9 @@ def _blank_result(feature: dict[str, Any], reason: str, inferred: str | None = N
         "mapping_row_count": 0,
         "retrieved_cases": [],
         "candidate_types": [],
+        "ranked_candidates": [],
+        "ranker_confidence_status": "unavailable",
+        "split_suggestions": {"status": "not_compound", "requires_review": False, "children": []},
         "conflict_flags": [],
         "llm_called": False,
         "llm_skipped": True,
@@ -290,6 +304,7 @@ def _add_mapping(result: dict[str, Any], account_type: str) -> None:
     mapping = map_account_type_to_segments(account_type)
     if mapping:
         result.update(mapping)
+        result["coa_validation"] = validate_mapping_with_optional_artifact(mapping, ACTIVE_COA_VALIDATOR)
     else:
         result.update(
             {
@@ -297,6 +312,7 @@ def _add_mapping(result: dict[str, Any], account_type: str) -> None:
                 **{f"segment{i}": None for i in range(1, 7)},
                 "mapping_source": "unmapped",
                 "mapping_row_count": 0,
+                "coa_validation": {"status": "unavailable", "reason": "unmapped_account_type"},
             }
         )
 
@@ -855,6 +871,14 @@ def classify_invoice(
     features = build_invoice_features(payload, classification_context=classification_context)
     calibrator = load_calibrator(LLM_LOGPROBS_CALIBRATION_PATH)
     classification_context = classification_context or {}
+    ranker_artifact = classification_context.get("ranker_calibration_artifact") or load_ranker_calibration(
+        SEGMENT3_RANKER_CALIBRATION_PATH
+    )
+    coa_version = str(classification_context.get("coa_version") or COA_VERSION)
+    ranker_feature_schema_version = classification_context.get("feature_schema_version")
+    ranker_dataset_version = classification_context.get("dataset_version")
+    ranker_calibration_version = classification_context.get("calibration_version")
+    ranker_model_route = classification_context.get("model_route")
     retrieval_dataset_types = classification_context.get("retrieval_dataset_types", ("HISTORY",))
     exclude_invoice_distribution_ids = classification_context.get("exclude_invoice_distribution_ids")
     exclude_source_invoice_distribution_ids = classification_context.get("exclude_source_invoice_distribution_ids")
@@ -893,7 +917,15 @@ def classify_invoice(
                 feature,
                 f"Line cannot be assigned one natural account safely; human review is required ({reasons}).",
             )
-            result.update({"decision_band": "REVIEW_REQUIRED", "decision": "REVIEW_REQUIRED"})
+            result.update(
+                {
+                    "decision_band": "REVIEW_REQUIRED",
+                    "decision": "REVIEW_REQUIRED",
+                    "split_suggestions": atomize_line_description(
+                        description, line_amount=feature.get("line_amount")
+                    ),
+                }
+            )
             results.append(result)
             continue
         if feature["line_type_norm"] not in {"ITEM", "TAX", "FREIGHT", "MISC", "UNKNOWN"}:
@@ -958,12 +990,8 @@ def classify_invoice(
                     "calibrated_confidence": None,
                     "confidence_source": "deterministic_identity",
                     "calibration_auto_ready": False,
-                    "decision_band": "REVIEW"
-                    if selected in REVIEW_ONLY_TYPES or not AUTO_DEFAULT_ENABLED or AUTO_REQUIRE_CALIBRATION
-                    else "AUTO_ELIGIBLE",
-                    "decision": "REVIEW"
-                    if selected in REVIEW_ONLY_TYPES or not AUTO_DEFAULT_ENABLED or AUTO_REQUIRE_CALIBRATION
-                    else "AUTO_DEFAULT",
+                    "decision_band": "REVIEW",
+                    "decision": "REVIEW",
                     "llm_called": False,
                     "llm_skipped": True,
                     "identity_match": identity,
@@ -1013,6 +1041,16 @@ def classify_invoice(
             line_type_norm=feature.get("line_type_norm"),
             vendor_prior=vendor_prior,
         )
+        ranking = rank_candidates(
+            cases,
+            artifact=ranker_artifact,
+            coa_version=coa_version,
+            feature_schema_version=ranker_feature_schema_version,
+            dataset_version=ranker_dataset_version,
+            calibration_version=ranker_calibration_version,
+            model_route=ranker_model_route,
+            taxonomy=ACCOUNT_TYPE_TO_SEGMENT3,
+        )
         summary = retrieval_summary(cases)
         candidate_types = [normalize_account_type(value) for value in summary["candidate_types"] if value]
         identity_types = [normalize_account_type(value) for value in ((identity or {}).get("account_types") or [])]
@@ -1054,6 +1092,8 @@ def classify_invoice(
             result.update(
                 {
                     "candidate_types": candidate_types,
+                    "ranked_candidates": ranking["candidates"],
+                    "ranker_confidence_status": ranking["confidence_status"],
                     "retrieved_cases": cases,
                     "identity_match": identity,
                     "vendor_prior": vendor_prior,
@@ -1124,6 +1164,8 @@ def classify_invoice(
                 {
                     "confidence": 0.0,
                     "candidate_types": candidate_types,
+                    "ranked_candidates": ranking["candidates"],
+                    "ranker_confidence_status": ranking["confidence_status"],
                     "retrieved_cases": cases,
                     "identity_match": identity,
                     "vendor_prior": vendor_prior,
@@ -1139,10 +1181,11 @@ def classify_invoice(
                     "logprob_status": (llm_result or {}).get("logprob_status", "not_called"),
                     "logprob_evidence_scope": (llm_result or {}).get("logprob_evidence_scope", "not_called"),
                     "logprob_candidate_scores": (llm_result or {}).get("logprob_candidate_scores", []),
-                    "confidence_source": "calibrated_logprob" if calibrated_confidence is not None else "heuristic_composite",
+                    "confidence_source": "heuristic_composite",
                     "logprob_confidence_source": (llm_result or {}).get("confidence_source", confidence_source),
-                    "calibrated_confidence": (llm_result or {}).get("calibrated_confidence", calibrated_confidence),
-                    "calibration_auto_ready": (llm_result or {}).get("calibration_auto_ready", calibration_auto_ready),
+                    "calibrated_confidence": None,
+                    "logprob_calibrated_signal": (llm_result or {}).get("calibrated_confidence", calibrated_confidence),
+                    "calibration_auto_ready": False,
                     "llm_provider": (llm_result or {}).get("provider"),
                     "llm_request_mode": (llm_result or {}).get("request_mode"),
                     "llm_finish_reason": (llm_result or {}).get("finish_reason"),
@@ -1163,16 +1206,16 @@ def classify_invoice(
             flags,
         )
         heuristic_confidence = float(confidence_breakdown["final_confidence"])
+        # Raw LLM logprobs remain diagnostics. Only a compatible ranker artifact
+        # can expose a correctness probability, and review-first still blocks action.
+        ranker_selected = ranking.get("selected") or {}
+        calibrated_confidence = (
+            ranker_selected.get("calibrated_probability")
+            if ranker_selected.get("account_type") == selected_type
+            else None
+        )
         confidence = float(calibrated_confidence) if calibrated_confidence is not None else heuristic_confidence
-        band = _decision_band(confidence)
-        if band == "AUTO_ELIGIBLE" and not AUTO_DEFAULT_ENABLED:
-            band = "REVIEW"
-        if band == "AUTO_ELIGIBLE" and AUTO_REQUIRE_CALIBRATION and confidence_source != "calibrated_logprob":
-            band = "REVIEW"
-        if band == "AUTO_ELIGIBLE" and AUTO_REQUIRE_CALIBRATION and not calibration_auto_ready:
-            band = "REVIEW"
-        if selected_type in REVIEW_ONLY_TYPES:
-            band = "REVIEW"
+        band = "REVIEW"
         result = {
             "line_index": feature["line_index"],
             "line_description": description,
@@ -1183,8 +1226,10 @@ def classify_invoice(
             "heuristic_confidence": heuristic_confidence,
             "calibrated_confidence": calibrated_confidence,
             "decision_band": band,
-            "decision": "AUTO_DEFAULT" if band == "AUTO_ELIGIBLE" else band,
+            "decision": band,
             "candidate_types": candidate_types,
+            "ranked_candidates": ranking["candidates"],
+            "ranker_confidence_status": ranking["confidence_status"],
             "retrieved_cases": cases,
             "identity_match": identity,
             "vendor_prior": vendor_prior,
@@ -1211,9 +1256,10 @@ def classify_invoice(
             "logprob_status": (llm_result or {}).get("logprob_status", "not_called"),
             "logprob_evidence_scope": (llm_result or {}).get("logprob_evidence_scope", "not_called"),
             "logprob_candidate_scores": (llm_result or {}).get("logprob_candidate_scores", []),
-            "confidence_source": "calibrated_logprob" if calibrated_confidence is not None else "heuristic_composite",
+            "confidence_source": "calibrated_ranker" if calibrated_confidence is not None else "heuristic_composite",
             "logprob_confidence_source": (llm_result or {}).get("confidence_source", confidence_source),
-            "calibration_auto_ready": (llm_result or {}).get("calibration_auto_ready", calibration_auto_ready),
+            "logprob_calibrated_signal": (llm_result or {}).get("calibrated_confidence", calibrated_confidence),
+            "calibration_auto_ready": False,
             "llm_provider": (llm_result or {}).get("provider"),
             "llm_request_mode": (llm_result or {}).get("request_mode"),
             "llm_finish_reason": (llm_result or {}).get("finish_reason"),
@@ -1251,6 +1297,19 @@ def classify_invoice(
         apply_result_contract(result, input_quality=result.get("input_quality"))
         for result in results
     ]
+    audit_writer = getattr(db_module, "record_classification_audit", None)
+    if callable(audit_writer):
+        for result in results:
+            try:
+                audit_writer(result)
+            except Exception:
+                # Classification must remain available in review mode if the
+                # optional audit sink is unavailable; the failure is surfaced
+                # in the result for operators instead of changing the answer.
+                result["audit_persisted"] = False
+                result["audit_persist_error"] = "audit_sink_unavailable"
+            else:
+                result["audit_persisted"] = True
     usage_records = [
         TokenUsage(**record)
         for line in results

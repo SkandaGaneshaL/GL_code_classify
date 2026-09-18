@@ -20,7 +20,7 @@ except ImportError:  # Supports running the file directly from this folder.
 TAXONOMY = tuple(ACCOUNT_TYPE_TO_SEGMENT3)
 ABSTENTION_TYPES = frozenset({"", "Unknown", "UNKNOWN", "None", "NULL"})
 AUTO_BANDS = frozenset({"AUTO", "AUTO_DEFAULT", "AUTO_ELIGIBLE"})
-METRIC_CONTRACT_VERSION = "segment3-evaluation-v2"
+METRIC_CONTRACT_VERSION = "segment3-evaluation-v3"
 
 
 @dataclass(frozen=True)
@@ -35,12 +35,29 @@ class EvaluationRow:
     source_group_id: str | None = None
     source_invoice_distribution_id: str | None = None
     invoice_date: str | None = None
+    vendor_id: str | None = None
+    vendor_site_id: str | None = None
+    business_unit: str | None = None
+    legal_entity: str | None = None
+    ledger: str | None = None
+    chart_of_accounts: str | None = None
+    line_amount: float | None = None
+    currency: str | None = None
+    final_posted: bool | None = None
+    segment1: str | None = None
+    segment2: str | None = None
+    segment4: str | None = None
+    segment5: str | None = None
+    segment6: str | None = None
+    natural_account_description: str | None = None
 
 
 def load_evaluation_rows(
     excel_path: Path,
     sheet_name: str = "POC Dataset",
     dataset_types: Iterable[str] | None = ("TEST",),
+    *,
+    strict_finance: bool = False,
 ) -> list[EvaluationRow]:
     """Load labeled rows for evaluation without mixing HISTORY into TEST."""
     frame = pd.read_excel(excel_path, sheet_name=sheet_name, dtype=object, keep_default_na=False)
@@ -50,6 +67,16 @@ def load_evaluation_rows(
         raise ValueError(f"Evaluation worksheet is missing columns: {missing}")
     requested_types = None if dataset_types is None else {str(value).strip().upper() for value in dataset_types}
     rows: list[EvaluationRow] = []
+
+    def optional_float(value: Any) -> float | None:
+        text = str(value or "").strip()
+        if not text:
+            return None
+        try:
+            return float(text)
+        except ValueError as exc:
+            raise ValueError(f"Invalid LINE_AMOUNT value: {value!r}") from exc
+
     seen_ids: set[str] = set()
     for index, values in frame.iterrows():
         description = str(values["LINE_DESCRIPTION"]).strip()
@@ -79,9 +106,65 @@ def load_evaluation_rows(
                 source_group_id=source_group_id,
                 source_invoice_distribution_id=source_invoice_distribution_id,
                 invoice_date=str(values.get("INVOICE_DATE") or "").strip() or None,
+                vendor_id=str(values.get("VENDOR_ID") or "").strip() or None,
+                vendor_site_id=str(values.get("VENDOR_SITE_ID") or "").strip() or None,
+                business_unit=str(values.get("BUSINESS_UNIT_ID") or "").strip() or None,
+                legal_entity=str(values.get("LEGAL_ENTITY_ID") or values.get("LEGAL_ENTITY") or "").strip() or None,
+                ledger=str(values.get("LEDGER_ID") or "").strip() or None,
+                chart_of_accounts=str(values.get("CHART_OF_ACCOUNTS_ID") or "").strip() or None,
+                line_amount=optional_float(values.get("LINE_AMOUNT")),
+                currency=str(values.get("CURRENCY_CODE") or values.get("CURRENCY") or "").strip() or None,
+                final_posted=(
+                    str(values.get("FINAL_POSTED")).strip().upper() in {"Y", "YES", "TRUE", "1"}
+                    if str(values.get("FINAL_POSTED") or "").strip()
+                    else None
+                ),
+                segment1=str(values.get("SEGMENT1") or "").strip() or None,
+                segment2=str(values.get("SEGMENT2") or "").strip() or None,
+                segment4=str(values.get("SEGMENT4") or "").strip() or None,
+                segment5=str(values.get("SEGMENT5") or "").strip() or None,
+                segment6=str(values.get("SEGMENT6") or "").strip() or None,
+                natural_account_description=str(values.get("NATURAL_ACCOUNT_DESCRIPTION") or values.get("SEGMENT3_DESCRIPTION") or "").strip() or None,
             )
         )
     validate_split_groups(rows)
+    if strict_finance:
+        try:
+            from .finance_dataset import validate_finance_rows
+        except ImportError:
+            from finance_dataset import validate_finance_rows
+        validate_finance_rows(
+            [
+                {
+                    "invoice_distribution_id": row.row_id,
+                    "invoice_date": row.invoice_date,
+                    "source_group_id": row.source_group_id,
+                    "vendor_id": row.vendor_id,
+                    "vendor_name": row.vendor_name,
+                    "vendor_site_id": row.vendor_site_id,
+                    "business_unit": row.business_unit,
+                    "legal_entity": row.legal_entity,
+                    "ledger": row.ledger,
+                    "chart_of_accounts": row.chart_of_accounts,
+                    "line_type": row.line_type,
+                    "line_description": row.description,
+                    "line_amount": row.line_amount,
+                    "currency": row.currency,
+                    "segment3": row.account_type,
+                    "segment1": row.segment1,
+                    "segment2": row.segment2,
+                    "segment4": row.segment4,
+                    "segment5": row.segment5,
+                    "segment6": row.segment6,
+                    "natural_account_description": row.natural_account_description,
+                    "source_invoice_distribution_id": row.source_invoice_distribution_id,
+                    "final_posted": row.final_posted,
+                    "is_synthetic": row.is_synthetic,
+                }
+                for row in rows
+            ],
+            strict=True,
+        )
     return rows
 
 
@@ -148,7 +231,17 @@ def _rate_metric(correct: int, total: int) -> dict[str, Any]:
 
 
 def _is_filled(prediction: Mapping[str, Any], normalized_type: str) -> bool:
-    return normalized_type not in ABSTENTION_TYPES and bool(prediction.get("segment3"))
+    expected_segment = ACCOUNT_TYPE_TO_SEGMENT3.get(normalized_type)
+    return bool(expected_segment) and str(prediction.get("segment3") or "").strip() == expected_segment
+
+
+def _has_invalid_segment3(prediction: Mapping[str, Any], normalized_type: str) -> bool:
+    """Return true when a suggested type has no matching active taxonomy code."""
+    if normalized_type in ABSTENTION_TYPES:
+        return False
+    expected_segment = ACCOUNT_TYPE_TO_SEGMENT3.get(normalized_type)
+    provided_segment = str(prediction.get("segment3") or "").strip()
+    return bool(provided_segment) and provided_segment != expected_segment
 
 
 def _is_auto(prediction: Mapping[str, Any]) -> bool:
@@ -181,6 +274,8 @@ def _classification_metrics(rows: Sequence[EvaluationRow], predictions: Sequence
             "f1_percent": format_percentage(f1),
             "false_positive": fp,
             "false_negative": fn,
+            "precision_ci95": _wilson_interval(tp, predicted),
+            "recall_ci95": _wilson_interval(tp, support),
         }
         per_class[label] = metrics
         if support:
@@ -208,7 +303,7 @@ def _classification_metrics(rows: Sequence[EvaluationRow], predictions: Sequence
 
 def _calibrated_confidence(prediction: Mapping[str, Any]) -> float | None:
     source = str(prediction.get("confidence_source") or "").lower()
-    if source not in {"calibrated_logprob", "calibrated", "calibrated_probability"}:
+    if source != "calibrated_ranker":
         return None
     value = prediction.get("calibrated_confidence")
     if value is None:
@@ -223,6 +318,8 @@ def _calibrated_confidence(prediction: Mapping[str, Any]) -> float | None:
 def _calibration_metrics(rows: Sequence[EvaluationRow], predictions: Sequence[Mapping[str, Any]], normalized: Sequence[str]) -> dict[str, Any]:
     scored: list[tuple[float, int]] = []
     for row, item, guess in zip(rows, predictions, normalized):
+        if row.is_synthetic:
+            continue
         confidence = _calibrated_confidence(item)
         if confidence is None or not _is_filled(item, guess):
             continue
@@ -253,8 +350,8 @@ def _calibration_metrics(rows: Sequence[EvaluationRow], predictions: Sequence[Ma
     errors = 0
     for index, (_, correct) in enumerate(ordered, start=1):
         errors += 1 - correct
-        risk_coverage.append({"accepted": index, "coverage": index / len(rows), "risk": errors / index})
-    aurc = sum(point["risk"] for point in risk_coverage) / len(rows)
+        risk_coverage.append({"accepted": index, "coverage": index / len(scored), "risk": errors / index})
+    aurc = sum(point["risk"] for point in risk_coverage) / len(scored)
     return {"evidence_count": len(scored), "brier_score": brier, "log_loss": log_loss, "ece": ece, "mce": mce, "reliability_bins": bins, "risk_coverage": risk_coverage, "aurc": aurc}
 
 
@@ -326,6 +423,16 @@ def evaluate_predictions(
         for index, item in enumerate(predictions)
     )
     skip_count = sum(bool(item.get("llm_skipped")) for item in predictions)
+    invalid_code_count = sum(
+        _has_invalid_segment3(item, normalized_predictions[index]) for index, item in enumerate(predictions)
+    )
+    override_indices = [
+        index
+        for index, item in enumerate(predictions)
+        if bool(item.get("override"))
+        or bool(item.get("human_override"))
+        or item.get("corrected_account_type") is not None
+    ]
 
     result: dict[str, Any] = {
         "metric_contract_version": METRIC_CONTRACT_VERSION,
@@ -339,7 +446,7 @@ def evaluate_predictions(
         "auto_post_recall": _rate_metric(len(auto_correct), total),
         "review_rate": _rate_metric(review_count, total),
         "abstain_rate": _rate_metric(abstain_count, total),
-        "filled_cell_accuracy": len(correct_indices) / len(filled_indices) if filled_indices else 0.0,
+        "filled_cell_accuracy": len(correct_indices) / len(filled_indices) if filled_indices else None,
         "filled_cell_accuracy_metric": _rate_metric(len(correct_indices), len(filled_indices)),
         "filled_cell_count": len(filled_indices),
         "review_or_blank_rate": review_or_blank_count / total if total else 0.0,
@@ -347,7 +454,7 @@ def evaluate_predictions(
         "real_filled_cell_accuracy": (
             len(real_correct_indices) / len(real_filled_indices)
             if real_filled_indices
-            else 0.0
+            else None
         ),
         "synthetic_filled_cell_accuracy": (
             len(synthetic_correct_indices) / len(synthetic_filled_indices)
@@ -358,18 +465,31 @@ def evaluate_predictions(
         "synthetic_strict_accuracy": _rate_metric(len(synthetic_correct_indices), len(synthetic_indices)),
         "real_selective_accuracy": _rate_metric(len(real_correct_indices), len(real_filled_indices)),
         "synthetic_selective_accuracy": _rate_metric(len(synthetic_correct_indices), len(synthetic_filled_indices)),
+        "real_filled_cell_accuracy_metric": _rate_metric(len(real_correct_indices), len(real_filled_indices)),
+        "synthetic_filled_cell_accuracy_metric": _rate_metric(len(synthetic_correct_indices), len(synthetic_filled_indices)),
+        "invalid_code_rate": _rate_metric(invalid_code_count, total),
+        "override_rate": _rate_metric(len(override_indices), len(filled_indices)),
         "classification_metrics": _classification_metrics(rows, normalized_predictions),
+        "real_classification_metrics": _classification_metrics(
+            [rows[index] for index in real_indices],
+            [normalized_predictions[index] for index in real_indices],
+        ),
         "calibration_metrics": _calibration_metrics(rows, predictions, normalized_predictions),
         "input_quality_metrics": _input_quality_metrics(predictions),
         "confusion_matrix": confusion_matrix((row.account_type for row in rows), normalized_predictions),
     }
     if retrieval_candidates is not None:
-        recall_hits = 0
-        for row, candidates in zip(rows, retrieval_candidates):
-            top_types = {normalize_account_type(str(case.get("account_type") or "Unknown")) for case in candidates[:3]}
-            recall_hits += row.account_type in top_types
-        result["retrieval_type_recall_at_3"] = recall_hits / total if total else 0.0
-        result["retrieval_type_recall_at_3_metric"] = _rate_metric(recall_hits, total)
+        for depth in (1, 3, 10):
+            recall_hits = sum(
+                row.account_type
+                in {
+                    normalize_account_type(str(case.get("account_type") or "Unknown"))
+                    for case in candidates[:depth]
+                }
+                for row, candidates in zip(rows, retrieval_candidates)
+            )
+            result[f"retrieval_type_recall_at_{depth}"] = recall_hits / total if total else 0.0
+            result[f"retrieval_type_recall_at_{depth}_metric"] = _rate_metric(recall_hits, total)
         result.update(_retrieval_ranking_metrics(rows, retrieval_candidates))
     if latencies_seconds is not None and latencies_seconds:
         ordered = sorted(latencies_seconds)
@@ -416,7 +536,18 @@ def run_evaluation(rows: list[EvaluationRow], classifier: Callable[[EvaluationRo
         started = time.perf_counter()
         predictions.append(_invoke_evaluation_classifier(classifier, row))
         latencies.append(time.perf_counter() - started)
-    metrics = evaluate_predictions(rows, predictions, latencies_seconds=latencies)
+    retrieval_candidates: list[list[Mapping[str, Any]]] = []
+    for prediction in predictions:
+        ranked = prediction.get("ranked_candidates")
+        if ranked is None:
+            ranked = prediction.get("retrieved_cases") or []
+        retrieval_candidates.append(list(ranked))
+    metrics = evaluate_predictions(
+        rows,
+        predictions,
+        retrieval_candidates=retrieval_candidates,
+        latencies_seconds=latencies,
+    )
     return {"name": name, "metrics": metrics, "predictions": predictions}
 
 

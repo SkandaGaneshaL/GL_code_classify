@@ -22,3 +22,13 @@ def test_time_group_split_keeps_groups_together_and_excludes_synthetic_rows():
 def test_time_group_split_rejects_missing_group_or_date():
     with pytest.raises(ValueError, match="source_group_id"):
         split_real_rows_by_time([{"row_id": "x", "invoice_date": "2024-01-01", "is_synthetic": False}])
+
+
+def test_n_flag_is_real_data():
+    rows = [
+        {"row_id": "a", "source_group_id": "a", "invoice_date": "2024-01-01", "is_synthetic": "N"},
+        {"row_id": "b", "source_group_id": "b", "invoice_date": "2024-02-01", "is_synthetic": "N"},
+        {"row_id": "c", "source_group_id": "c", "invoice_date": "2024-03-01", "is_synthetic": "N"},
+    ]
+    splits = split_real_rows_by_time(rows)
+    assert sum(len(value) for value in splits.values()) == 3

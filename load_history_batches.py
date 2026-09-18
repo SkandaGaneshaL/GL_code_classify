@@ -13,11 +13,13 @@ try:
     from .config import BASE_DIR, EMBEDDING_MODEL
     from .embeddings import create_document_embedder, embed_documents, load_oci_settings
     from .feature_pack import build_line_feature
+    from .finance_dataset import validate_finance_rows
 except ImportError:  # Supports running the file directly from this folder.
     import db_utils
     from config import BASE_DIR, EMBEDDING_MODEL
     from embeddings import create_document_embedder, embed_documents, load_oci_settings
     from feature_pack import build_line_feature
+    from finance_dataset import validate_finance_rows
 
 
 LOGGER = logging.getLogger(__name__)
@@ -52,6 +54,21 @@ EXPECTED_COLUMNS = [
     "SYNTHETIC_TYPE",
 ]
 
+# Governed Finance exports may include these columns. They are optional for
+# the legacy 120-row POC workbook, but certification loads require them via
+# ``validate_finance_rows(..., strict=True)`` before insertion.
+FINANCE_OPTIONAL_COLUMNS = [
+    "VENDOR_NAME",
+    "LEGAL_ENTITY_ID",
+    "LINE_AMOUNT",
+    "CURRENCY_CODE",
+    "UNIT_PRICE",
+    "QUANTITY_INVOICED",
+    "FINAL_POSTED",
+    "NATURAL_ACCOUNT_DESCRIPTION",
+    "SOURCE_GROUP_ID",
+]
+
 
 def _clean(value: Any) -> str | None:
     if value is None:
@@ -66,7 +83,8 @@ def _integer(value: Any) -> int | None:
 
 
 def _source_key(row: dict[str, str | None]) -> str:
-    payload = "\x1f".join(row.get(column) or "" for column in EXPECTED_COLUMNS)
+    columns = [*EXPECTED_COLUMNS, *(column for column in FINANCE_OPTIONAL_COLUMNS if column in row)]
+    payload = "\x1f".join(row.get(column) or "" for column in columns)
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
@@ -76,6 +94,7 @@ def read_batch(
     batch_size: int,
     sheet_name: str = DEFAULT_SHEET_NAME,
     dataset_type: str | None = "HISTORY",
+    strict_finance: bool = False,
 ) -> list[dict[str, str | None]]:
     if batch_number < 1:
         raise ValueError("batch_number must be at least 1")
@@ -109,16 +128,51 @@ def read_batch(
             f"Batch {batch_number} is empty. Dataset has {len(frame)} rows with batch size {batch_size}."
         )
 
-    selected = frame.iloc[start:end][EXPECTED_COLUMNS]
+    selected_columns = [*EXPECTED_COLUMNS, *(column for column in FINANCE_OPTIONAL_COLUMNS if column in frame.columns)]
+    selected = frame.iloc[start:end][selected_columns]
     rows: list[dict[str, str | None]] = []
     for excel_row_number, (_, values) in enumerate(selected.iterrows(), start=start + 2):
-        row = {column: _clean(values[column]) for column in EXPECTED_COLUMNS}
+        row = {column: _clean(values[column]) for column in selected_columns}
         if not row["LINE_DESCRIPTION"]:
             raise ValueError(f"Excel row {excel_row_number} has an empty LINE_DESCRIPTION")
         for required in ("INVOICE_NUM", "GL_CODE", "SEGMENT3_DESCRIPTION"):
             if not row[required]:
                 raise ValueError(f"Excel row {excel_row_number} has an empty {required}")
         rows.append(row)
+
+    if strict_finance:
+        validate_finance_rows(
+            [
+                {
+                    "invoice_distribution_id": row.get("INVOICE_DISTRIBUTION_ID"),
+                    "invoice_date": row.get("INVOICE_DATE"),
+                    "source_group_id": row.get("SOURCE_GROUP_ID") or row.get("INVOICE_ID") or row.get("INVOICE_DISTRIBUTION_ID"),
+                    "vendor_id": row.get("VENDOR_ID"),
+                    "vendor_name": row.get("VENDOR_NAME"),
+                    "vendor_site_id": row.get("VENDOR_SITE_ID"),
+                    "business_unit": row.get("BUSINESS_UNIT_ID"),
+                    "legal_entity": row.get("LEGAL_ENTITY_ID"),
+                    "ledger": row.get("LEDGER_ID"),
+                    "chart_of_accounts": row.get("CHART_OF_ACCOUNTS_ID"),
+                    "line_type": row.get("LINE_TYPE"),
+                    "line_description": row.get("LINE_DESCRIPTION"),
+                    "natural_account_description": row.get("NATURAL_ACCOUNT_DESCRIPTION") or row.get("SEGMENT3_DESCRIPTION"),
+                    "line_amount": row.get("LINE_AMOUNT"),
+                    "currency": row.get("CURRENCY_CODE"),
+                    "segment1": row.get("SEGMENT1"),
+                    "segment2": row.get("SEGMENT2"),
+                    "segment3": row.get("SEGMENT3"),
+                    "segment4": row.get("SEGMENT4"),
+                    "segment5": row.get("SEGMENT5"),
+                    "segment6": row.get("SEGMENT6"),
+                    "final_posted": row.get("FINAL_POSTED"),
+                    "source_invoice_distribution_id": row.get("SOURCE_INVOICE_DISTRIBUTION_ID"),
+                    "is_synthetic": row.get("IS_SYNTHETIC"),
+                }
+                for row in rows
+            ],
+            strict=True,
+        )
 
     LOGGER.info("Selected batch %d: Excel data rows %d-%d", batch_number, start + 1, end)
     return rows
@@ -156,9 +210,15 @@ def to_db_row(
         "line_type_norm": feature["line_type_norm"],
         "identity_key": feature["identity_key"],
         "amount_band": feature["amount_band"],
-        "line_amount": None,
-        "unit_price": None,
-        "quantity_invoiced": None,
+        "line_amount": row.get("LINE_AMOUNT"),
+        "unit_price": row.get("UNIT_PRICE"),
+        "quantity_invoiced": row.get("QUANTITY_INVOICED"),
+        "vendor_name": row.get("VENDOR_NAME"),
+        "legal_entity_id": row.get("LEGAL_ENTITY_ID"),
+        "currency_code": row.get("CURRENCY_CODE"),
+        "final_posted": row.get("FINAL_POSTED"),
+        "natural_account_description": row.get("NATURAL_ACCOUNT_DESCRIPTION") or row.get("SEGMENT3_DESCRIPTION"),
+        "source_group_id": row.get("SOURCE_GROUP_ID") or row.get("INVOICE_ID") or row.get("INVOICE_DISTRIBUTION_ID"),
         "embedding_model": EMBEDDING_MODEL,
         "dataset_type": row["DATASET_TYPE"],
         "is_synthetic": row["IS_SYNTHETIC"],
@@ -182,11 +242,23 @@ def main() -> None:
     parser.add_argument("--profile", default=None)
     parser.add_argument("--compartment-id", default=None)
     parser.add_argument("--service-endpoint", default=None)
+    parser.add_argument(
+        "--strict-finance",
+        action="store_true",
+        help="Require the complete Finance-posted distribution contract before loading",
+    )
     args = parser.parse_args()
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s - %(message)s")
     dataset_type = None if str(args.dataset_type).strip().lower() == "all" else args.dataset_type
-    rows = read_batch(args.excel_path, args.batch_number, args.batch_size, args.sheet_name, dataset_type)
+    rows = read_batch(
+        args.excel_path,
+        args.batch_number,
+        args.batch_size,
+        args.sheet_name,
+        dataset_type,
+        strict_finance=args.strict_finance,
+    )
     settings = load_oci_settings(
         profile=args.profile,
         compartment_id=args.compartment_id,
@@ -195,8 +267,14 @@ def main() -> None:
     embedder = create_document_embedder(settings)
     features = [
         build_line_feature(
-            {"LineDescription": row["LINE_DESCRIPTION"], "LineType": row["LINE_TYPE"]},
-            vendor="",
+            {
+                "LineDescription": row["LINE_DESCRIPTION"],
+                "LineType": row["LINE_TYPE"],
+                "LineAmount": row.get("LINE_AMOUNT"),
+                "UnitPrice": row.get("UNIT_PRICE"),
+                "QuantityInvoiced": row.get("QUANTITY_INVOICED"),
+            },
+            vendor=row.get("VENDOR_NAME") or row.get("VENDOR_ID") or "",
             line_index=index,
         )
         for index, row in enumerate(rows)

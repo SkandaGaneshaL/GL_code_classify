@@ -29,7 +29,10 @@ def split_real_rows_by_time(
     groups: dict[str, list[dict[str, Any]]] = defaultdict(list)
     group_dates: dict[str, datetime] = {}
     for source in rows:
-        if bool(source.get("is_synthetic")):
+        synthetic = source.get("is_synthetic")
+        if isinstance(synthetic, str):
+            synthetic = synthetic.strip().upper() in {"Y", "YES", "TRUE", "1"}
+        if bool(synthetic):
             continue
         row = dict(source)
         group = str(row.get("source_group_id") or "").strip()

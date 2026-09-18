@@ -23,6 +23,7 @@ try:
     from .embeddings import create_document_embedder, embed_documents, load_oci_settings
     from .evaluation import load_evaluation_rows, run_evaluation
     from .feature_pack import build_line_feature
+    from .split_review import accept_split_suggestions, merge_split_suggestions
     from .invoice_pipeline import InvoiceClassificationPipeline, InvoicePipelineError
 except ImportError:  # Supports streamlit run streamlit_app.py from this folder.
     import db_utils
@@ -39,6 +40,7 @@ except ImportError:  # Supports streamlit run streamlit_app.py from this folder.
     from embeddings import create_document_embedder, embed_documents, load_oci_settings
     from evaluation import load_evaluation_rows, run_evaluation
     from feature_pack import build_line_feature
+    from split_review import accept_split_suggestions, merge_split_suggestions
     from invoice_pipeline import InvoiceClassificationPipeline, InvoicePipelineError
 
 
@@ -97,23 +99,35 @@ def _render_rate_metric(label: str, metric: dict[str, Any]) -> None:
 
 def _render_evaluation_metrics(evaluation: dict[str, Any]) -> None:
     metrics = evaluation.get("metrics") or {}
-    st.write(f"Rows scored: **{metrics.get('row_count', 0)}**")
+    st.write(
+        f"Rows scored: **{metrics.get('row_count', 0)}** · "
+        f"real: **{metrics.get('real_row_count', 0)}** · "
+        f"synthetic: **{metrics.get('synthetic_row_count', 0)}**"
+    )
+    st.caption("Certification metrics use real held-out rows only. Synthetic rows are regression evidence, not production evidence.")
     first, second, third = st.columns(3)
     with first:
-        _render_rate_metric("Accepted precision", metrics.get("auto_post_precision") or {})
+        _render_rate_metric("Real filled-cell accuracy", metrics.get("real_filled_cell_accuracy_metric") or {})
     with second:
-        _render_rate_metric("Accepted coverage", metrics.get("coverage") or {})
+        _render_rate_metric("Coverage", metrics.get("coverage") or {})
     with third:
-        _render_rate_metric("Strict end-to-end accuracy", metrics.get("strict_accuracy") or {})
+        _render_rate_metric("Real strict accuracy", metrics.get("real_strict_accuracy") or {})
     fourth, fifth, sixth = st.columns(3)
     with fourth:
-        _render_rate_metric("Selective accuracy", metrics.get("selective_accuracy") or {})
-    with fifth:
         _render_rate_metric("Review rate", metrics.get("review_rate") or {})
-    with sixth:
+    with fifth:
         _render_rate_metric("Abstain rate", metrics.get("abstain_rate") or {})
+    with sixth:
+        _render_rate_metric("Invalid Segment 3 rate", metrics.get("invalid_code_rate") or {})
+    seventh, eighth, ninth = st.columns(3)
+    with seventh:
+        _render_rate_metric("Override rate", metrics.get("override_rate") or {})
+    with eighth:
+        _render_rate_metric("Auto-post precision", metrics.get("auto_post_precision") or {})
+    with ninth:
+        _render_rate_metric("Auto-post recall", metrics.get("auto_post_recall") or {})
 
-    classification_metrics = metrics.get("classification_metrics") or {}
+    classification_metrics = metrics.get("real_classification_metrics") or {}
     st.write(
         "Macro F1: **"
         f"{classification_metrics.get('macro_f1_percent', 'Unavailable')}** · "
@@ -131,8 +145,10 @@ def _render_evaluation_metrics(evaluation: dict[str, Any]) -> None:
     st.caption(
         "Input-quality review rows: "
         f"{quality_metrics.get('insufficient_count', 0)} · "
-        f"Retrieval MRR: {metrics.get('retrieval_mrr', 'Unavailable')} · "
-        f"nDCG@3: {metrics.get('retrieval_ndcg_at_3', 'Unavailable')}"
+        f"Recall@1: {metrics.get('retrieval_type_recall_at_1_metric', {}).get('percent', 'Unavailable')} · "
+        f"Recall@3: {metrics.get('retrieval_type_recall_at_3_metric', {}).get('percent', 'Unavailable')} · "
+        f"Recall@10: {metrics.get('retrieval_type_recall_at_10_metric', {}).get('percent', 'Unavailable')} · "
+        f"MRR: {metrics.get('retrieval_mrr', 'Unavailable')} · nDCG@3: {metrics.get('retrieval_ndcg_at_3', 'Unavailable')}"
     )
     per_class = classification_metrics.get("per_class") or {}
     if per_class:
@@ -353,13 +369,11 @@ def _render_logprob_explanation(result: dict[str, Any]) -> None:
                 "Only the selected account-type evidence is shown; it is diagnostic and cannot authorize "
                 "automatic defaulting."
             )
-        elif status == "available" and explanation.get("confidence_source") != "calibrated_logprob":
+        elif status == "available":
             st.warning(
-                "Logprobs detected but not empirically calibrated. They remain diagnostic and the line "
+                "Logprobs are next-token diagnostics, not a correctness probability. The line "
                 "stays review-safe."
             )
-        elif status == "available":
-            st.success("Calibrated account-type logprobs were used in the composite confidence.")
 
         st.write(f"Status: **{status}**")
         st.write(f"Evidence scope: **{evidence_scope}**")
@@ -484,6 +498,33 @@ def _render_line(result: dict[str, Any], document_embedder: Any) -> None:
         st.caption(f"Confidence status: `{result.get('confidence_status') or 'unavailable'}`")
         if result.get("review_reasons"):
             st.warning("Review reasons: " + ", ".join(result["review_reasons"]))
+        split_suggestions = result.get("split_suggestions") or {}
+        if split_suggestions.get("status") == "split_suggested":
+            st.warning("Split required before Segment 3 assignment. Suggestions are account natures, not GL codes.")
+            st.dataframe(
+                [
+                    {
+                        "Child description": child.get("description"),
+                        "Account nature": child.get("account_nature"),
+                        "Decision": child.get("decision"),
+                    }
+                    for child in split_suggestions.get("children") or []
+                ],
+                hide_index=True,
+            )
+            split_left, split_right = st.columns(2)
+            with split_left:
+                if st.button("Accept split for coding review", key=f"accept_split_{index}"):
+                    st.session_state[f"split_decision_{index}"] = accept_split_suggestions(
+                        split_suggestions, split_suggestions.get("children") or []
+                    )
+            with split_right:
+                if st.button("Merge split back", key=f"merge_split_{index}"):
+                    st.session_state[f"split_decision_{index}"] = merge_split_suggestions(
+                        split_suggestions.get("children") or []
+                    )
+            if st.session_state.get(f"split_decision_{index}"):
+                st.info("Split decision recorded for review; no Segment 3 was assigned.")
         with right:
             st.write(f"LLM: {'called' if result.get('llm_called') else 'skipped'}")
             st.write(f"Logprob confidence source: `{result.get('logprob_confidence_source') or 'none'}`")
@@ -504,6 +545,28 @@ def _render_line(result: dict[str, Any], document_embedder: Any) -> None:
             st.write(f"Competing types: {', '.join(result.get('candidate_types') or []) or 'none'}")
             st.write(f"Conflict flags: {', '.join(result.get('conflict_flags') or []) or 'none'}")
         st.info(result.get("reason") or "No reason returned.")
+        ranked_candidates = result.get("ranked_candidates") or []
+        if ranked_candidates:
+            with st.expander("Top review candidates"):
+                st.caption(
+                    "Candidate ranking is evidence only. A correctness percentage remains unavailable until a compatible, held-out ranker calibration artifact is loaded."
+                )
+                st.dataframe(
+                    [
+                        {
+                            "Account type": candidate.get("account_type"),
+                            "Segment 3": candidate.get("segment3"),
+                            "Retrieval score": candidate.get("retrieval_score"),
+                            "Calibrated probability": (
+                                "Unavailable"
+                                if candidate.get("calibrated_probability") is None
+                                else f"{float(candidate['calibrated_probability']) * 100:.2f}%"
+                            ),
+                        }
+                        for candidate in ranked_candidates
+                    ],
+                    hide_index=True,
+                )
         if result.get("llm_called"):
             _render_token_usage(
                 "Classification token usage",
@@ -519,7 +582,16 @@ def _render_line(result: dict[str, Any], document_embedder: Any) -> None:
             with st.expander("Historical evidence"):
                 for case in cases[:3]:
                     _render_case(case)
-        options = list(dict.fromkeys(["Unknown", result.get("account_type") or "Unknown", *(result.get("candidate_types") or [])]))
+        options = list(
+            dict.fromkeys(
+                [
+                    "Unknown",
+                    result.get("account_type") or "Unknown",
+                    *(candidate.get("account_type") for candidate in ranked_candidates),
+                    *(result.get("candidate_types") or []),
+                ]
+            )
+        )
         selected = st.selectbox(
             "Correction / confirmation",
             options,

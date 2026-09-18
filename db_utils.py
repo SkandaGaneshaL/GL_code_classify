@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import array
 import hashlib
+import json
 import math
 import os
 from pathlib import Path
@@ -24,6 +25,8 @@ load_dotenv(POC_DIR / ".env")
 load_dotenv(BASE_DIR / ".env", override=True)
 TABLE_NAME = "AG_GL_ACCOUNT_HISTORY_CASES"
 OVERRIDE_TABLE_NAME = "AG_GL_ACCOUNT_CLASSIFICATION_OVERRIDES"
+AUDIT_TABLE_NAME = "AG_GL_CLASSIFICATION_AUDIT"
+MODEL_REGISTRY_TABLE_NAME = "AG_GL_MODEL_REGISTRY"
 
 
 def _resolve(path_str: str | None) -> str | None:
@@ -75,6 +78,12 @@ def bulk_upsert_history(rows: Iterable[dict[str, Any]]) -> int:
             "line_amount",
             "unit_price",
             "quantity_invoiced",
+            "vendor_name",
+            "legal_entity_id",
+            "currency_code",
+            "final_posted",
+            "natural_account_description",
+            "source_group_id",
         ):
             item.setdefault(key, None)
         item.setdefault("embedding_model", EMBEDDING_MODEL)
@@ -122,6 +131,12 @@ def bulk_upsert_history(rows: Iterable[dict[str, Any]]) -> int:
             LINE_AMOUNT = :line_amount,
             UNIT_PRICE = :unit_price,
             QUANTITY_INVOICED = :quantity_invoiced,
+            VENDOR_NAME = :vendor_name,
+            LEGAL_ENTITY_ID = :legal_entity_id,
+            CURRENCY_CODE = :currency_code,
+            FINAL_POSTED = :final_posted,
+            NATURAL_ACCOUNT_DESCRIPTION = :natural_account_description,
+            SOURCE_GROUP_ID = :source_group_id,
             EMBEDDING_MODEL = :embedding_model,
             EMBEDDING = :embedding,
             DATASET_TYPE = :dataset_type,
@@ -136,7 +151,9 @@ def bulk_upsert_history(rows: Iterable[dict[str, Any]]) -> int:
             GL_CODE, SEGMENT1, SEGMENT2, SEGMENT3, SEGMENT4, SEGMENT5, SEGMENT6,
             RETRIEVAL_TEXT, VENDOR_NAME_NORM, LINE_TYPE_NORM, IDENTITY_KEY, AMOUNT_BAND,
             LINE_AMOUNT, UNIT_PRICE, QUANTITY_INVOICED, EMBEDDING_MODEL, EMBEDDING,
-            DATASET_TYPE, IS_SYNTHETIC, SOURCE_INVOICE_DISTRIBUTION_ID, SYNTHETIC_TYPE
+            DATASET_TYPE, IS_SYNTHETIC, SOURCE_INVOICE_DISTRIBUTION_ID, SYNTHETIC_TYPE,
+            VENDOR_NAME, LEGAL_ENTITY_ID, CURRENCY_CODE, FINAL_POSTED,
+            NATURAL_ACCOUNT_DESCRIPTION, SOURCE_GROUP_ID
         ) VALUES (
             :source_key, :invoice_id, :invoice_num, :invoice_date, :invoice_distribution_id,
             :invoice_line_number, :distribution_line_number, :dist_code_combination_id,
@@ -145,7 +162,9 @@ def bulk_upsert_history(rows: Iterable[dict[str, Any]]) -> int:
             :gl_code, :segment1, :segment2, :segment3, :segment4, :segment5, :segment6,
             :retrieval_text, :vendor_name_norm, :line_type_norm, :identity_key, :amount_band,
             :line_amount, :unit_price, :quantity_invoiced, :embedding_model, :embedding,
-            :dataset_type, :is_synthetic, :source_invoice_distribution_id, :synthetic_type
+            :dataset_type, :is_synthetic, :source_invoice_distribution_id, :synthetic_type,
+            :vendor_name, :legal_entity_id, :currency_code, :final_posted,
+            :natural_account_description, :source_group_id
         )
     """
     conn = get_db_connection()
@@ -516,8 +535,10 @@ def promote_correction_to_history(
         "line_description": feature.get("line_description") or "",
         "line_type": feature.get("line_type") or None,
         "vendor_id": None,
+        "vendor_name": feature.get("vendor_name") or feature.get("vendor_name_norm"),
         "vendor_site_id": None,
         "business_unit_id": None,
+        "legal_entity_id": None,
         "ledger_id": None,
         "chart_of_accounts_id": None,
         "account_type": corrected_account_type,
@@ -536,6 +557,10 @@ def promote_correction_to_history(
         "line_amount": feature.get("line_amount"),
         "unit_price": feature.get("unit_price"),
         "quantity_invoiced": feature.get("quantity_invoiced"),
+        "currency_code": feature.get("currency_code"),
+        "final_posted": "Y",
+        "natural_account_description": feature.get("line_description"),
+        "source_group_id": feature.get("source_group_id"),
         "embedding_model": EMBEDDING_MODEL,
         "dataset_type": "HISTORY",
         "is_synthetic": "N",
@@ -579,5 +604,97 @@ def map_account_type_to_gl(account_type: str) -> dict[str, Any] | None:
             "mapping_row_count": int(row[7]),
             "mapping_source": "account_type_history",
         }
+    finally:
+        conn.close()
+
+
+def record_classification_audit(
+    result: dict[str, Any], *, event_type: str = "CLASSIFICATION_RESULT"
+) -> None:
+    """Persist a redacted classification trace for review and shadow metrics."""
+    payload = dict(result)
+    payload.pop("raw_invoice", None)
+    payload.pop("document_bytes", None)
+    payload_json = json.dumps(payload, default=str, sort_keys=True)
+    evidence_hash = hashlib.sha256(payload_json.encode("utf-8")).hexdigest()
+    conn = get_db_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                f"""
+                INSERT INTO {AUDIT_TABLE_NAME} (
+                    EVENT_TYPE, EVIDENCE_HASH, MODEL_VERSION, POLICY_VERSION,
+                    DECISION, PREDICTED_ACCOUNT_TYPE,
+                    CALIBRATED_CORRECTNESS_PROBABILITY, PAYLOAD_JSON
+                ) VALUES (
+                    :event_type, :evidence_hash, :model_version, :policy_version,
+                    :decision, :predicted_account_type,
+                    :calibrated_probability, :payload_json
+                )
+                """,
+                {
+                    "event_type": event_type,
+                    "evidence_hash": evidence_hash,
+                    "model_version": result.get("model_version") or result.get("classifier_version"),
+                    "policy_version": result.get("policy_version") or "review-first-v1",
+                    "decision": result.get("decision") or "REVIEW_REQUIRED",
+                    "predicted_account_type": result.get("account_type"),
+                    "calibrated_probability": result.get("calibrated_correctness_probability"),
+                    "payload_json": payload_json,
+                },
+            )
+        conn.commit()
+    except Exception:
+        conn.rollback()
+        raise
+    finally:
+        conn.close()
+
+
+def register_model_artifact(
+    *,
+    model_version: str,
+    artifact_type: str,
+    artifact_hash: str,
+    dataset_version: str,
+    finance_approved: bool,
+    metrics: dict[str, Any],
+) -> None:
+    """Register a versioned ranker/calibration artifact and its evidence."""
+    conn = get_db_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                f"""
+                MERGE INTO {MODEL_REGISTRY_TABLE_NAME} target
+                USING (SELECT :model_version AS model_version FROM dual) incoming
+                   ON (target.MODEL_VERSION = incoming.model_version)
+                WHEN MATCHED THEN UPDATE SET
+                    ARTIFACT_TYPE = :artifact_type,
+                    ARTIFACT_HASH = :artifact_hash,
+                    DATASET_VERSION = :dataset_version,
+                    FINANCE_APPROVED = :finance_approved,
+                    METRICS_JSON = :metrics_json
+                WHEN NOT MATCHED THEN INSERT (
+                    MODEL_VERSION, ARTIFACT_TYPE, ARTIFACT_HASH, DATASET_VERSION,
+                    FINANCE_APPROVED, METRICS_JSON
+                ) VALUES (
+                    :model_version, :artifact_type, :artifact_hash, :dataset_version,
+                    :finance_approved, :metrics_json
+                )
+                """,
+                {
+                    "model_version": model_version,
+                    "artifact_type": artifact_type,
+                    "artifact_hash": artifact_hash,
+                    "dataset_version": dataset_version,
+                    "finance_approved": "Y" if finance_approved else "N",
+                    "metrics_json": json.dumps(metrics, default=str, sort_keys=True),
+                },
+            )
+        conn.commit()
+    except Exception:
+        conn.rollback()
+        raise
     finally:
         conn.close()

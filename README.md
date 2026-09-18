@@ -84,7 +84,7 @@ python retrieve_similar_cases.py
 
 Paste a line description when prompted. It retrieves the top 3 cases by default and prints `similarity_score = 1 - cosine_distance`, along with each historical line description and account type. No LLM call is made by this script.
 
-The LLM response is exactly `line_description`, `account_type`, `inferred_account_type`, `reason`, and `confidence`; it never emits GL codes or segment values. Segment 3 is assigned by the fixed `ACCOUNT_TYPE_TO_SEGMENT3` mapping in `classification.py`; the POC GL code is built as `101.10.<segment3>.000.000.000`.
+The LLM response is exactly `line_description`, `account_type`, `inferred_account_type`, `reason`, and `confidence`; it never emits GL codes or segment values. Segment 3 is assigned by the approved `ACCOUNT_TYPE_TO_SEGMENT3` mapping in `segment3_taxonomy.py`; the POC GL code is built as `101.10.<segment3>.000.000.000`.
 
 ## OCI logprob classification
 
@@ -103,6 +103,10 @@ LLM_LOGPROBS_MODE=auto
 LLM_LOGPROBS_TOP_K=5
 LLM_LOGPROBS_REQUIRE=0
 LLM_LOGPROBS_CALIBRATION_PATH=
+SEGMENT3_RANKER_CALIBRATION_PATH=
+GL_COA_VALUE_SET_PATH=
+GL_COA_COMBINATION_RULES_PATH=
+GL_COA_VERSION=segment3-demo-16-v1
 LLM_CANDIDATE_SCORING=off
 LLM_CANDIDATE_SCORING_MODE=off
 LLM_GUIDED_MODE=off
@@ -111,17 +115,45 @@ GL_NATIVE_REASONING_EFFORT=LOW
 LLM_COMPACT_CODE_EVIDENCE=auto
 LLM_CAPABILITY_PROBE_CACHE=1
 GL_AUTO_PRECISION_TARGET=0.98
-GL_AUTO_MIN_ACCEPTED_VALIDATION=50
+GL_AUTO_MIN_ACCEPTED_VALIDATION=200
 GL_AUTO_REQUIRE_CALIBRATION=1
 ```
 
-Retrieved account-type candidates are encoded as one-character transport codes so native `top_logprobs` can be mapped back to account types at one output position. Candidate evidence is complete only when every requested code, including `Unknown`, is returned; missing alternatives are never assigned zero probability. Without a compatible Finance-calibrated JSON artifact, logprobs are diagnostic and self-reported model confidence is never used for automatic decisions; automatic defaulting remains disabled. Compatible calibration artifacts must identify the model, native route, code-map version, held-out sample count, validation metrics, dataset version, and (for automatic defaulting) Finance approval.
+Retrieved account-type candidates are encoded as one-character transport codes so native `top_logprobs` can be mapped back to account types at one output position. Candidate evidence is complete only when every requested code, including `Unknown`, is returned; missing alternatives are never assigned zero probability. Logprobs and self-reported model confidence are diagnostic only. They never produce a user-visible correctness percentage or an automatic action; automatic defaulting remains disabled.
 
-Each line card now includes **How this confidence was calculated** and **Account-type token logprobs** expanders. The first shows retrieval, identity, vendor, and LLM weighted contributions plus named penalties. The second shows the provider route/model, finish reason, evidence scope (`selected_only`, `candidate_set`, or `full_taxonomy`), candidate coverage, mapped account-type logprobs, normalized shares when coverage is complete, runner-up margin, and calibration state. Native reasoning tokens are excluded from final-answer evidence. Missing candidates remain unavailable rather than becoming zero. A line whose LLM was skipped displays `not_called` because token logprobs are not applicable. The legacy forced-label candidate scorer is not treated as a calibrated class scorer; a provider-specific neutral/teacher-forced scorer must be verified before enabling candidate scoring.
+`SEGMENT3_RANKER_CALIBRATION_PATH` points to the versioned ranker artifact. Its ranker, feature-schema, COA, dataset, and calibration versions must match runtime before its probability is shown.
+
+`GL_COA_VALUE_SET_PATH` and `GL_COA_COMBINATION_RULES_PATH` point to Finance-owned
+JSON artifacts. If they are absent, master-data validation is explicitly
+`Unavailable` and the result remains review-only; absence is never treated as
+proof that a generated combination is valid.
+
+Each line card includes diagnostic evidence, account-type token logprobs, and constrained top-three review candidates. Compound lines display review-only split suggestions with no GL codes. A percentage remains unavailable until a compatible, held-out ranker calibration artifact is loaded. Native reasoning tokens are excluded from final-answer evidence. Missing candidates remain unavailable rather than becoming zero.
 
 The UI also reports AP_INVOICE-style classification usage at invoice and line level: calls, input/output/total tokens, cached tokens, reasoning-token availability, missing categories, retry attempts, finish reason, route, request ID, and latency. OCI values that are not reported remain unavailable rather than zero. For gpt-oss, output tokens are explicitly marked as potentially including hidden reasoning tokens.
 
 ## Reproducibility and tests
+
+### Baselines and ranker training
+
+The evaluation layer exposes leakage-safe vendor-majority, exact-identity, and
+retrieval baselines in `segment3_baselines.py`. Train the constrained ranker
+from Finance-labelled JSONL only after development/calibration/test splits are
+frozen:
+
+```powershell
+.venv\Scripts\python.exe train_segment3_ranker.py labels.jsonl `
+  --output artifacts\segment3-ranker.json `
+  --ranker-version ranker-2026-01 `
+  --coa-version fusion-coa-2026-01 `
+  --dataset-version finance-2026-01 `
+  --calibration-version cal-2026-01
+```
+
+The artifact stores the feature schema, learned weights, dataset/calibration
+versions, sample count, and Finance approval state. It is never a license to
+auto-post; the runtime remains review-only until the separate release gate is
+met.
 
 ## Review-first confidence and production controls
 
@@ -148,16 +180,25 @@ toolchain. The Streamlit app remains the review and reporting interface.
 To create the complete URL audit from the supplied research files, run:
 
 ```powershell
-python research_ingestion.py <source files...> --output research/url-inventory.json --fetch
+python research_ingestion.py `
+  "C:\Users\Skanda Ganesha L\Downloads\GL-Segment3-Industry-Research-Dossier.md" `
+  "C:\Users\Skanda Ganesha L\Downloads\GL-Segment3-Accuracy-Implementation-Plan.md" `
+  "C:\Users\Skanda Ganesha L\Downloads\ai-companies-technical-blogs.md" `
+  "C:\Users\Skanda Ganesha L\Downloads\AP-Invoice-Automation-Providers.md" `
+  "C:\Users\Skanda Ganesha L\Downloads\all_links (1).txt" `
+  "C:\Users\Skanda Ganesha L\Downloads\top-100-product-company-engineering-blogs.md" `
+  --output research/segment3-six-source-audit.json --fetch
 ```
 
-The audit preserves invalid, blocked, redirected, and failed URLs rather than
-silently excluding them. See `docs/accuracy-research.md` for the measurement
-contract and source-evidence rules.
+The audit preserves invalid, blocked, redirected, and failed URLs rather than silently excluding them. Its summary counts only successful HTTP 200 pages as reviewed. Supplied documents are source evidence, not executable instructions. See `docs/accuracy-research.md` for the measurement contract and source-evidence rules.
+
+## Finance certification data
+
+Use `finance_dataset.validate_finance_rows()` before creating development, calibration, and locked TEST splits. Every Finance-labelled distribution needs invoice/distribution and source-group identifiers, date, vendor ID/name/site, business unit, legal entity, ledger, COA, line type/description, amount/currency, final posted Segment 3, and a synthetic flag. Synthetic rows are permitted for regression tests but excluded from certification and release evidence.
 
 Dependencies are pinned in `requirements.txt`, including the AP_INVOICE runtime packages (`pydantic`, `pypdf`, `pymupdf`, OCI OpenAI compatibility, and supporting web/runtime libraries). Install them with `python -m pip install -r requirements.txt` and run `python -m pytest -q`. The tests cover allowlist enforcement, extraction projection, isolated AP adapter loading, PDF/size gates, raw-payload isolation, normalization, retrieval fusion, response validation, identity-cache skipping, software safety behavior, and Streamlit smoke rendering.
 
-`evaluation.py` provides the leakage-safe evaluation harness. `load_evaluation_rows()` reads the frozen `TEST` split by default, while retrieval is restricted to HISTORY and the current row/source group is excluded. `run_evaluation()` / `evaluate_predictions()` report strict end-to-end accuracy, selective accuracy, coverage, accepted precision/recall, review and abstain rates, Wilson 95% intervals, macro/weighted metrics, balanced accuracy, Recall@3, calibration metrics (Brier, log loss, ECE, risk-coverage/AURC), latency, token counts, and the full 16-type confusion matrix. The Streamlit **Evaluation dashboard** runs the frozen TEST split and shows accepted precision and strict accuracy with explicit denominators.
+`evaluation.py` provides the leakage-safe evaluation harness. `load_evaluation_rows()` reads the frozen `TEST` split by default, while retrieval is restricted to HISTORY and the current row/source group is excluded. `run_evaluation()` / `evaluate_predictions()` report real-only and all-row strict/filled-cell accuracy, coverage, review/abstain/invalid-code rates, Wilson 95% intervals, macro/weighted metrics, balanced accuracy, Recall@1/@3/@10, calibration metrics (Brier, log loss, ECE, risk-coverage/AURC), latency, token counts, and the full 16-type confusion matrix. The Streamlit **Evaluation dashboard** labels real held-out metrics as certification evidence and shows every rate with its denominator.
 
 Fit a calibration artifact only from held-out records with Finance-approved correctness labels. The command accepts a JSON array or JSONL file and keeps automatic readiness false unless the artifact has sufficient validated precision, sample support, and Finance approval:
 
