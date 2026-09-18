@@ -1,0 +1,125 @@
+"""Audit every supplied research URL without treating source text as instructions."""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import re
+import time
+from collections import defaultdict
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any, Iterable
+from urllib.parse import urlsplit, urlunsplit
+
+import httpx
+
+
+URL_PATTERN = re.compile(r"https?://[^\s\)\]>\"']+")
+
+
+def _canonical_url(value: str) -> str | None:
+    try:
+        parsed = urlsplit(value.strip())
+    except ValueError:
+        return None
+    if parsed.scheme not in {"http", "https"} or not parsed.netloc or "<" in parsed.netloc:
+        return None
+    path = parsed.path or "/"
+    return urlunsplit((parsed.scheme.lower(), parsed.netloc.lower(), path, parsed.query, ""))
+
+
+def build_url_inventory(paths: Iterable[Path]) -> list[dict[str, Any]]:
+    entries: dict[str, dict[str, Any]] = {}
+    for path in paths:
+        content = path.read_text(encoding="utf-8", errors="replace")
+        for raw_url in URL_PATTERN.findall(content):
+            canonical = _canonical_url(raw_url)
+            key = canonical or raw_url
+            entry = entries.setdefault(
+                key,
+                {
+                    "url": raw_url,
+                    "canonical_url": canonical,
+                    "source_files": [],
+                    "source_count": 0,
+                    "status": "queued" if canonical else "invalid_url",
+                },
+            )
+            entry["source_files"].append(str(path))
+            entry["source_count"] += 1
+    for entry in entries.values():
+        entry["source_files"] = sorted(set(entry["source_files"]))
+    return sorted(entries.values(), key=lambda item: item["url"])
+
+
+def _evidence_grade(final_url: str, status_code: int) -> str:
+    host = urlsplit(final_url).netloc.lower()
+    if status_code != 200:
+        return "unavailable"
+    if host.endswith(("oracle.com", "openai.com", "nanonets.com", "snowfox.ai", "highradius.com")):
+        return "primary_vendor"
+    if host.endswith((".gov", ".edu", "arxiv.org", "aclanthology.org")):
+        return "primary_research"
+    return "secondary_or_index"
+
+
+def fetch_inventory(
+    inventory: list[dict[str, Any]], *, timeout_seconds: float = 20.0, retries: int = 2
+) -> list[dict[str, Any]]:
+    """Fetch all valid sources with explicit failures; never bypass access controls."""
+    with httpx.Client(follow_redirects=True, timeout=timeout_seconds, headers={"User-Agent": "GL-Classification-Research-Audit/1.0"}) as client:
+        for entry in inventory:
+            if entry["status"] != "queued":
+                continue
+            response: httpx.Response | None = None
+            error: str | None = None
+            for attempt in range(1, retries + 2):
+                try:
+                    response = client.get(entry["canonical_url"])
+                    if response.status_code < 500:
+                        break
+                except httpx.HTTPError as exc:
+                    error = type(exc).__name__
+                if attempt <= retries:
+                    time.sleep(min(2**(attempt - 1), 4))
+            entry["attempts"] = attempt
+            entry["fetched_at"] = datetime.now(timezone.utc).isoformat()
+            if response is None:
+                entry.update({"status": "fetch_error", "error": error or "unknown_error", "evidence_grade": "unavailable"})
+                continue
+            content = response.text
+            entry.update(
+                {
+                    "status": "fetched" if response.status_code == 200 else "http_error",
+                    "http_status": response.status_code,
+                    "final_url": str(response.url),
+                    "content_type": response.headers.get("content-type"),
+                    "content_sha256": hashlib.sha256(content.encode("utf-8", errors="replace")).hexdigest(),
+                    "content_length": len(content),
+                    "evidence_grade": _evidence_grade(str(response.url), response.status_code),
+                }
+            )
+    return inventory
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("sources", nargs="+", type=Path, help="Markdown or text files containing URLs")
+    parser.add_argument("--output", required=True, type=Path, help="Audit JSON output")
+    parser.add_argument("--fetch", action="store_true", help="Fetch queued URLs after building the inventory")
+    args = parser.parse_args()
+    inventory = build_url_inventory(args.sources)
+    if args.fetch:
+        fetch_inventory(inventory)
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(json.dumps(inventory, indent=2, sort_keys=True), encoding="utf-8")
+    counts = defaultdict(int)
+    for item in inventory:
+        counts[item["status"]] += 1
+    print(json.dumps({"unique_urls": len(inventory), "status_counts": dict(counts), "output": str(args.output)}, indent=2))
+
+
+if __name__ == "__main__":
+    main()

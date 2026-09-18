@@ -10,16 +10,19 @@ import pandas as pd
 
 try:
     from . import db_utils
-    from .config import BASE_DIR
+    from .config import BASE_DIR, EMBEDDING_MODEL
     from .embeddings import create_document_embedder, embed_documents, load_oci_settings
+    from .feature_pack import build_line_feature
 except ImportError:  # Supports running the file directly from this folder.
     import db_utils
-    from config import BASE_DIR
+    from config import BASE_DIR, EMBEDDING_MODEL
     from embeddings import create_document_embedder, embed_documents, load_oci_settings
+    from feature_pack import build_line_feature
 
 
 LOGGER = logging.getLogger(__name__)
 DEFAULT_EXCEL_PATH = BASE_DIR / "gl_account_history_poc_120.xlsx"
+DEFAULT_SHEET_NAME = "POC Dataset"
 EXPECTED_COLUMNS = [
     "INVOICE_ID",
     "INVOICE_NUM",
@@ -67,7 +70,13 @@ def _source_key(row: dict[str, str | None]) -> str:
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
-def read_batch(excel_path: Path, batch_number: int, batch_size: int) -> list[dict[str, str | None]]:
+def read_batch(
+    excel_path: Path,
+    batch_number: int,
+    batch_size: int,
+    sheet_name: str = DEFAULT_SHEET_NAME,
+    dataset_type: str | None = "HISTORY",
+) -> list[dict[str, str | None]]:
     if batch_number < 1:
         raise ValueError("batch_number must be at least 1")
     if batch_size < 1:
@@ -79,13 +88,19 @@ def read_batch(excel_path: Path, batch_number: int, batch_size: int) -> list[dic
     # pandas inferring identifiers, codes, or ISO date strings as numeric/date values.
     frame = pd.read_excel(
         excel_path,
-        sheet_name=0,
+        sheet_name=sheet_name,
         dtype=object,
         keep_default_na=False,
     )
     missing = [column for column in EXPECTED_COLUMNS if column not in frame.columns]
     if missing:
         raise ValueError(f"Excel dataset is missing columns: {missing}")
+
+    if dataset_type is not None:
+        requested_type = str(dataset_type).strip().upper()
+        frame = frame.loc[frame["DATASET_TYPE"].astype(str).str.strip().str.upper() == requested_type].copy()
+        if frame.empty:
+            raise ValueError(f"Excel dataset contains no rows with DATASET_TYPE={requested_type!r}")
 
     start = (batch_number - 1) * batch_size
     end = min(start + batch_size, len(frame))
@@ -109,7 +124,9 @@ def read_batch(excel_path: Path, batch_number: int, batch_size: int) -> list[dic
     return rows
 
 
-def to_db_row(row: dict[str, str | None], embedding: list[float]) -> dict[str, Any]:
+def to_db_row(
+    row: dict[str, str | None], embedding: list[float], feature: dict[str, Any]
+) -> dict[str, Any]:
     return {
         "source_key": _source_key(row),
         "invoice_id": row["INVOICE_ID"],
@@ -134,6 +151,15 @@ def to_db_row(row: dict[str, str | None], embedding: list[float]) -> dict[str, A
         "segment4": row["SEGMENT4"],
         "segment5": row["SEGMENT5"],
         "segment6": row["SEGMENT6"],
+        "retrieval_text": feature["retrieval_text"],
+        "vendor_name_norm": feature["vendor_name_norm"] or None,
+        "line_type_norm": feature["line_type_norm"],
+        "identity_key": feature["identity_key"],
+        "amount_band": feature["amount_band"],
+        "line_amount": None,
+        "unit_price": None,
+        "quantity_invoiced": None,
+        "embedding_model": EMBEDDING_MODEL,
         "dataset_type": row["DATASET_TYPE"],
         "is_synthetic": row["IS_SYNTHETIC"],
         "source_invoice_distribution_id": row["SOURCE_INVOICE_DISTRIBUTION_ID"],
@@ -147,23 +173,38 @@ def main() -> None:
     parser.add_argument("batch_number", type=int, help="1-based batch number; batch 1 is rows 1-60 by default")
     parser.add_argument("--batch-size", type=int, default=60)
     parser.add_argument("--excel-path", type=Path, default=DEFAULT_EXCEL_PATH)
+    parser.add_argument("--sheet-name", default=DEFAULT_SHEET_NAME)
+    parser.add_argument(
+        "--dataset-type",
+        default="HISTORY",
+        help="Only load this dataset split into retrieval history; use 'all' to disable filtering.",
+    )
     parser.add_argument("--profile", default=None)
     parser.add_argument("--compartment-id", default=None)
     parser.add_argument("--service-endpoint", default=None)
     args = parser.parse_args()
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s - %(message)s")
-    rows = read_batch(args.excel_path, args.batch_number, args.batch_size)
+    dataset_type = None if str(args.dataset_type).strip().lower() == "all" else args.dataset_type
+    rows = read_batch(args.excel_path, args.batch_number, args.batch_size, args.sheet_name, dataset_type)
     settings = load_oci_settings(
         profile=args.profile,
         compartment_id=args.compartment_id,
         service_endpoint=args.service_endpoint,
     )
     embedder = create_document_embedder(settings)
-    embeddings = embed_documents(rows, embedder)
+    features = [
+        build_line_feature(
+            {"LineDescription": row["LINE_DESCRIPTION"], "LineType": row["LINE_TYPE"]},
+            vendor="",
+            line_index=index,
+        )
+        for index, row in enumerate(rows)
+    ]
+    embeddings = embed_documents(features, embedder)
     inserted_or_updated = db_utils.bulk_upsert_history(
-        to_db_row(row, embedding)
-        for row, embedding in zip(rows, embeddings)
+        to_db_row(row, embedding, feature)
+        for row, embedding, feature in zip(rows, embeddings, features)
     )
     first_row = (args.batch_number - 1) * args.batch_size + 1
     last_row = first_row + len(rows) - 1
@@ -175,4 +216,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

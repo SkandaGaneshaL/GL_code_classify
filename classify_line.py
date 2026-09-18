@@ -4,10 +4,10 @@ import argparse
 import json
 try:
     from .classification import classify_line
-    from .embeddings import create_document_embedder, load_oci_settings
+    from .embeddings import create_query_embedder, load_oci_settings
 except ImportError:  # Supports running the file directly from this folder.
     from classification import classify_line
-    from embeddings import create_document_embedder, load_oci_settings
+    from embeddings import create_query_embedder, load_oci_settings
 
 
 def main() -> None:
@@ -25,7 +25,7 @@ def main() -> None:
     )
     result = classify_line(
         line_description,
-        create_document_embedder(settings),
+        create_query_embedder(settings),
         settings,
     )
     print(json.dumps(result, ensure_ascii=False, indent=2))

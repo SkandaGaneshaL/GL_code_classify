@@ -9,13 +9,30 @@ import oci
 from langchain_oci import OCIGenAIEmbeddings
 
 try:
-    from .config import EMBEDDING_MODEL, EXPECTED_EMBEDDING_DIMENSION, POC_DIR
+    from .config import (
+        BASE_DIR,
+        EMBEDDING_MODEL,
+        EMBEDDING_OUTPUT_DIMENSIONS,
+        EXPECTED_EMBEDDING_DIMENSION,
+        OCI_CONFIG_PATH,
+        OCI_PROFILE,
+        normalize_path,
+    )
 except ImportError:  # Supports running the files directly from this folder.
-    from config import EMBEDDING_MODEL, EXPECTED_EMBEDDING_DIMENSION, POC_DIR
+    from config import (
+        BASE_DIR,
+        EMBEDDING_MODEL,
+        EMBEDDING_OUTPUT_DIMENSIONS,
+        EXPECTED_EMBEDDING_DIMENSION,
+        OCI_CONFIG_PATH,
+        OCI_PROFILE,
+        normalize_path,
+    )
 
 
 LOGGER = logging.getLogger(__name__)
-EMBEDDING_INPUT_TYPE = "SEARCH_DOCUMENT"
+DOCUMENT_INPUT_TYPE = "SEARCH_DOCUMENT"
+QUERY_INPUT_TYPE = "SEARCH_QUERY"
 
 
 @dataclass(frozen=True)
@@ -33,8 +50,8 @@ def load_oci_settings(
     compartment_id: str | None = None,
     service_endpoint: str | None = None,
 ) -> OCIEmbeddingSettings:
-    path = config_path or Path(os.getenv("GL_OCI_CONFIG_PATH", str(POC_DIR / ".oci" / "config")))
-    selected_profile = profile or os.getenv("OCI_PROFILE", "DEFAULT")
+    path = normalize_path(config_path or os.getenv("GL_OCI_CONFIG_PATH"), BASE_DIR) or OCI_CONFIG_PATH
+    selected_profile = (profile or os.getenv("OCI_PROFILE", OCI_PROFILE)).strip() or OCI_PROFILE
     if not path.is_file():
         raise FileNotFoundError(f"OCI config file was not found: {path}")
     config = oci.config.from_file(str(path), selected_profile)
@@ -50,24 +67,41 @@ def load_oci_settings(
     return OCIEmbeddingSettings(path, selected_profile, resolved_compartment, endpoint)
 
 
-def create_document_embedder(settings: OCIEmbeddingSettings) -> OCIGenAIEmbeddings:
+def create_embedder(settings: OCIEmbeddingSettings, input_type: str) -> OCIGenAIEmbeddings:
+    kwargs = {
+        "model_id": settings.model_id,
+        "service_endpoint": settings.service_endpoint,
+        "compartment_id": settings.compartment_id,
+        "auth_profile": settings.profile,
+        "auth_file_location": str(settings.config_path),
+        "input_type": input_type,
+        "truncate": "END",
+        "batch_size": 96,
+    }
+    # Cohere Embed English v3.0 rejects the optional output_dimensions
+    # request; its native output is already 1024 dimensions.
+    if "embed-english-v3" not in settings.model_id.lower():
+        kwargs["output_dimensions"] = EMBEDDING_OUTPUT_DIMENSIONS
     return OCIGenAIEmbeddings(
-        model_id=settings.model_id,
-        service_endpoint=settings.service_endpoint,
-        compartment_id=settings.compartment_id,
-        auth_profile=settings.profile,
-        auth_file_location=str(settings.config_path),
-        input_type=EMBEDDING_INPUT_TYPE,
-        truncate="END",
-        batch_size=96,
+        **kwargs,
     )
 
 
+def create_document_embedder(settings: OCIEmbeddingSettings) -> OCIGenAIEmbeddings:
+    return create_embedder(settings, DOCUMENT_INPUT_TYPE)
+
+
+def create_query_embedder(settings: OCIEmbeddingSettings) -> OCIGenAIEmbeddings:
+    return create_embedder(settings, QUERY_INPUT_TYPE)
+
+
 def embed_documents(records: list[dict[str, object]], embedder: OCIGenAIEmbeddings) -> list[list[float]]:
-    LOGGER.info("Generating %d embeddings with input_type=%s", len(records), EMBEDDING_INPUT_TYPE)
+    LOGGER.info("Generating %d embeddings with input_type=%s", len(records), DOCUMENT_INPUT_TYPE)
     descriptions = []
     for row in records:
-        description = row.get("line_description") or row.get("LINE_DESCRIPTION")
+        description = row.get("retrieval_text") or row.get("RETRIEVAL_TEXT")
+        if not description:
+            description = row.get("line_description") or row.get("LINE_DESCRIPTION")
         if not description:
             raise ValueError("Each embedding record must contain a non-empty line description")
         descriptions.append(str(description))
@@ -82,8 +116,8 @@ def embed_documents(records: list[dict[str, object]], embedder: OCIGenAIEmbeddin
     return vectors
 
 
-def embed_query(line_description: str, embedder: OCIGenAIEmbeddings) -> list[float]:
-    vector = embedder.embed_query(line_description)
+def embed_query(retrieval_text: str, embedder: OCIGenAIEmbeddings) -> list[float]:
+    vector = embedder.embed_query(retrieval_text)
     if len(vector) != EXPECTED_EMBEDDING_DIMENSION:
         raise ValueError(
             f"Expected query embedding dimension {EXPECTED_EMBEDDING_DIMENSION}, received {len(vector)}"

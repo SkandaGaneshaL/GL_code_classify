@@ -1,0 +1,8 @@
+-r requirements.txt
+# Versioned calibration, experiment tracking, drift monitoring, and traces.
+scikit-learn>=1.5,<2
+pandera>=0.22,<1
+mlflow>=2.16,<4
+evidently>=0.6,<1
+opentelemetry-api>=1.28,<2
+opentelemetry-sdk>=1.28,<2

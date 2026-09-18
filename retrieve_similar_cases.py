@@ -7,10 +7,12 @@ from typing import Any
 
 try:
     from . import db_utils
-    from .embeddings import create_document_embedder, embed_query, load_oci_settings
+    from .embeddings import create_query_embedder, embed_query, load_oci_settings
+    from .feature_pack import build_line_feature
 except ImportError:  # Supports running the file directly from this folder.
     import db_utils
-    from embeddings import create_document_embedder, embed_query, load_oci_settings
+    from embeddings import create_query_embedder, embed_query, load_oci_settings
+    from feature_pack import build_line_feature
 
 
 LOGGER = logging.getLogger(__name__)
@@ -26,9 +28,9 @@ def retrieve_cases(line_description: str, top_k: int = DEFAULT_TOP_K) -> list[di
         raise ValueError("top_k must be greater than zero")
 
     settings = load_oci_settings()
-    # create_document_embedder configures OCI with input_type=SEARCH_DOCUMENT.
-    embedder = create_document_embedder(settings)
-    query_embedding = embed_query(text, embedder)
+    feature = build_line_feature({"LineDescription": text}, vendor="", line_index=0)
+    embedder = create_query_embedder(settings)
+    query_embedding = embed_query(feature["retrieval_text"], embedder)
     cases = db_utils.search_similar_history(query_embedding, top_k=top_k, target_accuracy=95)
 
     # Recalculate explicitly so the terminal output documents the requested formula.
@@ -73,4 +75,3 @@ def main() -> None:
 
 if __name__ == "__main__":
     main()
-

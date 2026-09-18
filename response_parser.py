@@ -2,26 +2,26 @@ from __future__ import annotations
 
 import json
 import re
+import unicodedata
 from typing import Any
+
+try:
+    from .provider_response import extract_provider_text
+except ImportError:
+    from provider_response import extract_provider_text
 
 
 def extract_response_text(raw_response: Any) -> str:
-    output_text = getattr(raw_response, "output_text", None)
-    if output_text:
-        return str(output_text).strip()
-    parts: list[str] = []
-    for item in getattr(raw_response, "output", None) or []:
-        for content in getattr(item, "content", None) or []:
-            text = getattr(content, "text", None)
-            if text:
-                parts.append(str(text))
-    if parts:
-        return "".join(parts).strip()
-    raise ValueError("OCI Responses API returned no text output")
+    try:
+        return extract_provider_text(raw_response)
+    except ValueError as exc:
+        raise ValueError("OCI provider returned no text output") from exc
 
 
 def parse_account_type_response(
-    raw_response: Any, expected_line_description: str
+    raw_response: Any,
+    expected_line_description: str,
+    allowed_account_types: list[str] | None = None,
 ) -> dict[str, Any]:
     text = extract_response_text(raw_response)
     match = re.fullmatch(r"```(?:json)?\s*(.*?)\s*```", text, flags=re.IGNORECASE | re.DOTALL)
@@ -30,7 +30,7 @@ def parse_account_type_response(
     try:
         result = json.loads(text)
     except json.JSONDecodeError as exc:
-        raise ValueError(f"LLM response was not valid JSON: {text}") from exc
+        raise ValueError("LLM response was not valid JSON") from exc
     if not isinstance(result, dict):
         raise ValueError("LLM response must be a JSON object")
 
@@ -49,10 +49,18 @@ def parse_account_type_response(
     inferred = result["inferred_account_type"]
     if inferred is not None and (not isinstance(inferred, str) or not inferred.strip()):
         raise ValueError("inferred_account_type must be null or a non-empty string")
-    if result["account_type"].strip().lower() == "unknown":
+    result["account_type"] = _normalize_account_type(result["account_type"])
+    if result["inferred_account_type"] is not None:
+        result["inferred_account_type"] = _normalize_account_type(result["inferred_account_type"])
+    allowed = {_normalize_account_type(value) for value in (allowed_account_types or [])}
+    allowed.add("Unknown")
+    if allowed_account_types and result["account_type"] not in allowed:
+        raise ValueError("account_type is not one of the allowed taxonomy values")
+    if result["inferred_account_type"] is not None and allowed_account_types:
+        if result["inferred_account_type"] not in allowed:
+            raise ValueError("inferred_account_type is not one of the allowed taxonomy values")
+    if result["account_type"].lower() == "unknown":
         result["account_type"] = "Unknown"
-        if inferred is None:
-            raise ValueError("inferred_account_type is required when account_type is Unknown")
     elif inferred is not None:
         raise ValueError("inferred_account_type must be null when account_type is not Unknown")
     confidence = result["confidence"]
@@ -63,3 +71,10 @@ def parse_account_type_response(
     result["line_description"] = expected_line_description
     result["confidence"] = float(confidence)
     return result
+
+
+def _normalize_account_type(value: Any) -> str:
+    text = unicodedata.normalize("NFKC", str(value or ""))
+    text = text.replace("\ufffd", "-").replace("\u2013", "-").replace("\u2014", "-")
+    text = re.sub(r"\s*-\s*", " - ", text)
+    return re.sub(r"\s+", " ", text).strip()

@@ -1,0 +1,6209 @@
+[
+  {
+    "canonical_url": null,
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\01-oracle-iacd.md"
+    ],
+    "status": "invalid_url",
+    "url": "https://<pod"
+  },
+  {
+    "canonical_url": "https://about.gitlab.com/blog/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://about.gitlab.com/blog/"
+  },
+  {
+    "canonical_url": "https://academy.weaviate.io/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://academy.weaviate.io/"
+  },
+  {
+    "canonical_url": "https://academy.weaviate.io/paths",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://academy.weaviate.io/paths"
+  },
+  {
+    "canonical_url": "https://aclanthology.org/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://aclanthology.org/"
+  },
+  {
+    "canonical_url": "https://ai.google.dev/gemini-api/docs/function-calling",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://ai.google.dev/gemini-api/docs/function-calling"
+  },
+  {
+    "canonical_url": "https://ai.google/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://ai.google/"
+  },
+  {
+    "canonical_url": "https://ai.meta.com/blog/",
+    "source_count": 3,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt",
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://ai.meta.com/blog/"
+  },
+  {
+    "canonical_url": "https://ai.pydantic.dev/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://ai.pydantic.dev/"
+  },
+  {
+    "canonical_url": "https://aicloud.core42.ai/blog/g42-intelligence-grid-sovereign-ai-infrastructure",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://aicloud.core42.ai/blog/g42-intelligence-grid-sovereign-ai-infrastructure"
+  },
+  {
+    "canonical_url": "https://aifoundation.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://aifoundation.com/"
+  },
+  {
+    "canonical_url": "https://airflow.apache.org/docs/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://airflow.apache.org/docs/"
+  },
+  {
+    "canonical_url": "https://airflow.apache.org/docs/apache-airflow/stable/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://airflow.apache.org/docs/apache-airflow/stable/"
+  },
+  {
+    "canonical_url": "https://alegra.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://alegra.com/"
+  },
+  {
+    "canonical_url": "https://aleph-alpha.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://aleph-alpha.com/"
+  },
+  {
+    "canonical_url": "https://aleph-alpha.com/en/blog/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://aleph-alpha.com/en/blog/"
+  },
+  {
+    "canonical_url": "https://anysphere.inc/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://anysphere.inc/"
+  },
+  {
+    "canonical_url": "https://applied-llms.org/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://applied-llms.org/"
+  },
+  {
+    "canonical_url": "https://art-recognition.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://art-recognition.com/"
+  },
+  {
+    "canonical_url": "https://artisse.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://artisse.ai/"
+  },
+  {
+    "canonical_url": "https://artisse.ai/blog/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://artisse.ai/blog/"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/1603.09320",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/1603.09320"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/1706.03762",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/1706.03762"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2004.12832",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2004.12832"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2005.11401",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2005.11401"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2101.00190",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2101.00190"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2106.09685",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2106.09685"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2201.11903",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2201.11903"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2203.02155",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2203.02155"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2203.11171",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2203.11171"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2205.10625",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2205.10625"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2205.14135",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2205.14135"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2210.03629",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2210.03629"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2211.17192",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2211.17192"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2212.08073",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2212.08073"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2212.10496",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2212.10496"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2302.04761",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2302.04761"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2303.11366",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2303.11366"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2304.03442",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2304.03442"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2305.10601",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2305.10601"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2305.14314",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2305.14314"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2305.18290",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2305.18290"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2309.06180",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2309.06180"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2310.08560",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2310.08560"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2310.11511",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2310.11511"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2312.10997",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2312.10997"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2401.15884",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2401.15884"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2401.18059",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2401.18059"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2404.16130",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2404.16130"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2501.09136",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2501.09136"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2501.12948",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2501.12948"
+  },
+  {
+    "canonical_url": "https://arxiv.org/abs/2503.12434",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/abs/2503.12434"
+  },
+  {
+    "canonical_url": "https://arxiv.org/list/cs.CL/recent",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://arxiv.org/list/cs.CL/recent"
+  },
+  {
+    "canonical_url": "https://aws.amazon.com/architecture/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://aws.amazon.com/architecture/"
+  },
+  {
+    "canonical_url": "https://aws.amazon.com/blogs/architecture/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://aws.amazon.com/blogs/architecture/"
+  },
+  {
+    "canonical_url": "https://aws.amazon.com/blogs/architecture/announcing-the-aws-well-architected-generative-ai-lens/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://aws.amazon.com/blogs/architecture/announcing-the-aws-well-architected-generative-ai-lens/"
+  },
+  {
+    "canonical_url": "https://aws.amazon.com/blogs/machine-learning/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://aws.amazon.com/blogs/machine-learning/"
+  },
+  {
+    "canonical_url": "https://axelera.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://axelera.ai/"
+  },
+  {
+    "canonical_url": "https://axelera.ai/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://axelera.ai/blog"
+  },
+  {
+    "canonical_url": "https://azure.microsoft.com/blog/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://azure.microsoft.com/blog/"
+  },
+  {
+    "canonical_url": "https://bakuraku.jp/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://bakuraku.jp/"
+  },
+  {
+    "canonical_url": "https://bill-one.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://bill-one.com/"
+  },
+  {
+    "canonical_url": "https://blog.character.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://blog.character.ai/"
+  },
+  {
+    "canonical_url": "https://blog.cloudflare.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://blog.cloudflare.com/"
+  },
+  {
+    "canonical_url": "https://blog.developer.adobe.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://blog.developer.adobe.com/"
+  },
+  {
+    "canonical_url": "https://blog.duolingo.com/hub/engineering/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://blog.duolingo.com/hub/engineering/"
+  },
+  {
+    "canonical_url": "https://blog.flipkart.tech/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://blog.flipkart.tech/"
+  },
+  {
+    "canonical_url": "https://blog.google/innovation-and-ai/technology/ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://blog.google/innovation-and-ai/technology/ai/"
+  },
+  {
+    "canonical_url": "https://blog.helsing.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://blog.helsing.ai/"
+  },
+  {
+    "canonical_url": "https://blog.hotstar.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://blog.hotstar.com/"
+  },
+  {
+    "canonical_url": "https://blog.langchain.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://blog.langchain.com/"
+  },
+  {
+    "canonical_url": "https://blog.langchain.com/context-engineering-for-agents/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://blog.langchain.com/context-engineering-for-agents/"
+  },
+  {
+    "canonical_url": "https://blog.langchain.dev/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://blog.langchain.dev/"
+  },
+  {
+    "canonical_url": "https://blog.logrocket.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://blog.logrocket.com/"
+  },
+  {
+    "canonical_url": "https://blog.logrocket.com/tag/ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://blog.logrocket.com/tag/ai/"
+  },
+  {
+    "canonical_url": "https://blog.palantir.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://blog.palantir.com/"
+  },
+  {
+    "canonical_url": "https://blog.postman.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://blog.postman.com/"
+  },
+  {
+    "canonical_url": "https://blog.sentry.io/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://blog.sentry.io/"
+  },
+  {
+    "canonical_url": "https://blog.twitch.tv/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://blog.twitch.tv/"
+  },
+  {
+    "canonical_url": "https://blog.x.com/engineering/en_us",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://blog.x.com/engineering/en_us"
+  },
+  {
+    "canonical_url": "https://blog.zomato.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://blog.zomato.com/"
+  },
+  {
+    "canonical_url": "https://blogs.nvidia.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://blogs.nvidia.com/"
+  },
+  {
+    "canonical_url": "https://blogs.oracle.com/ai-and-datascience/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://blogs.oracle.com/ai-and-datascience/"
+  },
+  {
+    "canonical_url": "https://bluedot.global/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://bluedot.global/"
+  },
+  {
+    "canonical_url": "https://bluedot.global/blogs/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://bluedot.global/blogs/"
+  },
+  {
+    "canonical_url": "https://booking.ai/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://booking.ai/"
+  },
+  {
+    "canonical_url": "https://building.nubank.com/engineering/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://building.nubank.com/engineering/"
+  },
+  {
+    "canonical_url": "https://bytes.swiggy.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://bytes.swiggy.com/"
+  },
+  {
+    "canonical_url": "https://careersatdoordash.com/engineering-blog/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://careersatdoordash.com/engineering-blog/"
+  },
+  {
+    "canonical_url": "https://character.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://character.ai/"
+  },
+  {
+    "canonical_url": "https://chat.stepfun.com/research",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://chat.stepfun.com/research"
+  },
+  {
+    "canonical_url": "https://cleartax.in/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://cleartax.in/"
+  },
+  {
+    "canonical_url": "https://cloud.google.com/blog",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://cloud.google.com/blog"
+  },
+  {
+    "canonical_url": "https://cn.xiaoi.com/en/aboutPage/newsInfo",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://cn.xiaoi.com/en/aboutPage/newsInfo"
+  },
+  {
+    "canonical_url": "https://cognition.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://cognition.com/"
+  },
+  {
+    "canonical_url": "https://cognition.com/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://cognition.com/blog"
+  },
+  {
+    "canonical_url": "https://cohere.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://cohere.com/"
+  },
+  {
+    "canonical_url": "https://cohere.com/blog",
+    "source_count": 3,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md",
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://cohere.com/blog"
+  },
+  {
+    "canonical_url": "https://cohere.com/llmu",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://cohere.com/llmu"
+  },
+  {
+    "canonical_url": "https://contextual.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://contextual.ai/"
+  },
+  {
+    "canonical_url": "https://contextual.ai/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://contextual.ai/blog"
+  },
+  {
+    "canonical_url": "https://covariant.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://covariant.ai/"
+  },
+  {
+    "canonical_url": "https://covoro.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://covoro.ai/"
+  },
+  {
+    "canonical_url": "https://crfm.stanford.edu/helm/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://crfm.stanford.edu/helm/"
+  },
+  {
+    "canonical_url": "https://cursor.com/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://cursor.com/blog"
+  },
+  {
+    "canonical_url": "https://d2.naver.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://d2.naver.com/"
+  },
+  {
+    "canonical_url": "https://decagon.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://decagon.ai/"
+  },
+  {
+    "canonical_url": "https://decagon.ai/resources/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://decagon.ai/resources/blog"
+  },
+  {
+    "canonical_url": "https://decart.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://decart.ai/"
+  },
+  {
+    "canonical_url": "https://decart.ai/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://decart.ai/blog"
+  },
+  {
+    "canonical_url": "https://deepmind.google/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://deepmind.google/"
+  },
+  {
+    "canonical_url": "https://deepmind.google/blog/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://deepmind.google/blog/"
+  },
+  {
+    "canonical_url": "https://deepmind.google/discover/blog/",
+    "source_count": 3,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt",
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://deepmind.google/discover/blog/"
+  },
+  {
+    "canonical_url": "https://devblogs.microsoft.com/engineering-at-microsoft/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://devblogs.microsoft.com/engineering-at-microsoft/"
+  },
+  {
+    "canonical_url": "https://developer.ibm.com/blogs/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://developer.ibm.com/blogs/"
+  },
+  {
+    "canonical_url": "https://developer.nvidia.com/blog/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://developer.nvidia.com/blog/"
+  },
+  {
+    "canonical_url": "https://developers.tiktok.com/blogs",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://developers.tiktok.com/blogs"
+  },
+  {
+    "canonical_url": "https://dext.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://dext.com/"
+  },
+  {
+    "canonical_url": "https://discord.com/blog",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://discord.com/blog"
+  },
+  {
+    "canonical_url": "https://docs.arize.com/phoenix",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://docs.arize.com/phoenix"
+  },
+  {
+    "canonical_url": "https://docs.cohere.com/docs/llmu-2",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://docs.cohere.com/docs/llmu-2"
+  },
+  {
+    "canonical_url": "https://docs.crewai.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://docs.crewai.com/"
+  },
+  {
+    "canonical_url": "https://docs.haystack.deepset.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://docs.haystack.deepset.ai/"
+  },
+  {
+    "canonical_url": "https://docs.letta.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://docs.letta.com/"
+  },
+  {
+    "canonical_url": "https://docs.litellm.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://docs.litellm.ai/"
+  },
+  {
+    "canonical_url": "https://docs.llamaindex.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://docs.llamaindex.ai/"
+  },
+  {
+    "canonical_url": "https://docs.nanonets.com/docs/confidence-scores",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\08-nanonets-gl-agent.md"
+    ],
+    "status": "queued",
+    "url": "https://docs.nanonets.com/docs/confidence-scores"
+  },
+  {
+    "canonical_url": "https://docs.oracle.com/en/cloud/saas/financials/26b/facsf/opt-in-for-intelligent-account-combination-defaulting.html",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\01-oracle-iacd.md"
+    ],
+    "status": "queued",
+    "url": "https://docs.oracle.com/en/cloud/saas/financials/26b/facsf/opt-in-for-intelligent-account-combination-defaulting.html"
+  },
+  {
+    "canonical_url": "https://docs.oracle.com/en/cloud/saas/financials/26b/fappp/faqs-for-intelligent-account-combination-defaulting.html",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\01-oracle-iacd.md"
+    ],
+    "status": "queued",
+    "url": "https://docs.oracle.com/en/cloud/saas/financials/26b/fappp/faqs-for-intelligent-account-combination-defaulting.html"
+  },
+  {
+    "canonical_url": "https://docs.oracle.com/en/cloud/saas/financials/26b/fappp/intelligent-account-combination-defaulting.html",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\01-oracle-iacd.md"
+    ],
+    "status": "queued",
+    "url": "https://docs.oracle.com/en/cloud/saas/financials/26b/fappp/intelligent-account-combination-defaulting.html"
+  },
+  {
+    "canonical_url": "https://docs.oracle.com/en/cloud/saas/fusion-ai/aiafl/ai-erp.html",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\01-oracle-iacd.md"
+    ],
+    "status": "queued",
+    "url": "https://docs.oracle.com/en/cloud/saas/fusion-ai/aiafl/ai-erp.html"
+  },
+  {
+    "canonical_url": "https://docs.ragas.io/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://docs.ragas.io/"
+  },
+  {
+    "canonical_url": "https://docs.smith.langchain.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://docs.smith.langchain.com/"
+  },
+  {
+    "canonical_url": "https://docs.temporal.io/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://docs.temporal.io/"
+  },
+  {
+    "canonical_url": "https://docs.vllm.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://docs.vllm.ai/"
+  },
+  {
+    "canonical_url": "https://dokka.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://dokka.com/"
+  },
+  {
+    "canonical_url": "https://dropbox.tech/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://dropbox.tech/"
+  },
+  {
+    "canonical_url": "https://dspy.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://dspy.ai/"
+  },
+  {
+    "canonical_url": "https://ecosio.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://ecosio.com/"
+  },
+  {
+    "canonical_url": "https://edicomgroup.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://edicomgroup.com/"
+  },
+  {
+    "canonical_url": "https://elevenlabs.io/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://elevenlabs.io/"
+  },
+  {
+    "canonical_url": "https://elevenlabs.io/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://elevenlabs.io/blog"
+  },
+  {
+    "canonical_url": "https://elevenlabs.io/blog/category/research",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://elevenlabs.io/blog/category/research"
+  },
+  {
+    "canonical_url": "https://en.4paradigm.com/index.html",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://en.4paradigm.com/index.html"
+  },
+  {
+    "canonical_url": "https://eng.lyft.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://eng.lyft.com/"
+  },
+  {
+    "canonical_url": "https://eng.snap.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://eng.snap.com/"
+  },
+  {
+    "canonical_url": "https://eng.uber.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://eng.uber.com/"
+  },
+  {
+    "canonical_url": "https://engineering.atspotify.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://engineering.atspotify.com/"
+  },
+  {
+    "canonical_url": "https://engineering.block.xyz/blog",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://engineering.block.xyz/blog"
+  },
+  {
+    "canonical_url": "https://engineering.fb.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://engineering.fb.com/"
+  },
+  {
+    "canonical_url": "https://engineering.forethought.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://engineering.forethought.ai/"
+  },
+  {
+    "canonical_url": "https://engineering.grab.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://engineering.grab.com/"
+  },
+  {
+    "canonical_url": "https://engineering.klarna.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://engineering.klarna.com/"
+  },
+  {
+    "canonical_url": "https://engineering.mercari.com/en/blog/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://engineering.mercari.com/en/blog/"
+  },
+  {
+    "canonical_url": "https://engineering.razorpay.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://engineering.razorpay.com/"
+  },
+  {
+    "canonical_url": "https://engineering.salesforce.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://engineering.salesforce.com/"
+  },
+  {
+    "canonical_url": "https://engineeringblog.yelp.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://engineeringblog.yelp.com/"
+  },
+  {
+    "canonical_url": "https://eugeneyan.com/writing/eval-process/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://eugeneyan.com/writing/eval-process/"
+  },
+  {
+    "canonical_url": "https://eugeneyan.com/writing/llm-patterns/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://eugeneyan.com/writing/llm-patterns/"
+  },
+  {
+    "canonical_url": "https://factura.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://factura.ai/"
+  },
+  {
+    "canonical_url": "https://factura.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://factura.com/"
+  },
+  {
+    "canonical_url": "https://farmwise.io/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://farmwise.io/"
+  },
+  {
+    "canonical_url": "https://finexio.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://finexio.com/"
+  },
+  {
+    "canonical_url": "https://fireworks.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://fireworks.ai/"
+  },
+  {
+    "canonical_url": "https://fireworks.ai/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://fireworks.ai/blog"
+  },
+  {
+    "canonical_url": "https://forethought.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://forethought.ai/"
+  },
+  {
+    "canonical_url": "https://github.blog/engineering/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://github.blog/engineering/"
+  },
+  {
+    "canonical_url": "https://github.com/Danielskry/Awesome-RAG",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/Danielskry/Awesome-RAG"
+  },
+  {
+    "canonical_url": "https://github.com/EthicalML/awesome-production-machine-learning",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/EthicalML/awesome-production-machine-learning"
+  },
+  {
+    "canonical_url": "https://github.com/Giskard-AI/giskard",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/Giskard-AI/giskard"
+  },
+  {
+    "canonical_url": "https://github.com/Hannibal046/Awesome-LLM",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/Hannibal046/Awesome-LLM"
+  },
+  {
+    "canonical_url": "https://github.com/NVIDIA/TensorRT-LLM",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/NVIDIA/TensorRT-LLM"
+  },
+  {
+    "canonical_url": "https://github.com/NirDiamant/Controllable-RAG-Agent",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/NirDiamant/Controllable-RAG-Agent"
+  },
+  {
+    "canonical_url": "https://github.com/NirDiamant/GenAI_Agents",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/NirDiamant/GenAI_Agents"
+  },
+  {
+    "canonical_url": "https://github.com/NirDiamant/RAG_Techniques",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/NirDiamant/RAG_Techniques"
+  },
+  {
+    "canonical_url": "https://github.com/YunjiaXi/Awesome-Search-Agent-Papers",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/YunjiaXi/Awesome-Search-Agent-Papers"
+  },
+  {
+    "canonical_url": "https://github.com/anthropics/claude-cookbooks",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/anthropics/claude-cookbooks"
+  },
+  {
+    "canonical_url": "https://github.com/confident-ai/deepeval",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/confident-ai/deepeval"
+  },
+  {
+    "canonical_url": "https://github.com/currentslab/awesome-vector-search",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/currentslab/awesome-vector-search"
+  },
+  {
+    "canonical_url": "https://github.com/dair-ai/Prompt-Engineering-Guide",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/dair-ai/Prompt-Engineering-Guide"
+  },
+  {
+    "canonical_url": "https://github.com/dave-nachman/awesome-ai-engineering",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/dave-nachman/awesome-ai-engineering"
+  },
+  {
+    "canonical_url": "https://github.com/donnemartin/system-design-primer",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/donnemartin/system-design-primer"
+  },
+  {
+    "canonical_url": "https://github.com/dottxt-ai/outlines",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/dottxt-ai/outlines"
+  },
+  {
+    "canonical_url": "https://github.com/e2b-dev/awesome-ai-agents",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/e2b-dev/awesome-ai-agents"
+  },
+  {
+    "canonical_url": "https://github.com/facebookresearch/faiss",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/facebookresearch/faiss"
+  },
+  {
+    "canonical_url": "https://github.com/ggerganov/llama.cpp",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/ggerganov/llama.cpp"
+  },
+  {
+    "canonical_url": "https://github.com/google-gemini/cookbook",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/google-gemini/cookbook"
+  },
+  {
+    "canonical_url": "https://github.com/jxzhangjhu/Awesome-LLM-RAG",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/jxzhangjhu/Awesome-LLM-RAG"
+  },
+  {
+    "canonical_url": "https://github.com/karpathy/nanoGPT",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/karpathy/nanoGPT"
+  },
+  {
+    "canonical_url": "https://github.com/langchain-ai/langgraph",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/langchain-ai/langgraph"
+  },
+  {
+    "canonical_url": "https://github.com/microsoft/graphrag",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/microsoft/graphrag"
+  },
+  {
+    "canonical_url": "https://github.com/milvus-io/bootcamp",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/milvus-io/bootcamp"
+  },
+  {
+    "canonical_url": "https://github.com/naver/splade",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/naver/splade"
+  },
+  {
+    "canonical_url": "https://github.com/openai/openai-cookbook",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/openai/openai-cookbook"
+  },
+  {
+    "canonical_url": "https://github.com/sgl-project/sglang",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/sgl-project/sglang"
+  },
+  {
+    "canonical_url": "https://github.com/shubhamsaboo/awesome-llm-apps",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/shubhamsaboo/awesome-llm-apps"
+  },
+  {
+    "canonical_url": "https://github.com/stanford-futuredata/ColBERT",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/stanford-futuredata/ColBERT"
+  },
+  {
+    "canonical_url": "https://github.com/tensorchord/Awesome-LLMOps",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/tensorchord/Awesome-LLMOps"
+  },
+  {
+    "canonical_url": "https://github.com/unslothai/unsloth",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/unslothai/unsloth"
+  },
+  {
+    "canonical_url": "https://github.com/weitianxin/Awesome-Agentic-Reasoning",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://github.com/weitianxin/Awesome-Agentic-Reasoning"
+  },
+  {
+    "canonical_url": "https://global.bill-one.com/en/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://global.bill-one.com/en/"
+  },
+  {
+    "canonical_url": "https://gradient-labs.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://gradient-labs.ai/"
+  },
+  {
+    "canonical_url": "https://gradient-labs.ai/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://gradient-labs.ai/blog"
+  },
+  {
+    "canonical_url": "https://grafana.com/blog/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://grafana.com/blog/"
+  },
+  {
+    "canonical_url": "https://groq.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://groq.com/"
+  },
+  {
+    "canonical_url": "https://groq.com/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://groq.com/blog"
+  },
+  {
+    "canonical_url": "https://hacks.mozilla.org/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://hacks.mozilla.org/"
+  },
+  {
+    "canonical_url": "https://hailo.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://hailo.ai/"
+  },
+  {
+    "canonical_url": "https://hailo.ai/blog/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://hailo.ai/blog/"
+  },
+  {
+    "canonical_url": "https://hamel.dev/blog/posts/evals/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://hamel.dev/blog/posts/evals/"
+  },
+  {
+    "canonical_url": "https://hamel.dev/blog/posts/field-guide/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://hamel.dev/blog/posts/field-guide/"
+  },
+  {
+    "canonical_url": "https://hcompany.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://hcompany.ai/"
+  },
+  {
+    "canonical_url": "https://hcompany.ai/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://hcompany.ai/blog"
+  },
+  {
+    "canonical_url": "https://helsing.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://helsing.ai/"
+  },
+  {
+    "canonical_url": "https://home.deepl.com/en/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://home.deepl.com/en/blog"
+  },
+  {
+    "canonical_url": "https://huggingface.co/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://huggingface.co/"
+  },
+  {
+    "canonical_url": "https://huggingface.co/blog",
+    "source_count": 5,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md",
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt",
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://huggingface.co/blog"
+  },
+  {
+    "canonical_url": "https://huggingface.co/docs/peft",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://huggingface.co/docs/peft"
+  },
+  {
+    "canonical_url": "https://huggingface.co/docs/smolagents",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://huggingface.co/docs/smolagents"
+  },
+  {
+    "canonical_url": "https://huggingface.co/docs/trl",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://huggingface.co/docs/trl"
+  },
+  {
+    "canonical_url": "https://huggingface.co/learn/agents-course",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://huggingface.co/learn/agents-course"
+  },
+  {
+    "canonical_url": "https://huggingface.co/learn/deep-rl-course",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://huggingface.co/learn/deep-rl-course"
+  },
+  {
+    "canonical_url": "https://huggingface.co/papers",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://huggingface.co/papers"
+  },
+  {
+    "canonical_url": "https://huggingface.co/spaces/mteb/leaderboard",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://huggingface.co/spaces/mteb/leaderboard"
+  },
+  {
+    "canonical_url": "https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard"
+  },
+  {
+    "canonical_url": "https://humain.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://humain.ai/"
+  },
+  {
+    "canonical_url": "https://huyenchip.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://huyenchip.com/"
+  },
+  {
+    "canonical_url": "https://huyenchip.com/2025/01/07/agents.html",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://huyenchip.com/2025/01/07/agents.html"
+  },
+  {
+    "canonical_url": "https://importai.substack.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://importai.substack.com/"
+  },
+  {
+    "canonical_url": "https://infinite-it.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://infinite-it.com/"
+  },
+  {
+    "canonical_url": "https://infinite-it.com/global-einvoicing-platform/ap-automation-gip",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://infinite-it.com/global-einvoicing-platform/ap-automation-gip"
+  },
+  {
+    "canonical_url": "https://inflection.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://inflection.ai/"
+  },
+  {
+    "canonical_url": "https://inflection.ai/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://inflection.ai/blog"
+  },
+  {
+    "canonical_url": "https://innovation.ebayinc.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://innovation.ebayinc.com/"
+  },
+  {
+    "canonical_url": "https://invisibletech.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://invisibletech.ai/"
+  },
+  {
+    "canonical_url": "https://invisibletech.ai/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://invisibletech.ai/blog"
+  },
+  {
+    "canonical_url": "https://invox.jp/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://invox.jp/"
+  },
+  {
+    "canonical_url": "https://isn.ms/accounts-payable-automation/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://isn.ms/accounts-payable-automation/"
+  },
+  {
+    "canonical_url": "https://jxnl.co/writing/2024/05/22/systematically-improving-your-rag/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://jxnl.co/writing/2024/05/22/systematically-improving-your-rag/"
+  },
+  {
+    "canonical_url": "https://karpathy.github.io/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://karpathy.github.io/"
+  },
+  {
+    "canonical_url": "https://khealth.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://khealth.com/"
+  },
+  {
+    "canonical_url": "https://khealth.com/tag/blog/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://khealth.com/tag/blog/"
+  },
+  {
+    "canonical_url": "https://kissflow.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://kissflow.com/"
+  },
+  {
+    "canonical_url": "https://klearstack.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://klearstack.com/"
+  },
+  {
+    "canonical_url": "https://konfio.mx/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://konfio.mx/"
+  },
+  {
+    "canonical_url": "https://labscompanies.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://labscompanies.ai/"
+  },
+  {
+    "canonical_url": "https://langfuse.com/docs",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://langfuse.com/docs"
+  },
+  {
+    "canonical_url": "https://learn.microsoft.com/en-us/azure/search/hybrid-search-ranking",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://learn.microsoft.com/en-us/azure/search/hybrid-search-ranking"
+  },
+  {
+    "canonical_url": "https://learn.microsoft.com/en-us/semantic-kernel/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://learn.microsoft.com/en-us/semantic-kernel/"
+  },
+  {
+    "canonical_url": "https://lighton.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://lighton.ai/"
+  },
+  {
+    "canonical_url": "https://lighton.ai/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://lighton.ai/blog"
+  },
+  {
+    "canonical_url": "https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://lilianweng.github.io/posts/2023-03-15-prompt-engineering/"
+  },
+  {
+    "canonical_url": "https://lilianweng.github.io/posts/2023-06-23-agent/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://lilianweng.github.io/posts/2023-06-23-agent/"
+  },
+  {
+    "canonical_url": "https://linagora.com/en/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://linagora.com/en/"
+  },
+  {
+    "canonical_url": "https://linagora.com/en/linagora-newsroom",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://linagora.com/en/linagora-newsroom"
+  },
+  {
+    "canonical_url": "https://lmarena.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://lmarena.ai/"
+  },
+  {
+    "canonical_url": "https://lmsys.org/blog/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://lmsys.org/blog/"
+  },
+  {
+    "canonical_url": "https://lovable.dev/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://lovable.dev/"
+  },
+  {
+    "canonical_url": "https://lovable.dev/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://lovable.dev/blog"
+  },
+  {
+    "canonical_url": "https://machinelearning.apple.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://machinelearning.apple.com/"
+  },
+  {
+    "canonical_url": "https://magazine.sebastianraschka.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://magazine.sebastianraschka.com/"
+  },
+  {
+    "canonical_url": "https://makershub.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://makershub.com/"
+  },
+  {
+    "canonical_url": "https://medium.com/airbnb-engineering",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://medium.com/airbnb-engineering"
+  },
+  {
+    "canonical_url": "https://medium.com/bumble-tech",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://medium.com/bumble-tech"
+  },
+  {
+    "canonical_url": "https://medium.com/expedia-group-tech",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://medium.com/expedia-group-tech"
+  },
+  {
+    "canonical_url": "https://medium.com/freshworks-engineering-blog",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://medium.com/freshworks-engineering-blog"
+  },
+  {
+    "canonical_url": "https://medium.com/intuit-engineering",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://medium.com/intuit-engineering"
+  },
+  {
+    "canonical_url": "https://medium.com/mercadolibre-tech",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://medium.com/mercadolibre-tech"
+  },
+  {
+    "canonical_url": "https://medium.com/paypal-tech",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://medium.com/paypal-tech"
+  },
+  {
+    "canonical_url": "https://medium.com/pinterest-engineering",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://medium.com/pinterest-engineering"
+  },
+  {
+    "canonical_url": "https://medium.com/walmartglobaltech",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://medium.com/walmartglobaltech"
+  },
+  {
+    "canonical_url": "https://microsoft.ai/blog/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://microsoft.ai/blog/"
+  },
+  {
+    "canonical_url": "https://microsoft.github.io/autogen/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://microsoft.github.io/autogen/"
+  },
+  {
+    "canonical_url": "https://microsoft.github.io/graphrag/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://microsoft.github.io/graphrag/"
+  },
+  {
+    "canonical_url": "https://milvus.io/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://milvus.io/blog"
+  },
+  {
+    "canonical_url": "https://milvus.io/bootcamp",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://milvus.io/bootcamp"
+  },
+  {
+    "canonical_url": "https://mistral.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://mistral.ai/"
+  },
+  {
+    "canonical_url": "https://mistral.ai/news",
+    "source_count": 3,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md",
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://mistral.ai/news"
+  },
+  {
+    "canonical_url": "https://modelcontextprotocol.io/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://modelcontextprotocol.io/"
+  },
+  {
+    "canonical_url": "https://multithreaded.stitchfix.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://multithreaded.stitchfix.com/"
+  },
+  {
+    "canonical_url": "https://nanonets.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://nanonets.com/"
+  },
+  {
+    "canonical_url": "https://nanonets.com/agent/gl-coding",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\08-nanonets-gl-agent.md"
+    ],
+    "status": "queued",
+    "url": "https://nanonets.com/agent/gl-coding"
+  },
+  {
+    "canonical_url": "https://nanonets.com/ap-automation",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\08-nanonets-gl-agent.md"
+    ],
+    "status": "queued",
+    "url": "https://nanonets.com/ap-automation"
+  },
+  {
+    "canonical_url": "https://nanonets.com/blog/invoice-coding/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\08-nanonets-gl-agent.md"
+    ],
+    "status": "queued",
+    "url": "https://nanonets.com/blog/invoice-coding/"
+  },
+  {
+    "canonical_url": "https://nanonets.com/integrations/netsuite",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\08-nanonets-gl-agent.md"
+    ],
+    "status": "queued",
+    "url": "https://nanonets.com/integrations/netsuite"
+  },
+  {
+    "canonical_url": "https://nanonets.com/solutions/accounts-payable",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\08-nanonets-gl-agent.md"
+    ],
+    "status": "queued",
+    "url": "https://nanonets.com/solutions/accounts-payable"
+  },
+  {
+    "canonical_url": "https://nanonets.com/solutions/sap",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\08-nanonets-gl-agent.md"
+    ],
+    "status": "queued",
+    "url": "https://nanonets.com/solutions/sap"
+  },
+  {
+    "canonical_url": "https://netflixtechblog.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://netflixtechblog.com/"
+  },
+  {
+    "canonical_url": "https://neurotechnology.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://neurotechnology.com/"
+  },
+  {
+    "canonical_url": "https://newgensoft.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://newgensoft.com/"
+  },
+  {
+    "canonical_url": "https://news.ycombinator.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt",
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://news.ycombinator.com/"
+  },
+  {
+    "canonical_url": "https://newsroom.arm.com/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://newsroom.arm.com/blog"
+  },
+  {
+    "canonical_url": "https://open.nytimes.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://open.nytimes.com/"
+  },
+  {
+    "canonical_url": "https://openai.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://openai.com/"
+  },
+  {
+    "canonical_url": "https://openai.com/news",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://openai.com/news"
+  },
+  {
+    "canonical_url": "https://openai.com/research/index/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://openai.com/research/index/"
+  },
+  {
+    "canonical_url": "https://openai.github.io/openai-agents-python/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://openai.github.io/openai-agents-python/"
+  },
+  {
+    "canonical_url": "https://openrouter.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://openrouter.ai/"
+  },
+  {
+    "canonical_url": "https://openrouter.ai/blog/all/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://openrouter.ai/blog/all/"
+  },
+  {
+    "canonical_url": "https://otter.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://otter.ai/"
+  },
+  {
+    "canonical_url": "https://otter.ai/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://otter.ai/blog"
+  },
+  {
+    "canonical_url": "https://ottimate.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://ottimate.com/"
+  },
+  {
+    "canonical_url": "https://paintingrecognition.com/blog/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://paintingrecognition.com/blog/"
+  },
+  {
+    "canonical_url": "https://paperswithcode.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://paperswithcode.com/"
+  },
+  {
+    "canonical_url": "https://peak.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://peak.ai/"
+  },
+  {
+    "canonical_url": "https://peak.ai/hub/blogs/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://peak.ai/hub/blogs/"
+  },
+  {
+    "canonical_url": "https://planetscale.com/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://planetscale.com/blog"
+  },
+  {
+    "canonical_url": "https://platform.claude.com/cookbook/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://platform.claude.com/cookbook/"
+  },
+  {
+    "canonical_url": "https://platform.openai.com/docs/guides/function-calling",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://platform.openai.com/docs/guides/function-calling"
+  },
+  {
+    "canonical_url": "https://platform.openai.com/docs/guides/structured-outputs",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://platform.openai.com/docs/guides/structured-outputs"
+  },
+  {
+    "canonical_url": "https://precoro.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://precoro.com/"
+  },
+  {
+    "canonical_url": "https://python.useinstructor.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://python.useinstructor.com/"
+  },
+  {
+    "canonical_url": "https://qdrant.tech/articles/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://qdrant.tech/articles/"
+  },
+  {
+    "canonical_url": "https://quickbooks.intuit.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://quickbooks.intuit.com/"
+  },
+  {
+    "canonical_url": "https://raiclabs.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://raiclabs.com/"
+  },
+  {
+    "canonical_url": "https://raiclabs.com/blog/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://raiclabs.com/blog/"
+  },
+  {
+    "canonical_url": "https://ramp.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://ramp.com/"
+  },
+  {
+    "canonical_url": "https://react-lm.github.io/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://react-lm.github.io/"
+  },
+  {
+    "canonical_url": "https://redis.io/blog/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://redis.io/blog/"
+  },
+  {
+    "canonical_url": "https://reflection.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://reflection.ai/"
+  },
+  {
+    "canonical_url": "https://reflection.ai/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://reflection.ai/blog"
+  },
+  {
+    "canonical_url": "https://research.google/blog/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://research.google/blog/"
+  },
+  {
+    "canonical_url": "https://robinhood.engineering/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://robinhood.engineering/"
+  },
+  {
+    "canonical_url": "https://rossum.ai/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://rossum.ai/"
+  },
+  {
+    "canonical_url": "https://runway.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://runway.com/"
+  },
+  {
+    "canonical_url": "https://runway.com/news",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://runway.com/news"
+  },
+  {
+    "canonical_url": "https://sakana.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://sakana.ai/"
+  },
+  {
+    "canonical_url": "https://sakana.ai/blog/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://sakana.ai/blog/"
+  },
+  {
+    "canonical_url": "https://sambanova.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://sambanova.ai/"
+  },
+  {
+    "canonical_url": "https://sambanova.ai/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://sambanova.ai/blog"
+  },
+  {
+    "canonical_url": "https://scale.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://scale.com/"
+  },
+  {
+    "canonical_url": "https://scale.com/blog",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md",
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://scale.com/blog"
+  },
+  {
+    "canonical_url": "https://sebastianraschka.com/blog/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://sebastianraschka.com/blog/"
+  },
+  {
+    "canonical_url": "https://shield.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://shield.ai/"
+  },
+  {
+    "canonical_url": "https://shield.ai/newsroom/?category=blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://shield.ai/newsroom/?category=blog"
+  },
+  {
+    "canonical_url": "https://shopify.engineering/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://shopify.engineering/"
+  },
+  {
+    "canonical_url": "https://simonwillison.net/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://simonwillison.net/"
+  },
+  {
+    "canonical_url": "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://simonwillison.net/2025/Jun/16/the-lethal-trifecta/"
+  },
+  {
+    "canonical_url": "https://slack.engineering/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://slack.engineering/"
+  },
+  {
+    "canonical_url": "https://sourcegraph.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://sourcegraph.com/"
+  },
+  {
+    "canonical_url": "https://sovos.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://sovos.com/"
+  },
+  {
+    "canonical_url": "https://spectreai.io/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://spectreai.io/"
+  },
+  {
+    "canonical_url": "https://spectreai.io/journal.html",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://spectreai.io/journal.html"
+  },
+  {
+    "canonical_url": "https://spendconsole.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://spendconsole.ai/"
+  },
+  {
+    "canonical_url": "https://spenmo.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://spenmo.com/"
+  },
+  {
+    "canonical_url": "https://ssi.inc/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://ssi.inc/"
+  },
+  {
+    "canonical_url": "https://ssi.inc/updates",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://ssi.inc/updates"
+  },
+  {
+    "canonical_url": "https://stability.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://stability.ai/"
+  },
+  {
+    "canonical_url": "https://stability.ai/research",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://stability.ai/research"
+  },
+  {
+    "canonical_url": "https://stripe.dev/blog",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://stripe.dev/blog"
+  },
+  {
+    "canonical_url": "https://supabase.com/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://supabase.com/blog"
+  },
+  {
+    "canonical_url": "https://tallysolutions.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://tallysolutions.com/"
+  },
+  {
+    "canonical_url": "https://tech.instacart.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://tech.instacart.com/"
+  },
+  {
+    "canonical_url": "https://technology.riotgames.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://technology.riotgames.com/"
+  },
+  {
+    "canonical_url": "https://thinkingmachines.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://thinkingmachines.ai/"
+  },
+  {
+    "canonical_url": "https://thinkingmachines.ai/blog/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://thinkingmachines.ai/blog/"
+  },
+  {
+    "canonical_url": "https://tipalti.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://tipalti.com/"
+  },
+  {
+    "canonical_url": "https://towardsdatascience.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://towardsdatascience.com/"
+  },
+  {
+    "canonical_url": "https://tradeshift.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://tradeshift.com/"
+  },
+  {
+    "canonical_url": "https://translated.com/resources/future-of-ai-translation",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://translated.com/resources/future-of-ai-translation"
+  },
+  {
+    "canonical_url": "https://translated.com/welcome",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://translated.com/welcome"
+  },
+  {
+    "canonical_url": "https://unbabel.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://unbabel.com/"
+  },
+  {
+    "canonical_url": "https://unbabel.com/category/blog/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://unbabel.com/category/blog/"
+  },
+  {
+    "canonical_url": "https://undetectable.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://undetectable.ai/"
+  },
+  {
+    "canonical_url": "https://undetectable.ai/blog/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://undetectable.ai/blog/"
+  },
+  {
+    "canonical_url": "https://updates.midjourney.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://updates.midjourney.com/"
+  },
+  {
+    "canonical_url": "https://vercel.com/blog/category/engineering",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://vercel.com/blog/category/engineering"
+  },
+  {
+    "canonical_url": "https://visualdub.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://visualdub.ai/"
+  },
+  {
+    "canonical_url": "https://waabi.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://waabi.ai/"
+  },
+  {
+    "canonical_url": "https://waabi.ai/insights",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://waabi.ai/insights"
+  },
+  {
+    "canonical_url": "https://waymo.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://waymo.com/"
+  },
+  {
+    "canonical_url": "https://waymo.com/research/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://waymo.com/research/"
+  },
+  {
+    "canonical_url": "https://wayve.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://wayve.ai/"
+  },
+  {
+    "canonical_url": "https://wayve.ai/thinking/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://wayve.ai/thinking/"
+  },
+  {
+    "canonical_url": "https://weaviate.io/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://weaviate.io/blog"
+  },
+  {
+    "canonical_url": "https://writer.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://writer.com/"
+  },
+  {
+    "canonical_url": "https://writesonic.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://writesonic.com/"
+  },
+  {
+    "canonical_url": "https://writesonic.com/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://writesonic.com/blog"
+  },
+  {
+    "canonical_url": "https://www.01.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.01.ai/"
+  },
+  {
+    "canonical_url": "https://www.01.ai/newsroom.html",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.01.ai/newsroom.html"
+  },
+  {
+    "canonical_url": "https://www.1x.tech/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.1x.tech/"
+  },
+  {
+    "canonical_url": "https://www.1x.tech/discover",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.1x.tech/discover"
+  },
+  {
+    "canonical_url": "https://www.abbyy.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.abbyy.com/"
+  },
+  {
+    "canonical_url": "https://www.acumatica.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.acumatica.com/"
+  },
+  {
+    "canonical_url": "https://www.adyen.com/knowledge-hub",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.adyen.com/knowledge-hub"
+  },
+  {
+    "canonical_url": "https://www.afas.nl/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.afas.nl/"
+  },
+  {
+    "canonical_url": "https://www.ai21.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.ai21.com/"
+  },
+  {
+    "canonical_url": "https://www.ai21.com/blog/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.ai21.com/blog/"
+  },
+  {
+    "canonical_url": "https://www.aidoc.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.aidoc.com/"
+  },
+  {
+    "canonical_url": "https://www.aidoc.com/learn/blog/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.aidoc.com/learn/blog/"
+  },
+  {
+    "canonical_url": "https://www.airbase.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.airbase.com/"
+  },
+  {
+    "canonical_url": "https://www.airwallex.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.airwallex.com/"
+  },
+  {
+    "canonical_url": "https://www.algolia.com/blog/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.algolia.com/blog/"
+  },
+  {
+    "canonical_url": "https://www.alibabacloud.com/blog",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.alibabacloud.com/blog"
+  },
+  {
+    "canonical_url": "https://www.amazon.science/blog",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.amazon.science/blog"
+  },
+  {
+    "canonical_url": "https://www.anduril.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.anduril.com/"
+  },
+  {
+    "canonical_url": "https://www.anduril.com/news/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.anduril.com/news/"
+  },
+  {
+    "canonical_url": "https://www.anthropic.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.anthropic.com/"
+  },
+  {
+    "canonical_url": "https://www.anthropic.com/engineering",
+    "source_count": 3,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt",
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.anthropic.com/engineering"
+  },
+  {
+    "canonical_url": "https://www.anthropic.com/engineering/building-effective-agents",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://www.anthropic.com/engineering/building-effective-agents"
+  },
+  {
+    "canonical_url": "https://www.anthropic.com/engineering/built-multi-agent-research-system",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://www.anthropic.com/engineering/built-multi-agent-research-system"
+  },
+  {
+    "canonical_url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
+  },
+  {
+    "canonical_url": "https://www.anthropic.com/engineering/writing-tools-for-agents",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://www.anthropic.com/engineering/writing-tools-for-agents"
+  },
+  {
+    "canonical_url": "https://www.anthropic.com/research",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md",
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://www.anthropic.com/research"
+  },
+  {
+    "canonical_url": "https://www.appzen.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.appzen.com/"
+  },
+  {
+    "canonical_url": "https://www.apron.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.apron.com/"
+  },
+  {
+    "canonical_url": "https://www.arm.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.arm.com/"
+  },
+  {
+    "canonical_url": "https://www.atlassian.com/blog/atlassian-engineering",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.atlassian.com/blog/atlassian-engineering"
+  },
+  {
+    "canonical_url": "https://www.auditoria.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.auditoria.ai/"
+  },
+  {
+    "canonical_url": "https://www.avalara.com/us/en/products/e-invoicing.html",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.avalara.com/us/en/products/e-invoicing.html"
+  },
+  {
+    "canonical_url": "https://www.avidxchange.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.avidxchange.com/"
+  },
+  {
+    "canonical_url": "https://www.baichuan-ai.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.baichuan-ai.com/"
+  },
+  {
+    "canonical_url": "https://www.baichuan-ai.com/blog/baichuan-M2",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.baichuan-ai.com/blog/baichuan-M2"
+  },
+  {
+    "canonical_url": "https://www.baiwang.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.baiwang.com/"
+  },
+  {
+    "canonical_url": "https://www.basware.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.basware.com/"
+  },
+  {
+    "canonical_url": "https://www.basware.com/en/solutions/ap-automation",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.basware.com/en/solutions/ap-automation"
+  },
+  {
+    "canonical_url": "https://www.bill.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.bill.com/"
+  },
+  {
+    "canonical_url": "https://www.bloomberg.com/company/stories/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.bloomberg.com/company/stories/"
+  },
+  {
+    "canonical_url": "https://www.bluecopa.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.bluecopa.com/"
+  },
+  {
+    "canonical_url": "https://www.bottomline.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.bottomline.com/"
+  },
+  {
+    "canonical_url": "https://www.brex.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.brex.com/"
+  },
+  {
+    "canonical_url": "https://www.brinta.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.brinta.com/"
+  },
+  {
+    "canonical_url": "https://www.broadcom.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.broadcom.com/"
+  },
+  {
+    "canonical_url": "https://www.broadcom.com/company/resources",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.broadcom.com/company/resources"
+  },
+  {
+    "canonical_url": "https://www.canva.dev/blog/engineering/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.canva.dev/blog/engineering/"
+  },
+  {
+    "canonical_url": "https://www.caper.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.caper.ai/"
+  },
+  {
+    "canonical_url": "https://www.capitalone.com/tech/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.capitalone.com/tech/"
+  },
+  {
+    "canonical_url": "https://www.centime.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.centime.com/"
+  },
+  {
+    "canonical_url": "https://www.cerebras.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.cerebras.ai/"
+  },
+  {
+    "canonical_url": "https://www.cerebras.ai/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.cerebras.ai/blog"
+  },
+  {
+    "canonical_url": "https://www.cerence.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.cerence.com/"
+  },
+  {
+    "canonical_url": "https://www.cerence.com/newsroom/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.cerence.com/newsroom/blog"
+  },
+  {
+    "canonical_url": "https://www.certinia.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.certinia.com/"
+  },
+  {
+    "canonical_url": "https://www.cin7.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.cin7.com/"
+  },
+  {
+    "canonical_url": "https://www.clear.in/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.clear.in/"
+  },
+  {
+    "canonical_url": "https://www.cleartax.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.cleartax.com/"
+  },
+  {
+    "canonical_url": "https://www.cleartax.com/sa/ap-automation-software",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.cleartax.com/sa/ap-automation-software"
+  },
+  {
+    "canonical_url": "https://www.cockroachlabs.com/blog/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.cockroachlabs.com/blog/"
+  },
+  {
+    "canonical_url": "https://www.coinbase.com/blog/landing/engineering",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.coinbase.com/blog/landing/engineering"
+  },
+  {
+    "canonical_url": "https://www.colloqui.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.colloqui.ai/"
+  },
+  {
+    "canonical_url": "https://www.comarch.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.comarch.com/"
+  },
+  {
+    "canonical_url": "https://www.compleat.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.compleat.com/"
+  },
+  {
+    "canonical_url": "https://www.concur.com/en-us/invoice",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.concur.com/en-us/invoice"
+  },
+  {
+    "canonical_url": "https://www.confluent.io/blog/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.confluent.io/blog/"
+  },
+  {
+    "canonical_url": "https://www.conversable.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.conversable.com/"
+  },
+  {
+    "canonical_url": "https://www.corcentric.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.corcentric.com/"
+  },
+  {
+    "canonical_url": "https://www.coreweave.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.coreweave.com/"
+  },
+  {
+    "canonical_url": "https://www.coreweave.com/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.coreweave.com/blog"
+  },
+  {
+    "canonical_url": "https://www.corpay.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.corpay.com/"
+  },
+  {
+    "canonical_url": "https://www.counselai.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.counselai.com/"
+  },
+  {
+    "canonical_url": "https://www.coupa.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.coupa.com/"
+  },
+  {
+    "canonical_url": "https://www.coupa.com/products/accounts-payable",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.coupa.com/products/accounts-payable"
+  },
+  {
+    "canonical_url": "https://www.cradl.ai/posts",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.cradl.ai/posts"
+  },
+  {
+    "canonical_url": "https://www.cradle-ai.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.cradle-ai.com/"
+  },
+  {
+    "canonical_url": "https://www.cygnet.co.in/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.cygnet.co.in/"
+  },
+  {
+    "canonical_url": "https://www.databricks.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.databricks.com/"
+  },
+  {
+    "canonical_url": "https://www.databricks.com/blog",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.databricks.com/blog"
+  },
+  {
+    "canonical_url": "https://www.databricks.com/blog/category/engineering",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.databricks.com/blog/category/engineering"
+  },
+  {
+    "canonical_url": "https://www.datacamp.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://www.datacamp.com/"
+  },
+  {
+    "canonical_url": "https://www.datadoghq.com/blog/engineering/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.datadoghq.com/blog/engineering/"
+  },
+  {
+    "canonical_url": "https://www.dataiku.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.dataiku.com/"
+  },
+  {
+    "canonical_url": "https://www.dataiku.com/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.dataiku.com/blog"
+  },
+  {
+    "canonical_url": "https://www.datamolino.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.datamolino.com/"
+  },
+  {
+    "canonical_url": "https://www.datev.de/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.datev.de/"
+  },
+  {
+    "canonical_url": "https://www.deepl.com/en/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.deepl.com/en/"
+  },
+  {
+    "canonical_url": "https://www.deepseek.com/en/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.deepseek.com/en/"
+  },
+  {
+    "canonical_url": "https://www.deepseek.fyi/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.deepseek.fyi/"
+  },
+  {
+    "canonical_url": "https://www.digitalocean.com/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.digitalocean.com/blog"
+  },
+  {
+    "canonical_url": "https://www.docker.com/blog/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.docker.com/blog/"
+  },
+  {
+    "canonical_url": "https://www.docuware.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.docuware.com/"
+  },
+  {
+    "canonical_url": "https://www.elastic.co/blog/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.elastic.co/blog/"
+  },
+  {
+    "canonical_url": "https://www.eleuther.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.eleuther.ai/"
+  },
+  {
+    "canonical_url": "https://www.emburse.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.emburse.com/"
+  },
+  {
+    "canonical_url": "https://www.epicor.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.epicor.com/"
+  },
+  {
+    "canonical_url": "https://www.esker.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.esker.com/"
+  },
+  {
+    "canonical_url": "https://www.esker.com/solutions/accounts-payable/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.esker.com/solutions/accounts-payable/"
+  },
+  {
+    "canonical_url": "https://www.etsy.com/codeascraft",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.etsy.com/codeascraft"
+  },
+  {
+    "canonical_url": "https://www.exact.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.exact.com/"
+  },
+  {
+    "canonical_url": "https://www.ey.com/en_in/services/tax/digital-strategy/accounts-payable-solution",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.ey.com/en_in/services/tax/digital-strategy/accounts-payable-solution"
+  },
+  {
+    "canonical_url": "https://www.fastly.com/blog/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.fastly.com/blog/"
+  },
+  {
+    "canonical_url": "https://www.figma.com/blog/engineering/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.figma.com/blog/engineering/"
+  },
+  {
+    "canonical_url": "https://www.figure.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.figure.ai/"
+  },
+  {
+    "canonical_url": "https://www.figure.ai/news",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.figure.ai/news"
+  },
+  {
+    "canonical_url": "https://www.fisglobal.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.fisglobal.com/"
+  },
+  {
+    "canonical_url": "https://www.fortnox.se/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.fortnox.se/"
+  },
+  {
+    "canonical_url": "https://www.freee.co.jp/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.freee.co.jp/"
+  },
+  {
+    "canonical_url": "https://www.freehand.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.freehand.ai/"
+  },
+  {
+    "canonical_url": "https://www.furhatrobotics.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.furhatrobotics.com/"
+  },
+  {
+    "canonical_url": "https://www.furhatrobotics.com/newsroom",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.furhatrobotics.com/newsroom"
+  },
+  {
+    "canonical_url": "https://www.g42.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.g42.ai/"
+  },
+  {
+    "canonical_url": "https://www.gep.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.gep.com/"
+  },
+  {
+    "canonical_url": "https://www.gep.com/software/gep-smart",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.gep.com/software/gep-smart"
+  },
+  {
+    "canonical_url": "https://www.getyooz.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.getyooz.com/"
+  },
+  {
+    "canonical_url": "https://www.glean.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.glean.com/"
+  },
+  {
+    "canonical_url": "https://www.glean.com/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.glean.com/blog"
+  },
+  {
+    "canonical_url": "https://www.go-springtime.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.go-springtime.com/"
+  },
+  {
+    "canonical_url": "https://www.gojek.io/blog",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.gojek.io/blog"
+  },
+  {
+    "canonical_url": "https://www.grammarly.com/blog/engineering/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.grammarly.com/blog/engineering/"
+  },
+  {
+    "canonical_url": "https://www.haptik.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.haptik.ai/"
+  },
+  {
+    "canonical_url": "https://www.haptik.ai/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.haptik.ai/blog"
+  },
+  {
+    "canonical_url": "https://www.hashicorp.com/blog",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.hashicorp.com/blog"
+  },
+  {
+    "canonical_url": "https://www.hebbia.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.hebbia.com/"
+  },
+  {
+    "canonical_url": "https://www.hebbia.com/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.hebbia.com/blog"
+  },
+  {
+    "canonical_url": "https://www.heygen.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.heygen.com/"
+  },
+  {
+    "canonical_url": "https://www.heygen.com/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.heygen.com/blog"
+  },
+  {
+    "canonical_url": "https://www.highradius.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.highradius.com/"
+  },
+  {
+    "canonical_url": "https://www.highradius.com/product/ap-automation/invoice-coding-software/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\05-highradius.md"
+    ],
+    "status": "queued",
+    "url": "https://www.highradius.com/product/ap-automation/invoice-coding-software/"
+  },
+  {
+    "canonical_url": "https://www.highradius.com/software/accounts-payable/accounts-payable-automation/automated-invoice-coding/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\05-highradius.md"
+    ],
+    "status": "queued",
+    "url": "https://www.highradius.com/software/accounts-payable/accounts-payable-automation/automated-invoice-coding/"
+  },
+  {
+    "canonical_url": "https://www.highradius.com/software/accounts-payable/accounts-payable-automation/non-po-gl-coding/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\05-highradius.md"
+    ],
+    "status": "queued",
+    "url": "https://www.highradius.com/software/accounts-payable/accounts-payable-automation/non-po-gl-coding/"
+  },
+  {
+    "canonical_url": "https://www.highradius.com/solutions/accounts-payable/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.highradius.com/solutions/accounts-payable/"
+  },
+  {
+    "canonical_url": "https://www.holded.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.holded.com/"
+  },
+  {
+    "canonical_url": "https://www.honeycomb.io/blog/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.honeycomb.io/blog/"
+  },
+  {
+    "canonical_url": "https://www.honeycomb.io/blog/hard-stuff-nobody-talks-about-llm",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://www.honeycomb.io/blog/hard-stuff-nobody-talks-about-llm"
+  },
+  {
+    "canonical_url": "https://www.horizon.auto/en",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.horizon.auto/en"
+  },
+  {
+    "canonical_url": "https://www.horizon.auto/en/news/horizon-news",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.horizon.auto/en/news/horizon-news"
+  },
+  {
+    "canonical_url": "https://www.humainlabs.ai/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.humainlabs.ai/blog"
+  },
+  {
+    "canonical_url": "https://www.hyperscience.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.hyperscience.com/"
+  },
+  {
+    "canonical_url": "https://www.ibm.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.ibm.com/"
+  },
+  {
+    "canonical_url": "https://www.ifs.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.ifs.com/"
+  },
+  {
+    "canonical_url": "https://www.infor.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.infor.com/"
+  },
+  {
+    "canonical_url": "https://www.interconnects.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://www.interconnects.ai/"
+  },
+  {
+    "canonical_url": "https://www.isomorphiclabs.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.isomorphiclabs.com/"
+  },
+  {
+    "canonical_url": "https://www.isomorphiclabs.com/articles",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.isomorphiclabs.com/articles"
+  },
+  {
+    "canonical_url": "https://www.ivalua.com/",
+    "source_count": 3,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.ivalua.com/"
+  },
+  {
+    "canonical_url": "https://www.jaggaer.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.jaggaer.com/"
+  },
+  {
+    "canonical_url": "https://www.kdnuggets.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://www.kdnuggets.com/"
+  },
+  {
+    "canonical_url": "https://www.kimi.com/en/blog/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.kimi.com/en/blog/"
+  },
+  {
+    "canonical_url": "https://www.kingdee.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.kingdee.com/"
+  },
+  {
+    "canonical_url": "https://www.klippa.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.klippa.com/"
+  },
+  {
+    "canonical_url": "https://www.koncile.ai/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.koncile.ai/"
+  },
+  {
+    "canonical_url": "https://www.langchain.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.langchain.com/"
+  },
+  {
+    "canonical_url": "https://www.latent.space/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://www.latent.space/"
+  },
+  {
+    "canonical_url": "https://www.layernext.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.layernext.ai/"
+  },
+  {
+    "canonical_url": "https://www.lido.app/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.lido.app/"
+  },
+  {
+    "canonical_url": "https://www.lightyear.ai/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.lightyear.ai/"
+  },
+  {
+    "canonical_url": "https://www.linkedin.com/blog/engineering",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.linkedin.com/blog/engineering"
+  },
+  {
+    "canonical_url": "https://www.liquid.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.liquid.ai/"
+  },
+  {
+    "canonical_url": "https://www.liquid.ai/company/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.liquid.ai/company/blog"
+  },
+  {
+    "canonical_url": "https://www.lleverage.ai/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.lleverage.ai/"
+  },
+  {
+    "canonical_url": "https://www.medius.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.medius.com/"
+  },
+  {
+    "canonical_url": "https://www.medius.com/ap-automation/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.medius.com/ap-automation/"
+  },
+  {
+    "canonical_url": "https://www.meliopayments.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.meliopayments.com/"
+  },
+  {
+    "canonical_url": "https://www.mercor.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.mercor.com/"
+  },
+  {
+    "canonical_url": "https://www.mercor.com/blog/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.mercor.com/blog/"
+  },
+  {
+    "canonical_url": "https://www.meta.com/superintelligence/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.meta.com/superintelligence/"
+  },
+  {
+    "canonical_url": "https://www.microsoft.com/en-us/dynamics-365/products/finance",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.microsoft.com/en-us/dynamics-365/products/finance"
+  },
+  {
+    "canonical_url": "https://www.microsoft.com/en-us/research/blog/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://www.microsoft.com/en-us/research/blog/"
+  },
+  {
+    "canonical_url": "https://www.microsoft.com/en-us/research/project/maluuba/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.microsoft.com/en-us/research/project/maluuba/"
+  },
+  {
+    "canonical_url": "https://www.microsoft.com/en/ai",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.microsoft.com/en/ai"
+  },
+  {
+    "canonical_url": "https://www.midjourney.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.midjourney.com/"
+  },
+  {
+    "canonical_url": "https://www.mindee.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.mindee.com/"
+  },
+  {
+    "canonical_url": "https://www.mindfoundry.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.mindfoundry.ai/"
+  },
+  {
+    "canonical_url": "https://www.mindfoundry.ai/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.mindfoundry.ai/blog"
+  },
+  {
+    "canonical_url": "https://www.mindsprint.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.mindsprint.com/"
+  },
+  {
+    "canonical_url": "https://www.mineraltree.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.mineraltree.com/"
+  },
+  {
+    "canonical_url": "https://www.minimax.io/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.minimax.io/"
+  },
+  {
+    "canonical_url": "https://www.minimax.io/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.minimax.io/blog"
+  },
+  {
+    "canonical_url": "https://www.modelbest.cn/en/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.modelbest.cn/en/"
+  },
+  {
+    "canonical_url": "https://www.mongodb.com/blog/channel/engineering-blog",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.mongodb.com/blog/channel/engineering-blog"
+  },
+  {
+    "canonical_url": "https://www.moonshot.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.moonshot.ai/"
+  },
+  {
+    "canonical_url": "https://www.netsuite.com/portal/products/erp/financial-management/accounts-payable.shtml",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.netsuite.com/portal/products/erp/financial-management/accounts-payable.shtml"
+  },
+  {
+    "canonical_url": "https://www.nipendo.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.nipendo.com/"
+  },
+  {
+    "canonical_url": "https://www.notion.so/blog/topic/engineering",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.notion.so/blog/topic/engineering"
+  },
+  {
+    "canonical_url": "https://www.nuro.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.nuro.ai/"
+  },
+  {
+    "canonical_url": "https://www.nuro.ai/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.nuro.ai/blog"
+  },
+  {
+    "canonical_url": "https://www.nvidia.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.nvidia.com/"
+  },
+  {
+    "canonical_url": "https://www.obc.co.jp/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.obc.co.jp/"
+  },
+  {
+    "canonical_url": "https://www.omie.com.br/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.omie.com.br/"
+  },
+  {
+    "canonical_url": "https://www.openevidence.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.openevidence.com/"
+  },
+  {
+    "canonical_url": "https://www.openevidence.com/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.openevidence.com/blog"
+  },
+  {
+    "canonical_url": "https://www.opentext.com/products/vendor-invoice-management-for-sap-solutions",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.opentext.com/products/vendor-invoice-management-for-sap-solutions"
+  },
+  {
+    "canonical_url": "https://www.oracle.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.oracle.com/"
+  },
+  {
+    "canonical_url": "https://www.oracle.com/erp/financials/accounts-payable/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.oracle.com/erp/financials/accounts-payable/"
+  },
+  {
+    "canonical_url": "https://www.oracle.com/webfolder/technetwork/tutorials/tutorial/cloud/aierp/releases/Oct22/22oct-ai-erp-wn.htm",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\01-oracle-iacd.md"
+    ],
+    "status": "queued",
+    "url": "https://www.oracle.com/webfolder/technetwork/tutorials/tutorial/cloud/aierp/releases/Oct22/22oct-ai-erp-wn.htm"
+  },
+  {
+    "canonical_url": "https://www.oreilly.com/radar/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://www.oreilly.com/radar/"
+  },
+  {
+    "canonical_url": "https://www.osfin.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.osfin.ai/"
+  },
+  {
+    "canonical_url": "https://www.owkin.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.owkin.com/"
+  },
+  {
+    "canonical_url": "https://www.owkin.com/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.owkin.com/blog"
+  },
+  {
+    "canonical_url": "https://www.pagero.com/",
+    "source_count": 3,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.pagero.com/"
+  },
+  {
+    "canonical_url": "https://www.perplexity.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.perplexity.ai/"
+  },
+  {
+    "canonical_url": "https://www.perplexity.ai/en-GB/hub/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.perplexity.ai/en-GB/hub/blog"
+  },
+  {
+    "canonical_url": "https://www.pi.website/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.pi.website/"
+  },
+  {
+    "canonical_url": "https://www.pi.website/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.pi.website/blog"
+  },
+  {
+    "canonical_url": "https://www.pinecone.io/blog/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.pinecone.io/blog/"
+  },
+  {
+    "canonical_url": "https://www.pinecone.io/learn/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://www.pinecone.io/learn/"
+  },
+  {
+    "canonical_url": "https://www.pleo.io/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.pleo.io/"
+  },
+  {
+    "canonical_url": "https://www.poolside.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.poolside.ai/"
+  },
+  {
+    "canonical_url": "https://www.poolside.ai/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.poolside.ai/blog"
+  },
+  {
+    "canonical_url": "https://www.preamble.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.preamble.com/"
+  },
+  {
+    "canonical_url": "https://www.preamble.com/blogs/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.preamble.com/blogs/"
+  },
+  {
+    "canonical_url": "https://www.predictap.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.predictap.com/"
+  },
+  {
+    "canonical_url": "https://www.proactis.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.proactis.com/"
+  },
+  {
+    "canonical_url": "https://www.procuredesk.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.procuredesk.com/"
+  },
+  {
+    "canonical_url": "https://www.procurify.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.procurify.com/"
+  },
+  {
+    "canonical_url": "https://www.promptfoo.dev/docs/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://www.promptfoo.dev/docs/"
+  },
+  {
+    "canonical_url": "https://www.promptingguide.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://www.promptingguide.ai/"
+  },
+  {
+    "canonical_url": "https://www.quadient.com/en/ap-automation",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.quadient.com/en/ap-automation"
+  },
+  {
+    "canonical_url": "https://www.quantexa.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.quantexa.com/"
+  },
+  {
+    "canonical_url": "https://www.quantexa.com/blog/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.quantexa.com/blog/"
+  },
+  {
+    "canonical_url": "https://www.recraft.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.recraft.ai/"
+  },
+  {
+    "canonical_url": "https://www.recraft.ai/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.recraft.ai/blog"
+  },
+  {
+    "canonical_url": "https://www.reddit.com/r/LLMDevs/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt",
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.reddit.com/r/LLMDevs/"
+  },
+  {
+    "canonical_url": "https://www.reddit.com/r/LangChain/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://www.reddit.com/r/LangChain/"
+  },
+  {
+    "canonical_url": "https://www.reddit.com/r/LocalLLaMA/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt",
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.reddit.com/r/LocalLLaMA/"
+  },
+  {
+    "canonical_url": "https://www.reddit.com/r/MachineLearning/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt",
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.reddit.com/r/MachineLearning/"
+  },
+  {
+    "canonical_url": "https://www.reddit.com/r/Rag/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt",
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.reddit.com/r/Rag/"
+  },
+  {
+    "canonical_url": "https://www.reddit.com/r/RedditEng",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.reddit.com/r/RedditEng"
+  },
+  {
+    "canonical_url": "https://www.respeecher.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.respeecher.com/"
+  },
+  {
+    "canonical_url": "https://www.respeecher.com/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.respeecher.com/blog"
+  },
+  {
+    "canonical_url": "https://www.rillion.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.rillion.com/"
+  },
+  {
+    "canonical_url": "https://www.routable.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.routable.com/"
+  },
+  {
+    "canonical_url": "https://www.sage.com/",
+    "source_count": 3,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.sage.com/"
+  },
+  {
+    "canonical_url": "https://www.sap.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.sap.com/"
+  },
+  {
+    "canonical_url": "https://www.sap.com/products/financial-management/invoice-management.html",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.sap.com/products/financial-management/invoice-management.html"
+  },
+  {
+    "canonical_url": "https://www.sap.com/products/spend-management/invoice-management.html",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.sap.com/products/spend-management/invoice-management.html"
+  },
+  {
+    "canonical_url": "https://www.sarvam.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.sarvam.ai/"
+  },
+  {
+    "canonical_url": "https://www.sarvam.ai/blogs",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.sarvam.ai/blogs"
+  },
+  {
+    "canonical_url": "https://www.sbert.net/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://www.sbert.net/"
+  },
+  {
+    "canonical_url": "https://www.seeburger.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.seeburger.com/"
+  },
+  {
+    "canonical_url": "https://www.semanticscholar.org/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://www.semanticscholar.org/"
+  },
+  {
+    "canonical_url": "https://www.sensetime.com/en/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.sensetime.com/en/"
+  },
+  {
+    "canonical_url": "https://www.sensetime.com/en/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.sensetime.com/en/blog"
+  },
+  {
+    "canonical_url": "https://www.serrala.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.serrala.com/"
+  },
+  {
+    "canonical_url": "https://www.servicenow.com/fr/company/media/press-room/servicenow-to-acquire-element-ai.html",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.servicenow.com/fr/company/media/press-room/servicenow-to-acquire-element-ai.html"
+  },
+  {
+    "canonical_url": "https://www.siigo.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.siigo.com/"
+  },
+  {
+    "canonical_url": "https://www.snowflake.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.snowflake.com/"
+  },
+  {
+    "canonical_url": "https://www.snowflake.com/en/blog/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.snowflake.com/en/blog/"
+  },
+  {
+    "canonical_url": "https://www.snowflake.com/en/blog/engineering/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.snowflake.com/en/blog/engineering/"
+  },
+  {
+    "canonical_url": "https://www.snowfox.ai/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.snowfox.ai/"
+  },
+  {
+    "canonical_url": "https://www.snowfox.ai/insights/how-we-use-ai-to-build-ai-for-accounts-payable-part-1/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\03-snowfox-ai.md"
+    ],
+    "status": "queued",
+    "url": "https://www.snowfox.ai/insights/how-we-use-ai-to-build-ai-for-accounts-payable-part-1/"
+  },
+  {
+    "canonical_url": "https://www.snowfox.ai/insights/the-introduction-of-artificial-intelligence-has-revolutionized-the-purchase-invoice-automation-but-how-does-it-work/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\03-snowfox-ai.md"
+    ],
+    "status": "queued",
+    "url": "https://www.snowfox.ai/insights/the-introduction-of-artificial-intelligence-has-revolutionized-the-purchase-invoice-automation-but-how-does-it-work/"
+  },
+  {
+    "canonical_url": "https://www.snowfox.ai/product/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\03-snowfox-ai.md"
+    ],
+    "status": "queued",
+    "url": "https://www.snowfox.ai/product/"
+  },
+  {
+    "canonical_url": "https://www.softco.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.softco.com/"
+  },
+  {
+    "canonical_url": "https://www.soundhound.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.soundhound.com/"
+  },
+  {
+    "canonical_url": "https://www.soundhound.com/resources/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.soundhound.com/resources/blog"
+  },
+  {
+    "canonical_url": "https://www.spendesk.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.spendesk.com/"
+  },
+  {
+    "canonical_url": "https://www.stampli.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.stampli.com/"
+  },
+  {
+    "canonical_url": "https://www.stepfun.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.stepfun.com/"
+  },
+  {
+    "canonical_url": "https://www.storecove.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.storecove.com/"
+  },
+  {
+    "canonical_url": "https://www.swebench.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://www.swebench.com/"
+  },
+  {
+    "canonical_url": "https://www.synthesia.io/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.synthesia.io/"
+  },
+  {
+    "canonical_url": "https://www.synthesia.io/blog",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.synthesia.io/blog"
+  },
+  {
+    "canonical_url": "https://www.teamsystem.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.teamsystem.com/"
+  },
+  {
+    "canonical_url": "https://www.theaccessgroup.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.theaccessgroup.com/"
+  },
+  {
+    "canonical_url": "https://www.tokium.jp/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.tokium.jp/"
+  },
+  {
+    "canonical_url": "https://www.totvs.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.totvs.com/"
+  },
+  {
+    "canonical_url": "https://www.transcendap.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.transcendap.com/"
+  },
+  {
+    "canonical_url": "https://www.truecommerce.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.truecommerce.com/"
+  },
+  {
+    "canonical_url": "https://www.tungstenautomation.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.tungstenautomation.com/"
+  },
+  {
+    "canonical_url": "https://www.twilio.com/blog/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.twilio.com/blog/"
+  },
+  {
+    "canonical_url": "https://www.upstage.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.upstage.ai/"
+  },
+  {
+    "canonical_url": "https://www.vertexinc.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.vertexinc.com/"
+  },
+  {
+    "canonical_url": "https://www.veryfi.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.veryfi.com/"
+  },
+  {
+    "canonical_url": "https://www.vic.ai/",
+    "source_count": 3,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.vic.ai/"
+  },
+  {
+    "canonical_url": "https://www.visma.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.visma.com/"
+  },
+  {
+    "canonical_url": "https://www.volopay.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.volopay.com/"
+  },
+  {
+    "canonical_url": "https://www.wolterskluwer.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.wolterskluwer.com/"
+  },
+  {
+    "canonical_url": "https://www.workday.com/en-us/products/financial-management.html",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.workday.com/en-us/products/financial-management.html"
+  },
+  {
+    "canonical_url": "https://www.xero.com/",
+    "source_count": 3,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.xero.com/"
+  },
+  {
+    "canonical_url": "https://www.xiaoi.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.xiaoi.com/"
+  },
+  {
+    "canonical_url": "https://www.xsuite.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.xsuite.com/"
+  },
+  {
+    "canonical_url": "https://www.yonyou.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.yonyou.com/"
+  },
+  {
+    "canonical_url": "https://www.zhipuai.cn/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.zhipuai.cn/"
+  },
+  {
+    "canonical_url": "https://www.zillow.com/tech/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://www.zillow.com/tech/"
+  },
+  {
+    "canonical_url": "https://www.zoho.com/books/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.zoho.com/books/"
+  },
+  {
+    "canonical_url": "https://www.zucchetti.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.zucchetti.com/"
+  },
+  {
+    "canonical_url": "https://www.zycus.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://www.zycus.com/"
+  },
+  {
+    "canonical_url": "https://x.ai/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md",
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://x.ai/"
+  },
+  {
+    "canonical_url": "https://x.ai/news",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://x.ai/news"
+  },
+  {
+    "canonical_url": "https://x.com/HamelHusain",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://x.com/HamelHusain"
+  },
+  {
+    "canonical_url": "https://x.com/NetflixEng",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://x.com/NetflixEng"
+  },
+  {
+    "canonical_url": "https://x.com/ShopifyEng",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://x.com/ShopifyEng"
+  },
+  {
+    "canonical_url": "https://x.com/UberEng",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://x.com/UberEng"
+  },
+  {
+    "canonical_url": "https://x.com/_akhaliq",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://x.com/_akhaliq"
+  },
+  {
+    "canonical_url": "https://x.com/chipro",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://x.com/chipro"
+  },
+  {
+    "canonical_url": "https://x.com/jxnlco",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://x.com/jxnlco"
+  },
+  {
+    "canonical_url": "https://x.com/karpathy",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://x.com/karpathy"
+  },
+  {
+    "canonical_url": "https://x.com/lilianweng",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://x.com/lilianweng"
+  },
+  {
+    "canonical_url": "https://x.com/natolambert",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://x.com/natolambert"
+  },
+  {
+    "canonical_url": "https://x.com/rasbt",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://x.com/rasbt"
+  },
+  {
+    "canonical_url": "https://x.com/simonw",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://x.com/simonw"
+  },
+  {
+    "canonical_url": "https://x.com/swyx",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\all_links (1).txt"
+    ],
+    "status": "queued",
+    "url": "https://x.com/swyx"
+  },
+  {
+    "canonical_url": "https://z.ai/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://z.ai/"
+  },
+  {
+    "canonical_url": "https://zerodha.tech/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\top-100-product-company-engineering-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://zerodha.tech/"
+  },
+  {
+    "canonical_url": "https://zhipuai.ai/blog/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://zhipuai.ai/blog/"
+  },
+  {
+    "canonical_url": "https://zip.com/",
+    "source_count": 2,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\AP-Invoice-Automation-Providers.md"
+    ],
+    "status": "queued",
+    "url": "https://zip.com/"
+  },
+  {
+    "canonical_url": "https://zoox.com/",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://zoox.com/"
+  },
+  {
+    "canonical_url": "https://zoox.com/journal",
+    "source_count": 1,
+    "source_files": [
+      "C:\\Users\\Skanda Ganesha L\\Downloads\\ai-companies-technical-blogs.md"
+    ],
+    "status": "queued",
+    "url": "https://zoox.com/journal"
+  }
+]

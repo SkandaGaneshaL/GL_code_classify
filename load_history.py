@@ -7,10 +7,12 @@ from pathlib import Path
 try:
     from . import db_utils
     from .embeddings import create_document_embedder, embed_documents, load_oci_settings
+    from .feature_pack import build_line_feature
     from .xml_dataset import read_gl_history
 except ImportError:  # Supports running the file directly from this folder.
     import db_utils
     from embeddings import create_document_embedder, embed_documents, load_oci_settings
+    from feature_pack import build_line_feature
     from xml_dataset import read_gl_history
 
 
@@ -41,8 +43,31 @@ def main() -> None:
     )
     embedder = create_document_embedder(settings)
     raw_records = [record.as_dict() for record in records]
-    vectors = embed_documents(raw_records, embedder)
-    rows = ({**record, "embedding": vector} for record, vector in zip(raw_records, vectors))
+    features = [
+        build_line_feature(
+            {"LineDescription": record.get("line_description"), "LineType": record.get("line_type")},
+            vendor="",
+            line_index=index,
+        )
+        for index, record in enumerate(raw_records)
+    ]
+    vectors = embed_documents(features, embedder)
+    rows = (
+        {
+            **record,
+            "retrieval_text": feature["retrieval_text"],
+            "vendor_name_norm": feature["vendor_name_norm"] or None,
+            "line_type_norm": feature["line_type_norm"],
+            "identity_key": feature["identity_key"],
+            "amount_band": feature["amount_band"],
+            "line_amount": None,
+            "unit_price": None,
+            "quantity_invoiced": None,
+            "embedding_model": settings.model_id,
+            "embedding": vector,
+        }
+        for record, feature, vector in zip(raw_records, features, vectors)
+    )
     count = db_utils.bulk_upsert_history(rows)
     print(f"Loaded {count} GL history rows into {db_utils.TABLE_NAME}")
 

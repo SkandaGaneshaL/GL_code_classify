@@ -1,170 +1,139 @@
 from __future__ import annotations
 
 import json
-from typing import Any
+from typing import Any, Iterable
 
 
-def _historical_evidence(cases: list[dict[str, Any]]) -> str:
-    """Serialize only classification evidence needed by the LLM.
-
-    Similarity scores are intentionally excluded: they control retrieval in the
-    backend, but must not become a proxy for the LLM's accounting decision.
-    """
+def _historical_evidence(cases: Iterable[dict[str, Any]]) -> str:
+    """Serialize precedents without retrieval scores or non-allowlisted fields."""
     evidence = [
         {
-            "line_description": case.get("line_description"),
+            "vendor": case.get("vendor_name_norm") or case.get("vendor_name"),
+            "line_type": case.get("line_type_norm") or case.get("line_type"),
+            "description": case.get("line_description"),
             "approved_account_type": case.get("account_type"),
         }
         for case in cases
     ]
-    return json.dumps(evidence, ensure_ascii=False, indent=2)
+    return json.dumps(evidence, ensure_ascii=False, separators=(",", ":"))
 
 
-def _build_prompt(
-    line_description: str,
+def _current_line(feature: dict[str, Any]) -> str:
+    header = feature.get("classification_header") or {}
+    bounded_header = {
+        key: str(header[key])[:240]
+        for key in (
+            "VendorAddress",
+            "BillToAddress",
+            "ShipToAddress",
+            "InvoiceNetAmount",
+            "TaxAmount",
+            "InvoiceGrossAmount",
+            "InvoiceCurrency",
+            "PONumber",
+            "ProjectProtocolNumber",
+            "InvoicingCountry",
+            "BuyerNameOriginal",
+        )
+        if header.get(key) is not None
+    }
+    payload = {
+        "line_index": feature.get("line_index"),
+        "vendor": feature.get("vendor_name_norm") or None,
+        "line_type": feature.get("line_type_norm") or "UNKNOWN",
+        "description": feature.get("line_description") or "",
+        "quantity_invoiced": feature.get("quantity_invoiced"),
+        "unit_price": feature.get("unit_price"),
+        "line_amount": feature.get("line_amount"),
+        "tax_rate": feature.get("tax_rate"),
+        "tax_amount": feature.get("tax_amount"),
+        "invoice_context": bounded_header,
+        "project_reference_present": bool(feature.get("project_reference_present")),
+        "invoicing_country": feature.get("invoicing_country") or None,
+        "invoice_currency": feature.get("invoice_currency") or None,
+        "sibling_descriptions": list(feature.get("sibling_descriptions") or [])[:3],
+        "numeric_consistency": feature.get("numeric_consistency"),
+    }
+    return json.dumps(payload, ensure_ascii=False, separators=(",", ":"))
+
+
+def build_decision_prompt(
+    current_line: dict[str, Any],
     historical_cases: list[dict[str, Any]],
-    evidence_instructions: str,
+    allowed_account_types: list[str],
+    evidence_mode: str = "qualified",
 ) -> str:
-    line_json = json.dumps(line_description, ensure_ascii=False)
-    return f"""You are an intelligent enterprise accounts-payable account-type classifier.
+    allowed = list(dict.fromkeys([*allowed_account_types, "Unknown"]))
+    enum_text = json.dumps(allowed, ensure_ascii=False)
+    mode_text = (
+        "These are strong retrieval candidates; they are evidence, not proof."
+        if evidence_mode == "qualified"
+        else "These are weak nearest references; do not force a match."
+    )
+    return f"""You are an enterprise Accounts Payable natural-account classifier.
 
-Your task is to classify a new invoice line description into its account type. An account type is the business or natural expense/balance-sheet category represented by the accounting treatment. It identifies what was purchased or incurred and supports consistent GL mapping, reporting, and downstream accounting.
+Classify the CURRENT invoice line into exactly one allowed account type. Use the line's business meaning, accounting nature, vendor context, line type, and numeric consistency. Historical cases are approved precedents, but do not use retrieval rank, similarity scores, or majority voting as the decision.
 
-Current invoice line description:
-{line_description}
+Allowed account_type values: {enum_text}
 
-Historical evidence:
+Current line (only approved invoice fields):
+{_current_line(current_line)}
+
+Historical cases (one per competing type where available):
 {_historical_evidence(historical_cases)}
 
-{evidence_instructions}
+Evidence policy: {mode_text}
 
-Common classification instructions:
-- Historical rows are past approved and classified accounting decisions covering different types of invoice lines. They are semantic examples, not exact string matches.
-- Understand the current description semantically and lexically when useful: identify the good or service, business activity, and accounting nature.
-- For each historical row, understand both what its description means and why it was assigned its approved account type. Then decide whether that reasoning applies to the current line.
-- Do not copy an account type merely because words overlap or because a row was retrieved. The current line must have the same or sufficiently close business meaning.
-- If a historical account type genuinely fits, return it and explain the semantic/accounting fit in `reason`.
-- If no historical account type fits, return `account_type` as "Unknown", infer the most appropriate general account type in `inferred_account_type`, and explain why the retrieved cases do not apply.
-- Do not choose or invent a GL code or segment value. A deterministic backend mapping is performed after your response.
-- Confidence must be a number from 0.0 to 1.0 and reflect classification certainty and semantic fit, not retrieval score.
+Policy constraints:
+- Do not emit GL codes, segment values, POs, invoice IDs, country, or any other payload fields.
+- Software, SaaS, subscriptions, operating-system licenses, Linux/RHEL, and unsupported tax natures must be Unknown unless an explicitly allowed approved type genuinely supports that nature.
+- Asset Clearing and Miscellaneous require clear accounting evidence; do not use them as generic fallbacks.
+- Missing numeric values are unknown, not zero. Use amounts only for consistency, unit-value, capitalization, and bulk-purchase reasoning; they are not currency bands.
+- If no allowed type is clearly supported, set account_type to Unknown and inferred_account_type to the best allowed type or null.
+- If account_type is not Unknown, inferred_account_type must be null.
+- Confidence is accounting certainty from 0.0 to 1.0, never a retrieval score.
 
-Return ONLY valid JSON with exactly these fields:
-{{
-  "line_description": {line_json},
-  "account_type": "<matched account type or Unknown>",
-  "inferred_account_type": null,
-  "reason": "<concise, accounting-focused explanation>",
-  "confidence": 0.0
-}}
-
-For a matching line, `inferred_account_type` must be null. For a non-matching line, `account_type` must be "Unknown" and `inferred_account_type` must contain the inferred general account type. Keep the reason concise but specific. No Markdown, code fences, or text outside the JSON object.
+Return ONLY a JSON object with exactly these fields:
+{{"line_description":"...","account_type":"...","inferred_account_type":null,"reason":"...","confidence":0.0}}
+No Markdown or text outside the JSON object.
 """
 
 
-def build_qualified_cases_prompt(
-    line_description: str,
-    historical_cases: list[dict[str, Any]],
-) -> str:
-    """Prompt for one or more cases that passed the similarity threshold."""
-    line_json = json.dumps(line_description, ensure_ascii=False)
-    return f"""You are an enterprise Accounts Payable account-type classifier.
-
-Classify the CURRENT invoice line using its business and accounting meaning. First identify what was purchased or received, such as a product, service, fee, subscription, travel item, or other transaction. Use semantic meaning and, when useful, meaningful lexical clues.
-
-The HISTORICAL CASES are approved accounting precedents. They passed the backend retrieval threshold and are strong hints, but retrieval similarity does not prove that their account types apply.
-
-Similarity score and retrieval rank are metadata only. Do not classify based on the score, rank, or word overlap alone. Compare the current line with each historical description and understand why its approved account type may or may not apply.
-
-If one historical account type clearly matches the current line's business and accounting nature:
-- Return that approved account type in account_type.
-- Copy its wording exactly. Do not rename, shorten, paraphrase, translate, or change capitalization, spacing, punctuation, or hyphen characters.
-- Set inferred_account_type to null.
-- Explain the semantic and accounting fit.
-
-If the historical cases do not clearly apply:
-- Return account_type as exactly "Unknown".
-- Set inferred_account_type to the best possible account type.
-- If a plausible historical account type exists, copy its wording exactly from the historical cases.
-- If no historical account type is meaningfully related, provide a concise general account type based on the current line and explain that no reliable historical precedent applies.
-- Explain why the historical cases do not fit and why the inference was made.
-
-If historical cases have different account types, select the one with the closest business and accounting meaning. Do not use majority voting. If multiple account types remain equally plausible, return Unknown.
-
-Do not return GL codes, segment values, mappings, or accounting entries. Confidence must reflect accounting certainty only, between 0.0 and 1.0. Return only valid JSON with exactly these fields:
-
-{{
-  "line_description": {line_json},
-  "account_type": "<exact historical account type or Unknown>",
-  "inferred_account_type": "<exact historical account type, general inferred type, or null>",
-  "reason": "<1–3 concise accounting-focused sentences>",
-  "confidence": 0.0
-}}
-
-CURRENT INVOICE LINE:
-{line_description}
-
-HISTORICAL CASES:
-{_historical_evidence(historical_cases)}
-
-Return no Markdown, code fences, or text outside the JSON object.
-"""
+def _legacy_feature(line_description: str) -> dict[str, Any]:
+    return {
+        "line_index": 0,
+        "vendor_name_norm": None,
+        "line_type_norm": "UNKNOWN",
+        "line_description": line_description,
+        "quantity_invoiced": None,
+        "unit_price": None,
+        "line_amount": None,
+        "sibling_descriptions": [],
+    }
 
 
-def build_weak_cases_prompt(
-    line_description: str,
-    historical_cases: list[dict[str, Any]],
-) -> str:
-    """Prompt for the nearest cases when no case passed the threshold."""
-    """Prompt for the nearest cases when no case passed the threshold."""
-    line_json = json.dumps(line_description, ensure_ascii=False)
-    return f"""You are an enterprise Accounts Payable account-type classifier.
-
-Classify the CURRENT invoice line independently using its business and accounting meaning. First identify what was purchased or received, such as a product, service, fee, subscription, travel item, or other transaction. Use semantic meaning and, when useful, meaningful lexical clues.
-
-The HISTORICAL CASES are approved accounting decisions, but none passed the backend similarity threshold. They are the nearest available references and may be weak, unrelated, or misleading. Treat them only as possible accounting hints.
-
-Similarity score and retrieval rank are metadata only. Never classify based on score, rank, proximity, or word overlap alone. Do not force a classification just because five historical cases are provided.
-
-Compare the current line with each historical description and understand why its approved account type may or may not apply. Use a historical account type only when the current line genuinely has the same business and accounting nature.
-
-If one historical account type clearly matches:
-- Return that approved account type in account_type.
-- Copy its wording exactly. Do not rename, shorten, paraphrase, translate, or change capitalization, spacing, punctuation, or hyphen characters.
-- Set inferred_account_type to null.
-- Explain the semantic and accounting fit.
-
-If no historical account type clearly matches:
-- Return account_type as exactly "Unknown".
-- Set inferred_account_type to the best possible account type.
-- If a weak historical account type is still the closest reasonable candidate, copy its wording exactly from the historical cases.
-- If none is meaningfully related, provide a concise general account type based on the current line and explain that it is a general inference rather than a reliable historical precedent.
-- Explain why the historical cases do not fit and why the inference was made.
-
-If historical cases have different account types, select the one with the closest business and accounting meaning. Do not use majority voting. If multiple account types remain equally plausible, return Unknown.
-
-Do not return GL codes, segment values, mappings, or accounting entries. Confidence must reflect accounting certainty only, between 0.0 and 1.0. Return only valid JSON with exactly these fields:
-
-{{
-  "line_description": {line_json},
-  "account_type": "<exact historical account type or Unknown>",
-  "inferred_account_type": "<exact historical account type, general inferred type, or null>",
-  "reason": "<1–3 concise accounting-focused sentences>",
-  "confidence": 0.0
-}}
-
-CURRENT INVOICE LINE:
-{line_description}
-
-HISTORICAL CASES:
-{_historical_evidence(historical_cases)}
-
-Return no Markdown, code fences, or text outside the JSON object.
-"""
+def _allowed_from_cases(cases: list[dict[str, Any]]) -> list[str]:
+    return list(dict.fromkeys(str(case.get("account_type")) for case in cases if case.get("account_type")))
 
 
-def build_account_type_prompt(
-    line_description: str,
-    historical_cases: list[dict[str, Any]],
-) -> str:
+def build_qualified_cases_prompt(line_description: str, historical_cases: list[dict[str, Any]]) -> str:
+    return build_decision_prompt(
+        _legacy_feature(line_description),
+        historical_cases,
+        _allowed_from_cases(historical_cases),
+        evidence_mode="qualified",
+    )
+
+
+def build_weak_cases_prompt(line_description: str, historical_cases: list[dict[str, Any]]) -> str:
+    return build_decision_prompt(
+        _legacy_feature(line_description),
+        historical_cases,
+        _allowed_from_cases(historical_cases),
+        evidence_mode="weak",
+    )
+
+
+def build_account_type_prompt(line_description: str, historical_cases: list[dict[str, Any]]) -> str:
     """Backward-compatible alias for the qualified-evidence prompt."""
     return build_qualified_cases_prompt(line_description, historical_cases)

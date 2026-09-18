@@ -1,0 +1,20 @@
+streamlit==1.64.0
+pandas==3.0.5
+openpyxl==3.1.5
+oracledb==26.0.0
+oci==2.186.0
+langchain-oci==0.3.2
+oci-openai==1.1.0
+# oci-openai 1.1.0 is exercised with the installed OpenAI 3.x Responses SDK.
+openai==3.14.1
+python-dotenv==1.2.3
+pytest==8.4.2
+pydantic>=2.7,<3
+fastapi>=0.115,<1
+uvicorn[standard]>=0.30,<1
+httpx>=0.27,<1
+python-multipart>=0.0.9,<1
+pypdf>=5,<6
+pymupdf>=1.27.2,<2
+pillow>=12,<13
+tenacity>=9,<10
