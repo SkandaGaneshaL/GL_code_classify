@@ -1,6 +1,6 @@
 from types import SimpleNamespace
 
-from classification import classify_invoice
+from classification import classify_invoice, classify_line
 from segment3_ranker import RankerCalibrationArtifact
 
 
@@ -45,8 +45,14 @@ class FakeLLM:
         )
 
 
-def test_identity_cache_skips_embedding_and_maps_segment3():
+class FailingLLM:
+    def call(self, prompt, **kwargs):
+        raise RuntimeError("provider unavailable")
+
+
+def test_identity_cache_is_evidence_and_llm_still_classifies():
     embedder = FakeEmbedder()
+    llm = FakeLLM("Supplies")
     db = FakeDB(
         identity={
             "real_post_count": 2,
@@ -56,14 +62,17 @@ def test_identity_cache_skips_embedding_and_maps_segment3():
         }
     )
     result = classify_invoice(
-        {"VendorName": "Acme", "LineItems": [{"LineDescription": "paper"}]},
+        {"VendorName": "Acme", "LineItems": [{"LineDescription": "paper", "LineType": "ITEM"}]},
         embedder,
         db_module=db,
+        llm_client_factory=lambda: llm,
     )["lines"][0]
     assert result["account_type"] == "Supplies"
     assert result["segment3"] == "60520"
-    assert embedder.calls == []
-    assert result["llm_skipped"] is True
+    assert embedder.calls
+    assert result["llm_called"] is True
+    assert result["llm_route"] == "llm"
+    assert llm.calls == 1
 
 
 def test_software_is_unknown_even_when_retrieval_has_a_mapped_case():
@@ -107,7 +116,7 @@ def test_confidence_breakdown_exposes_contributions_and_penalties():
         ]
     )
     result = classify_invoice(
-        {"LineItems": [{"LineDescription": "office paper"}]},
+        {"VendorName": "Acme", "LineItems": [{"LineDescription": "office paper", "LineType": "ITEM"}]},
         FakeEmbedder(),
         db_module=db,
         llm_client_factory=lambda: llm,
@@ -195,9 +204,125 @@ def test_compatible_ranker_artifact_is_only_source_of_live_percentage():
                 retrieval_weight=1.0,
             )
         },
+        llm_client_factory=lambda: FakeLLM("Supplies"),
     )["lines"][0]
 
     assert result["confidence_source"] == "calibrated_ranker"
     assert result["confidence_status"] == "calibrated"
     assert result["calibrated_correctness_probability"] == result["ranked_candidates"][0]["calibrated_probability"]
     assert result["decision"] == "REVIEW_REQUIRED"
+
+
+def test_strict_finance_mode_requires_active_coa_artifacts():
+    result = classify_invoice(
+        {"VendorName": "Acme", "LineItems": [{"LineDescription": "office paper", "LineType": "ITEM"}]},
+        FakeEmbedder(),
+        db_module=FakeDB(cases=[{"id": 1, "account_type": "Supplies", "rrf_score": 0.9}]),
+        classification_context={"strict_finance": True},
+        llm_client_factory=lambda: FakeLLM("Supplies"),
+    )["lines"][0]
+    assert result["segment3"] is None
+    assert result["coa_validation"]["reason"] == "finance_coa_artifact_required"
+    assert result["decision"] == "REVIEW_REQUIRED"
+
+
+def test_missing_vendor_still_calls_llm_and_requires_review():
+    llm = FakeLLM("Supplies")
+    result = classify_invoice(
+        {"LineItems": [{"LineDescription": "office paper", "LineType": "ITEM"}]},
+        FakeEmbedder(),
+        db_module=FakeDB(cases=[{"account_type": "Supplies", "rrf_score": 0.9}]),
+        llm_client_factory=lambda: llm,
+    )["lines"][0]
+    assert llm.calls == 1
+    assert result["llm_route"] == "llm"
+    assert result["decision_band"] == "REVIEW_REQUIRED"
+    assert "missing_vendor" in result["review_reasons"]
+    assert result["segment3"] == "60520"
+
+
+def test_missing_line_type_still_calls_llm_and_requires_review():
+    llm = FakeLLM("Supplies")
+    result = classify_invoice(
+        {"VendorName": "Acme", "LineItems": [{"LineDescription": "office paper"}]},
+        FakeEmbedder(),
+        db_module=FakeDB(cases=[{"account_type": "Supplies", "rrf_score": 0.9}]),
+        llm_client_factory=lambda: llm,
+    )["lines"][0]
+    assert llm.calls == 1
+    assert result["llm_called"] is True
+    assert "missing_line_type" in result["review_reasons"]
+    assert result["decision_band"] == "REVIEW_REQUIRED"
+
+
+def test_no_history_uses_full_taxonomy_for_constrained_llm():
+    llm = FakeLLM("Supplies")
+    result = classify_invoice(
+        {"VendorName": "Acme", "LineItems": [{"LineDescription": "office paper", "LineType": "ITEM"}]},
+        FakeEmbedder(),
+        db_module=FakeDB(),
+        llm_client_factory=lambda: llm,
+    )["lines"][0]
+    assert llm.calls == 1
+    assert result["llm_route"] == "llm"
+    assert result["segment3"] == "60520"
+
+
+def test_uncertain_only_preserves_retrieval_fast_path():
+    llm = FakeLLM("Supplies")
+    result = classify_invoice(
+        {"VendorName": "Acme", "LineItems": [{"LineDescription": "office paper", "LineType": "ITEM"}]},
+        FakeEmbedder(),
+        db_module=FakeDB(cases=[
+            {"account_type": "Supplies", "rrf_score": 0.9},
+            {"account_type": "Supplies", "rrf_score": 0.8},
+            {"account_type": "Supplies", "rrf_score": 0.7},
+        ]),
+        classification_context={"llm_routing_mode": "uncertain_only"},
+        llm_client_factory=lambda: llm,
+    )["lines"][0]
+    assert llm.calls == 0
+    assert result["llm_called"] is False
+    assert result["llm_route"] == "retrieval_evidence"
+
+
+def test_missing_description_does_not_call_llm():
+    llm = FakeLLM("Supplies")
+    result = classify_invoice(
+        {"VendorName": "Acme", "LineItems": [{"LineDescription": "", "LineType": "ITEM"}]},
+        FakeEmbedder(),
+        db_module=FakeDB(),
+        llm_client_factory=lambda: llm,
+    )["lines"][0]
+    assert llm.calls == 0
+    assert result["llm_route"] == "quality_block"
+    assert result["llm_skip_reason"] == "missing_line_description"
+
+
+def test_llm_failure_is_explicitly_reported():
+    result = classify_invoice(
+        {"VendorName": "Acme", "LineItems": [{"LineDescription": "office paper", "LineType": "ITEM"}]},
+        FakeEmbedder(),
+        db_module=FakeDB(cases=[{"account_type": "Supplies", "rrf_score": 0.9}]),
+        llm_client_factory=lambda: FailingLLM(),
+    )["lines"][0]
+    assert result["llm_called"] is True
+    assert result["llm_route"] == "llm_error"
+    assert "provider unavailable" in result["llm_failure_reason"]
+    assert result["segment3"] is None
+
+
+def test_description_only_single_line_wrapper_calls_llm():
+    llm = FakeLLM("Supplies")
+    result = classify_line(
+        "Printer toner",
+        FakeEmbedder(),
+        settings=None,
+        db_module=FakeDB(cases=[{"account_type": "Supplies", "rrf_score": 0.9}]),
+        llm_client_factory=lambda: llm,
+    )
+    assert llm.calls == 1
+    assert result["llm_called"] is True
+    assert result["llm_route"] == "llm"
+    assert result["decision_band"] == "REVIEW_REQUIRED"
+    assert result["segment3"] == "60520"

@@ -91,6 +91,11 @@ COA_VALUE_SET_PATH = normalize_path(os.getenv("GL_COA_VALUE_SET_PATH"), BASE_DIR
 COA_COMBINATION_RULES_PATH = normalize_path(os.getenv("GL_COA_COMBINATION_RULES_PATH"), BASE_DIR)
 SEGMENT3_TAXONOMY_PATH = normalize_path(os.getenv("GL_SEGMENT3_TAXONOMY_PATH"), BASE_DIR)
 COA_VERSION = os.getenv("GL_COA_VERSION", "segment3-demo-16-v1").strip() or "segment3-demo-16-v1"
+STRICT_FINANCE_MODE = os.getenv("GL_STRICT_FINANCE_MODE", "0").lower() in {"1", "true", "yes"}
+MIN_EXTRACTION_QUALITY = float(os.getenv("GL_MIN_EXTRACTION_QUALITY", "0.80"))
+LLM_ROUTING_MODE = os.getenv("GL_LLM_ROUTING_MODE", "always").strip().lower() or "always"
+if LLM_ROUTING_MODE not in {"always", "uncertain_only", "never"}:
+    raise ValueError("GL_LLM_ROUTING_MODE must be always, uncertain_only, or never")
 LLM_CANDIDATE_SCORING = os.getenv("LLM_CANDIDATE_SCORING", "off").strip().lower() in {"1", "true", "yes", "on"}
 LLM_CANDIDATE_SCORING_MODE = os.getenv("LLM_CANDIDATE_SCORING_MODE", "off").strip().lower() or "off"
 LLM_GUIDED_MODE = os.getenv("LLM_GUIDED_MODE", "off").strip().lower() or "off"

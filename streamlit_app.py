@@ -3,6 +3,7 @@ from __future__ import annotations
 import hashlib
 from importlib.metadata import PackageNotFoundError, version
 import os
+from contextlib import nullcontext
 from typing import Any
 
 from dotenv import load_dotenv
@@ -23,7 +24,7 @@ try:
     from .embeddings import create_document_embedder, embed_documents, load_oci_settings
     from .evaluation import load_evaluation_rows, run_evaluation
     from .feature_pack import build_line_feature
-    from .split_review import accept_split_suggestions, merge_split_suggestions
+    from .split_review import accept_split_suggestions, merge_split_suggestions, persist_split_decision
     from .invoice_pipeline import InvoiceClassificationPipeline, InvoicePipelineError
 except ImportError:  # Supports streamlit run streamlit_app.py from this folder.
     import db_utils
@@ -40,7 +41,7 @@ except ImportError:  # Supports streamlit run streamlit_app.py from this folder.
     from embeddings import create_document_embedder, embed_documents, load_oci_settings
     from evaluation import load_evaluation_rows, run_evaluation
     from feature_pack import build_line_feature
-    from split_review import accept_split_suggestions, merge_split_suggestions
+    from split_review import accept_split_suggestions, merge_split_suggestions, persist_split_decision
     from invoice_pipeline import InvoiceClassificationPipeline, InvoicePipelineError
 
 
@@ -80,6 +81,7 @@ def _runtime_config_fingerprint() -> str:
                     "OCI_COMPARTMENT_ID",
                     "OCI_PROFILE",
                     "GL_CAPABILITY_PROBE_CACHE_VERSION",
+                    "GL_LLM_ROUTING_MODE",
                 )
             ),
         ]
@@ -126,6 +128,7 @@ def _render_evaluation_metrics(evaluation: dict[str, Any]) -> None:
         _render_rate_metric("Auto-post precision", metrics.get("auto_post_precision") or {})
     with ninth:
         _render_rate_metric("Auto-post recall", metrics.get("auto_post_recall") or {})
+    _render_rate_metric("Invoice-level exact accuracy", metrics.get("invoice_level_accuracy") or {})
 
     classification_metrics = metrics.get("real_classification_metrics") or {}
     st.write(
@@ -148,8 +151,24 @@ def _render_evaluation_metrics(evaluation: dict[str, Any]) -> None:
         f"Recall@1: {metrics.get('retrieval_type_recall_at_1_metric', {}).get('percent', 'Unavailable')} · "
         f"Recall@3: {metrics.get('retrieval_type_recall_at_3_metric', {}).get('percent', 'Unavailable')} · "
         f"Recall@10: {metrics.get('retrieval_type_recall_at_10_metric', {}).get('percent', 'Unavailable')} · "
-        f"MRR: {metrics.get('retrieval_mrr', 'Unavailable')} · nDCG@3: {metrics.get('retrieval_ndcg_at_3', 'Unavailable')}"
+        f"MRR: {metrics.get('real_retrieval_mrr_percent', metrics.get('retrieval_mrr_percent', 'Unavailable'))} · "
+        f"nDCG@3: {metrics.get('real_retrieval_ndcg_at_3_percent', metrics.get('retrieval_ndcg_at_3_percent', 'Unavailable'))}"
     )
+    baseline_comparison = metrics.get("baseline_comparison") or {}
+    if baseline_comparison:
+        st.write("Baseline comparison")
+        st.dataframe(
+            [
+                {
+                    "Route": name,
+                    "Filled-cell accuracy": (values.get("filled_cell_accuracy_metric") or {}).get("percent", "Unavailable"),
+                    "Coverage": (values.get("coverage") or {}).get("percent", "Unavailable"),
+                    "Strict accuracy": (values.get("strict_accuracy") or {}).get("percent", "Unavailable"),
+                }
+                for name, values in baseline_comparison.items()
+            ],
+            hide_index=True,
+        )
     per_class = classification_metrics.get("per_class") or {}
     if per_class:
         st.dataframe(
@@ -271,16 +290,16 @@ def _record_correction(result: dict[str, Any], selected_type: str, document_embe
         db_utils.promote_correction_to_history(feature, selected_type, vector, mapping)
 
 
-def _render_case(case: dict[str, Any]) -> None:
+def _render_case(case: dict[str, Any], rank: int | None = None) -> None:
     st.caption(
-        f"{case.get('account_type') or 'Unknown'} · {case.get('line_description') or ''}"
-        f" · similarity {case.get('similarity_score') if case.get('similarity_score') is not None else 'n/a'}"
+        f"Rank {rank if rank is not None else '—'} · {case.get('account_type') or 'Unknown'} · "
+        f"{case.get('line_description') or ''}"
     )
 
 
-def _render_confidence_breakdown(result: dict[str, Any]) -> None:
+def _render_confidence_breakdown(result: dict[str, Any], *, nested: bool = False) -> None:
     breakdown = result.get("confidence_breakdown") or {}
-    with st.expander("Evidence and confidence diagnostics"):
+    with (nullcontext() if nested else st.expander("Evidence and confidence diagnostics")):
         metric_left, metric_right = st.columns(2)
         with metric_left:
             probability = result.get("calibrated_correctness_probability")
@@ -339,7 +358,7 @@ def _render_confidence_breakdown(result: dict[str, Any]) -> None:
             st.info(breakdown.get("override_reason", "Identity cache supplied a deterministic result."))
 
 
-def _render_logprob_explanation(result: dict[str, Any]) -> None:
+def _render_logprob_explanation(result: dict[str, Any], *, nested: bool = False) -> None:
     explanation = result.get("logprob_explanation") or {}
     status = explanation.get("status", "not_called")
     evidence_scope = explanation.get("evidence_scope", "selected_only")
@@ -352,7 +371,7 @@ def _render_logprob_explanation(result: dict[str, Any]) -> None:
         except (TypeError, ValueError):
             return "—"
 
-    with st.expander("Account-type token logprobs"):
+    with (nullcontext() if nested else st.expander("Account-type token logprobs")):
         if status == "not_called":
             st.info("LLM was skipped by the retrieval cascade. Account-type logprobs are not applicable to this line.")
             return
@@ -515,34 +534,50 @@ def _render_line(result: dict[str, Any], document_embedder: Any) -> None:
             split_left, split_right = st.columns(2)
             with split_left:
                 if st.button("Accept split for coding review", key=f"accept_split_{index}"):
-                    st.session_state[f"split_decision_{index}"] = accept_split_suggestions(
+                    decision = accept_split_suggestions(
                         split_suggestions, split_suggestions.get("children") or []
                     )
+                    st.session_state[f"split_decision_{index}"] = decision
+                    try:
+                        persist_split_decision(
+                            db_utils,
+                            source_line_id=str(result.get("line_index", index)),
+                            decision=decision,
+                        )
+                    except Exception as exc:
+                        st.warning(f"Split review is visible but could not be persisted: {exc}")
             with split_right:
                 if st.button("Merge split back", key=f"merge_split_{index}"):
-                    st.session_state[f"split_decision_{index}"] = merge_split_suggestions(
+                    decision = merge_split_suggestions(
                         split_suggestions.get("children") or []
                     )
+                    st.session_state[f"split_decision_{index}"] = decision
+                    try:
+                        persist_split_decision(
+                            db_utils,
+                            source_line_id=str(result.get("line_index", index)),
+                            decision=decision,
+                        )
+                    except Exception as exc:
+                        st.warning(f"Split review is visible but could not be persisted: {exc}")
             if st.session_state.get(f"split_decision_{index}"):
                 st.info("Split decision recorded for review; no Segment 3 was assigned.")
         with right:
             st.write(f"LLM: {'called' if result.get('llm_called') else 'skipped'}")
-            st.write(f"Logprob confidence source: `{result.get('logprob_confidence_source') or 'none'}`")
+            st.write(f"LLM route: `{result.get('llm_route') or 'unknown'}`")
+            if result.get("llm_skip_reason"):
+                st.caption(f"LLM skip reason: {result['llm_skip_reason']}")
+            if result.get("llm_failure_reason"):
+                st.error(f"LLM failure: {result['llm_failure_reason']}")
             if result.get("llm_called"):
                 st.write(
                     f"Provider route: `{result.get('llm_provider') or 'unknown'}` · "
                     f"`{result.get('llm_request_mode') or 'unknown'}`"
                 )
             logprob_status = result.get("logprob_status") or "not_called"
-            if result.get("logprob_margin") is not None:
-                st.write(
-                    f"Account-type logprob margin: **{float(result['logprob_margin']):.4f}** "
-                    f"(`{logprob_status}`)"
-                )
-            else:
-                st.write(f"Account-type logprobs: `{logprob_status}`")
             st.write(f"Line type: `{result.get('line_type_norm') or 'UNKNOWN'}`")
-            st.write(f"Competing types: {', '.join(result.get('candidate_types') or []) or 'none'}")
+            top3_types = result.get("top3_candidate_types") or result.get("candidate_types") or []
+            st.write(f"Top review types: {', '.join(top3_types[:3]) or 'none'}")
             st.write(f"Conflict flags: {', '.join(result.get('conflict_flags') or []) or 'none'}")
         st.info(result.get("reason") or "No reason returned.")
         ranked_candidates = result.get("ranked_candidates") or []
@@ -554,34 +589,37 @@ def _render_line(result: dict[str, Any], document_embedder: Any) -> None:
                 st.dataframe(
                     [
                         {
+                            "Rank": index + 1,
                             "Account type": candidate.get("account_type"),
                             "Segment 3": candidate.get("segment3"),
-                            "Retrieval score": candidate.get("retrieval_score"),
+                            "Evidence": "hybrid retrieval candidate",
                             "Calibrated probability": (
                                 "Unavailable"
                                 if candidate.get("calibrated_probability") is None
                                 else f"{float(candidate['calibrated_probability']) * 100:.2f}%"
                             ),
                         }
-                        for candidate in ranked_candidates
+                        for index, candidate in enumerate(ranked_candidates)
                     ],
                     hide_index=True,
                 )
-        if result.get("llm_called"):
-            _render_token_usage(
-                "Classification token usage",
-                result.get("llm_usage_summary"),
-                records=list(result.get("llm_usage_records") or []),
-            )
-        else:
-            _render_token_usage("Classification token usage", None, not_called=True)
-        _render_confidence_breakdown(result)
-        _render_logprob_explanation(result)
+        with st.expander("Engineering diagnostics", expanded=False):
+            st.write(f"Logprob confidence source: `{result.get('logprob_confidence_source') or 'none'}`")
+            if result.get("llm_called"):
+                _render_token_usage(
+                    "Classification token usage",
+                    result.get("llm_usage_summary"),
+                    records=list(result.get("llm_usage_records") or []),
+                )
+            else:
+                _render_token_usage("Classification token usage", None, not_called=True)
+            _render_confidence_breakdown(result, nested=True)
+            _render_logprob_explanation(result, nested=True)
         cases = result.get("retrieved_cases") or []
         if cases:
             with st.expander("Historical evidence"):
-                for case in cases[:3]:
-                    _render_case(case)
+                for rank, case in enumerate(cases[:3], start=1):
+                    _render_case(case, rank)
         options = list(
             dict.fromkeys(
                 [
@@ -612,6 +650,7 @@ def _render_line(result: dict[str, Any], document_embedder: Any) -> None:
 st.set_page_config(page_title="Segment 3 Natural Account Classifier", layout="wide")
 st.title("Segment 3 Natural Account Classification")
 st.caption("AP_INVOICE extraction → strict six-field projection → per-line cascade classification")
+st.warning("Shadow mode — auto-post disabled. Percentages appear only after Finance-approved calibration.")
 _refresh_local_classifier_environment()
 active_model = os.getenv("LLM_MODEL", CLASSIFIER_MODEL_ID).strip()
 active_provider = os.getenv("CLASSIFIER_PROVIDER", CLASSIFIER_PROVIDER).strip() or CLASSIFIER_PROVIDER
@@ -624,7 +663,8 @@ except RuntimeError:
 st.caption(
     f"Classifier model: `{active_model or 'not configured'}` · "
     f"active route: `{active_route}` · OCI SDK: `{_oci_sdk_version()}` · "
-    f"configuration: `{configuration_state}` · native reasoning: `{LLM_NATIVE_REASONING_EFFORT}`"
+    f"configuration: `{configuration_state}` · native reasoning: `{LLM_NATIVE_REASONING_EFFORT}` · "
+    f"LLM routing: `{os.getenv('GL_LLM_ROUTING_MODE', 'always')}`"
 )
 required_model = os.getenv("GL_REQUIRED_CLASSIFIER_MODEL", REQUIRED_CLASSIFIER_MODEL).strip()
 if active_model != required_model:
@@ -695,7 +735,6 @@ if result:
         with st.expander("Extraction diagnostics"):
             st.json(diagnostics)
     st.subheader(f"Classification results ({result['line_count']} lines)")
-    _render_token_usage("Invoice classification token usage", result.get("classification_usage"))
     if result["lines"]:
         _, document_embedder = get_runtime(_runtime_config_fingerprint())
         for line_result in result["lines"]:
@@ -724,7 +763,9 @@ with st.expander("Evaluation dashboard", expanded=False):
     )
     if st.button("Run frozen TEST evaluation", key="run_test_evaluation"):
         try:
-            evaluation_rows = load_evaluation_rows(BASE_DIR / "gl_account_history_poc_120.xlsx")
+            workbook_path = BASE_DIR / "gl_account_history_poc_120.xlsx"
+            evaluation_rows = load_evaluation_rows(workbook_path)
+            history_rows = load_evaluation_rows(workbook_path, dataset_types=("HISTORY",))
             evaluation_pipeline, evaluation_embedder = get_runtime(_runtime_config_fingerprint())
 
             def classify_evaluation_row(row: Any, classification_context: dict[str, Any] | None = None) -> dict[str, Any]:
@@ -745,6 +786,7 @@ with st.expander("Evaluation dashboard", expanded=False):
                 evaluation_rows,
                 classify_evaluation_row,
                 "frozen-test",
+                history_rows=history_rows,
             )
         except Exception as exc:
             st.error(f"Evaluation could not be completed: {exc}")

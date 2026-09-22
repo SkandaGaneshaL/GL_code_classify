@@ -54,6 +54,7 @@ def one_case_per_account_type(cases: Iterable[dict[str, Any]], limit: int = 3) -
 def retrieval_summary(cases: list[dict[str, Any]]) -> dict[str, Any]:
     types = [str(case.get("account_type") or "Unknown") for case in cases]
     unique_types = list(dict.fromkeys(types))
+    top3_types = types[:3]
     top = cases[0] if cases else {}
     second = next((case for case in cases if case.get("account_type") != top.get("account_type")), None)
     top_score = float(top.get("rrf_score") or 0.0)
@@ -65,7 +66,8 @@ def retrieval_summary(cases: list[dict[str, Any]]) -> dict[str, Any]:
     return {
         "top_account_type": top.get("account_type"),
         "candidate_types": unique_types,
-        "top3_unanimous": bool(types) and len(set(types[:3])) == 1,
+        "top3_types": top3_types,
+        "top3_unanimous": bool(top3_types) and len(set(top3_types)) == 1,
         "retrieval_margin": margin,
         "top_score": top_score,
         "second_score": second_score,

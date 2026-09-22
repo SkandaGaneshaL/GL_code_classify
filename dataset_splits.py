@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from collections import defaultdict
 from datetime import datetime
+import hashlib
+import json
 from typing import Any, Iterable, Mapping
 
 
@@ -54,3 +56,32 @@ def split_real_rows_by_time(
         "test": ordered_groups[development_count + calibration_count :],
     }
     return {name: [row for group in selected for row in groups[group]] for name, selected in boundaries.items()}
+
+
+def build_dataset_splits(
+    rows: Iterable[Mapping[str, Any]],
+    *,
+    development_fraction: float = 0.70,
+    calibration_fraction: float = 0.15,
+    dataset_version: str = "unversioned",
+) -> dict[str, Any]:
+    """Build immutable chronological splits plus a reproducibility manifest."""
+    splits = split_real_rows_by_time(
+        rows,
+        development_fraction=development_fraction,
+        calibration_fraction=calibration_fraction,
+    )
+    groups = {
+        name: sorted({str(row.get("source_group_id")) for row in values})
+        for name, values in splits.items()
+    }
+    payload = {
+        "dataset_version": dataset_version,
+        "development_fraction": development_fraction,
+        "calibration_fraction": calibration_fraction,
+        "groups": groups,
+        "row_ids": {name: sorted(str(row.get("row_id") or row.get("invoice_distribution_id")) for row in values) for name, values in splits.items()},
+    }
+    encoded = json.dumps(payload, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    payload["manifest_sha256"] = hashlib.sha256(encoded).hexdigest()
+    return {**splits, "manifest": payload}

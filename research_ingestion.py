@@ -17,7 +17,16 @@ from urllib.parse import urlsplit, urlunsplit
 import httpx
 
 
-URL_PATTERN = re.compile(r"https?://[^\s\)\]>\"']+")
+URL_PATTERN = re.compile(
+    r"https?://[^\s\)\]>\"']+(?:\r?\n\s*(?!https?://)[A-Za-z0-9][^\s\)\]>\"']*)*"
+)
+
+
+def _clean_url_token(value: str) -> str:
+    """Join Markdown line-wrapped URLs and remove surrounding punctuation."""
+    cleaned = re.sub(r"\s+", "", str(value or ""))
+    cleaned = cleaned.strip("<>[](){}\u0060\"'")
+    return cleaned.rstrip(".,;:!\u3002\u0060")
 
 
 def _canonical_url(value: str) -> str | None:
@@ -36,6 +45,7 @@ def build_url_inventory(paths: Iterable[Path]) -> list[dict[str, Any]]:
     for path in paths:
         content = path.read_text(encoding="utf-8", errors="replace")
         for raw_url in URL_PATTERN.findall(content):
+            raw_url = _clean_url_token(raw_url)
             canonical = _canonical_url(raw_url)
             key = canonical or raw_url
             entry = entries.setdefault(
@@ -90,6 +100,7 @@ def fetch_inventory(
                     time.sleep(min(2**(attempt - 1), 4))
             entry["audit_run_id"] = audit_run_id
             entry["attempts"] = attempt
+            entry["retry_count"] = max(0, attempt - 1)
             entry["fetched_at"] = datetime.now(timezone.utc).isoformat()
             if response is None:
                 entry.update(

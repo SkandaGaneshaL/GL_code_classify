@@ -41,6 +41,9 @@ class EvaluationRow:
     legal_entity: str | None = None
     ledger: str | None = None
     chart_of_accounts: str | None = None
+    invoice_source: str | None = None
+    line_source: str | None = None
+    requester: str | None = None
     line_amount: float | None = None
     currency: str | None = None
     final_posted: bool | None = None
@@ -112,6 +115,9 @@ def load_evaluation_rows(
                 legal_entity=str(values.get("LEGAL_ENTITY_ID") or values.get("LEGAL_ENTITY") or "").strip() or None,
                 ledger=str(values.get("LEDGER_ID") or "").strip() or None,
                 chart_of_accounts=str(values.get("CHART_OF_ACCOUNTS_ID") or "").strip() or None,
+                invoice_source=str(values.get("INVOICE_SOURCE") or "").strip() or None,
+                line_source=str(values.get("LINE_SOURCE") or "").strip() or None,
+                requester=str(values.get("REQUESTER") or "").strip() or None,
                 line_amount=optional_float(values.get("LINE_AMOUNT")),
                 currency=str(values.get("CURRENCY_CODE") or values.get("CURRENCY") or "").strip() or None,
                 final_posted=(
@@ -146,6 +152,9 @@ def load_evaluation_rows(
                     "legal_entity": row.legal_entity,
                     "ledger": row.ledger,
                     "chart_of_accounts": row.chart_of_accounts,
+                    "invoice_source": row.invoice_source,
+                    "line_source": row.line_source,
+                    "requester": row.requester,
                     "line_type": row.line_type,
                     "line_description": row.description,
                     "line_amount": row.line_amount,
@@ -230,16 +239,18 @@ def _rate_metric(correct: int, total: int) -> dict[str, Any]:
     }
 
 
-def _is_filled(prediction: Mapping[str, Any], normalized_type: str) -> bool:
-    expected_segment = ACCOUNT_TYPE_TO_SEGMENT3.get(normalized_type)
+def _is_filled(prediction: Mapping[str, Any], normalized_type: str, taxonomy: Mapping[str, str] | None = None) -> bool:
+    expected_segment = (taxonomy or ACCOUNT_TYPE_TO_SEGMENT3).get(normalized_type)
     return bool(expected_segment) and str(prediction.get("segment3") or "").strip() == expected_segment
 
 
-def _has_invalid_segment3(prediction: Mapping[str, Any], normalized_type: str) -> bool:
+def _has_invalid_segment3(
+    prediction: Mapping[str, Any], normalized_type: str, taxonomy: Mapping[str, str] | None = None
+) -> bool:
     """Return true when a suggested type has no matching active taxonomy code."""
     if normalized_type in ABSTENTION_TYPES:
         return False
-    expected_segment = ACCOUNT_TYPE_TO_SEGMENT3.get(normalized_type)
+    expected_segment = (taxonomy or ACCOUNT_TYPE_TO_SEGMENT3).get(normalized_type)
     provided_segment = str(prediction.get("segment3") or "").strip()
     return bool(provided_segment) and provided_segment != expected_segment
 
@@ -248,12 +259,17 @@ def _is_auto(prediction: Mapping[str, Any]) -> bool:
     return str(prediction.get("decision_band") or prediction.get("decision") or "").upper() in AUTO_BANDS
 
 
-def _classification_metrics(rows: Sequence[EvaluationRow], predictions: Sequence[str]) -> dict[str, Any]:
+def _classification_metrics(
+    rows: Sequence[EvaluationRow],
+    predictions: Sequence[str],
+    taxonomy: Mapping[str, str] | None = None,
+) -> dict[str, Any]:
+    labels = tuple(taxonomy or ACCOUNT_TYPE_TO_SEGMENT3)
     per_class: dict[str, dict[str, Any]] = {}
     supported: list[dict[str, Any]] = []
     weighted_f1_numerator = 0.0
     total_support = 0
-    for label in TAXONOMY:
+    for label in labels:
         tp = sum(row.account_type == label and guess == label for row, guess in zip(rows, predictions))
         support = sum(row.account_type == label for row in rows)
         predicted = sum(guess == label for guess in predictions)
@@ -306,8 +322,6 @@ def _calibrated_confidence(prediction: Mapping[str, Any]) -> float | None:
     if source != "calibrated_ranker":
         return None
     value = prediction.get("calibrated_confidence")
-    if value is None:
-        value = prediction.get("logprob_signal")
     try:
         value = float(value)
     except (TypeError, ValueError):
@@ -315,13 +329,18 @@ def _calibrated_confidence(prediction: Mapping[str, Any]) -> float | None:
     return value if math.isfinite(value) and 0.0 <= value <= 1.0 else None
 
 
-def _calibration_metrics(rows: Sequence[EvaluationRow], predictions: Sequence[Mapping[str, Any]], normalized: Sequence[str]) -> dict[str, Any]:
+def _calibration_metrics(
+    rows: Sequence[EvaluationRow],
+    predictions: Sequence[Mapping[str, Any]],
+    normalized: Sequence[str],
+    taxonomy: Mapping[str, str] | None = None,
+) -> dict[str, Any]:
     scored: list[tuple[float, int]] = []
     for row, item, guess in zip(rows, predictions, normalized):
         if row.is_synthetic:
             continue
         confidence = _calibrated_confidence(item)
-        if confidence is None or not _is_filled(item, guess):
+        if confidence is None or not _is_filled(item, guess, taxonomy):
             continue
         scored.append((confidence, int(guess == row.account_type)))
     if not scored:
@@ -380,17 +399,22 @@ def _retrieval_ranking_metrics(rows: Sequence[EvaluationRow], candidates_by_row:
         rank = next(
             (
                 index
-                for index, candidate in enumerate(candidates[:3], start=1)
+                for index, candidate in enumerate(candidates, start=1)
                 if normalize_account_type(str(candidate.get("account_type") or "Unknown")) == row.account_type
             ),
             None,
         )
         reciprocal_ranks.append(1.0 / rank if rank else 0.0)
-        ndcgs.append(1.0 / math.log2(rank + 1) if rank else 0.0)
+        ndcgs.append(1.0 / math.log2(rank + 1) if rank and rank <= 3 else 0.0)
     denominator = len(rows)
+    mrr = sum(reciprocal_ranks) / denominator if denominator else None
+    ndcg = sum(ndcgs) / denominator if denominator else None
     return {
-        "retrieval_mrr": sum(reciprocal_ranks) / denominator if denominator else 0.0,
-        "retrieval_ndcg_at_3": sum(ndcgs) / denominator if denominator else 0.0,
+        "retrieval_mrr": mrr,
+        "retrieval_mrr_percent": format_percentage(mrr),
+        "retrieval_ndcg_at_3": ndcg,
+        "retrieval_ndcg_at_3_percent": format_percentage(ndcg),
+        "retrieval_ranking_evidence_count": denominator,
     }
 
 
@@ -400,14 +424,16 @@ def evaluate_predictions(
     retrieval_candidates: list[list[Mapping[str, Any]]] | None = None,
     latencies_seconds: list[float] | None = None,
     token_counts: list[int] | None = None,
+    active_taxonomy: Mapping[str, str] | None = None,
+    baseline_predictions: Mapping[str, Sequence[Mapping[str, Any]]] | None = None,
 ) -> dict[str, Any]:
     if len(rows) != len(predictions):
         raise ValueError("rows and predictions must have equal length")
     normalized_predictions = [normalize_account_type(str(item.get("account_type") or "Unknown")) for item in predictions]
     total = len(rows)
-    filled_indices = [index for index, value in enumerate(normalized_predictions) if _is_filled(predictions[index], value)]
+    filled_indices = [index for index, value in enumerate(normalized_predictions) if _is_filled(predictions[index], value, active_taxonomy)]
     correct_indices = [index for index in filled_indices if normalized_predictions[index] == rows[index].account_type]
-    auto_indices = [index for index, item in enumerate(predictions) if _is_auto(item) and _is_filled(item, normalized_predictions[index])]
+    auto_indices = [index for index, item in enumerate(predictions) if _is_auto(item) and _is_filled(item, normalized_predictions[index], active_taxonomy)]
     auto_correct = [index for index in auto_indices if normalized_predictions[index] == rows[index].account_type]
     real_indices = [index for index, row in enumerate(rows) if not row.is_synthetic]
     synthetic_indices = [index for index, row in enumerate(rows) if row.is_synthetic]
@@ -424,7 +450,7 @@ def evaluate_predictions(
     )
     skip_count = sum(bool(item.get("llm_skipped")) for item in predictions)
     invalid_code_count = sum(
-        _has_invalid_segment3(item, normalized_predictions[index]) for index, item in enumerate(predictions)
+        _has_invalid_segment3(item, normalized_predictions[index], active_taxonomy) for index, item in enumerate(predictions)
     )
     override_indices = [
         index
@@ -469,15 +495,35 @@ def evaluate_predictions(
         "synthetic_filled_cell_accuracy_metric": _rate_metric(len(synthetic_correct_indices), len(synthetic_filled_indices)),
         "invalid_code_rate": _rate_metric(invalid_code_count, total),
         "override_rate": _rate_metric(len(override_indices), len(filled_indices)),
-        "classification_metrics": _classification_metrics(rows, normalized_predictions),
+        "classification_metrics": _classification_metrics(rows, normalized_predictions, active_taxonomy),
         "real_classification_metrics": _classification_metrics(
             [rows[index] for index in real_indices],
             [normalized_predictions[index] for index in real_indices],
+            active_taxonomy,
         ),
-        "calibration_metrics": _calibration_metrics(rows, predictions, normalized_predictions),
+        "calibration_metrics": _calibration_metrics(rows, predictions, normalized_predictions, active_taxonomy),
         "input_quality_metrics": _input_quality_metrics(predictions),
-        "confusion_matrix": confusion_matrix((row.account_type for row in rows), normalized_predictions),
+        "confusion_matrix": confusion_matrix(
+            (row.account_type for row in rows),
+            normalized_predictions,
+            labels=tuple(active_taxonomy or ACCOUNT_TYPE_TO_SEGMENT3),
+        ),
     }
+    groups: dict[str, list[int]] = {}
+    for index, row in enumerate(rows):
+        groups.setdefault(row.source_group_id or row.row_id, []).append(index)
+    invoice_correct = sum(
+        int(all(index in correct_indices for index in indexes))
+        for indexes in groups.values()
+    )
+    result["invoice_level_accuracy"] = _rate_metric(invoice_correct, len(groups))
+    if baseline_predictions:
+        result["baseline_comparison"] = {
+            name: evaluate_predictions(
+                list(rows), list(values), active_taxonomy=active_taxonomy
+            )
+            for name, values in baseline_predictions.items()
+        }
     if retrieval_candidates is not None:
         for depth in (1, 3, 10):
             recall_hits = sum(
@@ -491,6 +537,26 @@ def evaluate_predictions(
             result[f"retrieval_type_recall_at_{depth}"] = recall_hits / total if total else 0.0
             result[f"retrieval_type_recall_at_{depth}_metric"] = _rate_metric(recall_hits, total)
         result.update(_retrieval_ranking_metrics(rows, retrieval_candidates))
+        real_row_indexes = [index for index, row in enumerate(rows) if not row.is_synthetic]
+        if real_row_indexes:
+            real_rows = [rows[index] for index in real_row_indexes]
+            real_candidates = [retrieval_candidates[index] for index in real_row_indexes]
+            result.update(
+                {
+                    f"real_{key}": value
+                    for key, value in _retrieval_ranking_metrics(real_rows, real_candidates).items()
+                }
+            )
+            for depth in (1, 3, 10):
+                hits = sum(
+                    row.account_type
+                    in {
+                        normalize_account_type(str(case.get("account_type") or "Unknown"))
+                        for case in candidates[:depth]
+                    }
+                    for row, candidates in zip(real_rows, real_candidates)
+                )
+                result[f"real_retrieval_type_recall_at_{depth}_metric"] = _rate_metric(hits, len(real_rows))
     if latencies_seconds is not None and latencies_seconds:
         ordered = sorted(latencies_seconds)
         result["latency_p50_seconds"] = _percentile(ordered, 0.50)
@@ -529,7 +595,15 @@ def _invoke_evaluation_classifier(classifier: Callable[..., Mapping[str, Any]], 
     return classifier(row)
 
 
-def run_evaluation(rows: list[EvaluationRow], classifier: Callable[[EvaluationRow], Mapping[str, Any]], name: str) -> dict[str, Any]:
+def run_evaluation(
+    rows: list[EvaluationRow],
+    classifier: Callable[[EvaluationRow], Mapping[str, Any]],
+    name: str,
+    *,
+    active_taxonomy: Mapping[str, str] | None = None,
+    baseline_predictions: Mapping[str, Sequence[Mapping[str, Any]]] | None = None,
+    history_rows: Sequence[EvaluationRow] | None = None,
+) -> dict[str, Any]:
     predictions: list[Mapping[str, Any]] = []
     latencies: list[float] = []
     for row in rows:
@@ -542,11 +616,31 @@ def run_evaluation(rows: list[EvaluationRow], classifier: Callable[[EvaluationRo
         if ranked is None:
             ranked = prediction.get("retrieved_cases") or []
         retrieval_candidates.append(list(ranked))
+    if baseline_predictions is None and history_rows is not None:
+        try:
+            from .segment3_baselines import (
+                exact_identity_predictions,
+                retrieval_predictions,
+                vendor_majority_predictions,
+            )
+        except ImportError:
+            from segment3_baselines import (
+                exact_identity_predictions,
+                retrieval_predictions,
+                vendor_majority_predictions,
+            )
+        baseline_predictions = {
+            "vendor_majority": vendor_majority_predictions(rows, history_rows),
+            "exact_identity": exact_identity_predictions(rows, history_rows),
+            "retrieval_only": retrieval_predictions(rows, retrieval_candidates),
+        }
     metrics = evaluate_predictions(
         rows,
         predictions,
         retrieval_candidates=retrieval_candidates,
         latencies_seconds=latencies,
+        active_taxonomy=active_taxonomy,
+        baseline_predictions=baseline_predictions,
     )
     return {"name": name, "metrics": metrics, "predictions": predictions}
 

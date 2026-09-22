@@ -33,6 +33,8 @@ def vendor_majority_predictions(
 ) -> list[dict[str, Any]]:
     """Predict the dominant posted account for each vendor, then global mode."""
     by_vendor: dict[str, Counter[str]] = defaultdict(Counter)
+    by_line_type: dict[str, Counter[str]] = defaultdict(Counter)
+    by_vendor_line_type: dict[tuple[str, str], Counter[str]] = defaultdict(Counter)
     global_counts: Counter[str] = Counter()
     for row in history_rows:
         if row.is_synthetic:
@@ -41,10 +43,19 @@ def vendor_majority_predictions(
         global_counts[label] += 1
         if row.vendor_name:
             by_vendor[_norm(row.vendor_name)][label] += 1
+        if row.line_type:
+            by_line_type[_norm(row.line_type)][label] += 1
+        by_vendor_line_type[(_norm(row.vendor_name), _norm(row.line_type))][label] += 1
     fallback = global_counts.most_common(1)[0][0] if global_counts else "Unknown"
     predictions = []
     for row in rows:
-        counts = by_vendor.get(_norm(row.vendor_name), Counter()) if row.vendor_name else Counter()
+        vendor_key = _norm(row.vendor_name)
+        line_key = _norm(row.line_type)
+        counts = by_vendor_line_type.get((vendor_key, line_key), Counter())
+        if not counts and vendor_key:
+            counts = by_vendor.get(vendor_key, Counter())
+        if not counts and line_key:
+            counts = by_line_type.get(line_key, Counter())
         predictions.append(_prediction(counts.most_common(1)[0][0] if counts else fallback))
     return predictions
 
@@ -97,4 +108,3 @@ def compare_baselines(
         name: evaluate_predictions(list(rows), list(predictions))
         for name, predictions in predictions_by_name.items()
     }
-

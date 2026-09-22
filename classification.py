@@ -24,11 +24,13 @@ try:
         IDENTITY_MIN_REAL_POSTS,
         LLM_LOGPROBS_SATURATION_THRESHOLD,
         LLM_LOGPROBS_CALIBRATION_PATH,
+        LLM_ROUTING_MODE,
         SEGMENT3_RANKER_CALIBRATION_PATH,
         MIN_SIMILARITY_SCORE,
         REVIEW_CONFIDENCE_THRESHOLD,
         RRF_K,
         SPARSE_TOP_K,
+        STRICT_FINANCE_MODE,
         VENDOR_DOMINANCE_THRESHOLD,
         VENDOR_MIN_REAL_POSTS,
     )
@@ -68,11 +70,13 @@ except ImportError:  # Supports running the files directly from this folder.
         IDENTITY_MIN_REAL_POSTS,
         LLM_LOGPROBS_SATURATION_THRESHOLD,
         LLM_LOGPROBS_CALIBRATION_PATH,
+        LLM_ROUTING_MODE,
         SEGMENT3_RANKER_CALIBRATION_PATH,
         MIN_SIMILARITY_SCORE,
         REVIEW_CONFIDENCE_THRESHOLD,
         RRF_K,
         SPARSE_TOP_K,
+        STRICT_FINANCE_MODE,
         VENDOR_DOMINANCE_THRESHOLD,
         VENDOR_MIN_REAL_POSTS,
     )
@@ -98,8 +102,13 @@ except ImportError:  # Supports running the files directly from this folder.
 REVIEW_ONLY_TYPES = frozenset({"Asset Clearing", "Miscellaneous"})
 COA_VERSION = CONFIG_COA_VERSION
 
+TAXONOMY_ARTIFACT_LOADED = False
 try:
-    ACCOUNT_TYPE_TO_SEGMENT3 = load_taxonomy_artifact(SEGMENT3_TAXONOMY_PATH)
+    if SEGMENT3_TAXONOMY_PATH is not None and SEGMENT3_TAXONOMY_PATH.is_file():
+        ACCOUNT_TYPE_TO_SEGMENT3 = load_taxonomy_artifact(SEGMENT3_TAXONOMY_PATH)
+        TAXONOMY_ARTIFACT_LOADED = True
+    else:
+        ACCOUNT_TYPE_TO_SEGMENT3 = dict(ACCOUNT_TYPE_TO_SEGMENT3)
 except (OSError, ValueError):
     # Keep the demo fallback for local regression tests, but expose the
     # failure through the unavailable COA validation status below.
@@ -287,6 +296,13 @@ def _blank_result(feature: dict[str, Any], reason: str, inferred: str | None = N
         "conflict_flags": [],
         "llm_called": False,
         "llm_skipped": True,
+        "llm_routing_mode": LLM_ROUTING_MODE,
+        "llm_route": "quality_block",
+        "llm_eligible": False,
+        "llm_attempted": False,
+        "llm_skip_reason": "quality_block",
+        "llm_failure_reason": None,
+        "llm_request_id": None,
         "llm_usage": None,
         "llm_usage_summary": None,
         "llm_usage_records": [],
@@ -300,7 +316,21 @@ def _blank_result(feature: dict[str, Any], reason: str, inferred: str | None = N
     }
 
 
-def _add_mapping(result: dict[str, Any], account_type: str) -> None:
+def _add_mapping(result: dict[str, Any], account_type: str, *, strict_finance: bool = False) -> None:
+    if strict_finance and (not TAXONOMY_ARTIFACT_LOADED or ACTIVE_COA_VALIDATOR is None):
+        result.update(
+            {
+                "gl_code": None,
+                **{f"segment{i}": None for i in range(1, 7)},
+                "mapping_source": "finance_artifact_required",
+                "mapping_row_count": 0,
+                "coa_validation": {
+                    "status": "unavailable",
+                    "reason": "finance_coa_artifact_required",
+                },
+            }
+        )
+        return
     mapping = map_account_type_to_segments(account_type)
     if mapping:
         result.update(mapping)
@@ -871,9 +901,22 @@ def classify_invoice(
     features = build_invoice_features(payload, classification_context=classification_context)
     calibrator = load_calibrator(LLM_LOGPROBS_CALIBRATION_PATH)
     classification_context = classification_context or {}
+    strict_value = classification_context.get("strict_finance", STRICT_FINANCE_MODE)
+    strict_finance = (
+        strict_value
+        if isinstance(strict_value, bool)
+        else str(strict_value).strip().lower() in {"1", "true", "yes", "on"}
+    )
+    routing_mode = str(classification_context.get("llm_routing_mode", LLM_ROUTING_MODE)).strip().lower()
+    if routing_mode not in {"always", "uncertain_only", "never"}:
+        raise ValueError("llm_routing_mode must be always, uncertain_only, or never")
     ranker_artifact = classification_context.get("ranker_calibration_artifact") or load_ranker_calibration(
         SEGMENT3_RANKER_CALIBRATION_PATH
     )
+    registered_artifact_hash = str(classification_context.get("registered_artifact_hash") or "").strip()
+    if registered_artifact_hash and ranker_artifact is not None:
+        if str(getattr(ranker_artifact, "artifact_sha256", "")) != registered_artifact_hash:
+            ranker_artifact = None
     coa_version = str(classification_context.get("coa_version") or COA_VERSION)
     ranker_feature_schema_version = classification_context.get("feature_schema_version")
     ranker_dataset_version = classification_context.get("dataset_version")
@@ -909,9 +952,18 @@ def classify_invoice(
         input_quality = assess_line_quality(feature)
         feature["input_quality"] = input_quality
         if not description:
-            results.append(_blank_result(feature, "LineDescription is empty; Segment 3 remains blank."))
+            result = _blank_result(feature, "LineDescription is empty; Segment 3 remains blank.")
+            result.update(
+                {
+                    "llm_routing_mode": routing_mode,
+                    "llm_route": "quality_block",
+                    "llm_eligible": False,
+                    "llm_skip_reason": "missing_line_description",
+                }
+            )
+            results.append(result)
             continue
-        if input_quality["blocks_classification"]:
+        if input_quality["blocks_llm"]:
             reasons = ", ".join(input_quality["review_reasons"])
             result = _blank_result(
                 feature,
@@ -921,8 +973,15 @@ def classify_invoice(
                 {
                     "decision_band": "REVIEW_REQUIRED",
                     "decision": "REVIEW_REQUIRED",
-                    "split_suggestions": atomize_line_description(
-                        description, line_amount=feature.get("line_amount")
+                    "llm_routing_mode": routing_mode,
+                    "llm_route": "compound_review" if "compound_account_nature" in input_quality.get("review_reasons", []) else "quality_block",
+                    "llm_eligible": False,
+                    "llm_skip_reason": reasons or "description_unavailable",
+                    "conflict_flags": list(input_quality.get("review_reasons", [])),
+                    "split_suggestions": (
+                        atomize_line_description(description, line_amount=feature.get("line_amount"))
+                        if "compound_account_nature" in input_quality.get("review_reasons", [])
+                        else {"status": "not_compound", "requires_review": True, "children": []}
                     ),
                 }
             )
@@ -961,6 +1020,7 @@ def classify_invoice(
             and identity.get("real_post_count", 0) >= IDENTITY_MIN_REAL_POSTS
             and identity_type in ACCOUNT_TYPE_TO_SEGMENT3
             and not feature["is_software_like"]
+            and routing_mode != "always"
         ):
             selected = identity_type
             result = _blank_result(feature, "")
@@ -994,6 +1054,11 @@ def classify_invoice(
                     "decision": "REVIEW",
                     "llm_called": False,
                     "llm_skipped": True,
+                    "llm_routing_mode": routing_mode,
+                    "llm_route": "identity_evidence",
+                    "llm_eligible": True,
+                    "llm_attempted": False,
+                    "llm_skip_reason": "identity_cache_match",
                     "identity_match": identity,
                     "vendor_prior": vendor_prior,
                     "vendor_name_norm": feature.get("vendor_name_norm"),
@@ -1003,7 +1068,7 @@ def classify_invoice(
                     "explainability_version": "v2",
                 }
             )
-            _add_mapping(result, selected)
+            _add_mapping(result, selected, strict_finance=strict_finance)
             results.append(result)
             continue
 
@@ -1050,23 +1115,35 @@ def classify_invoice(
             calibration_version=ranker_calibration_version,
             model_route=ranker_model_route,
             taxonomy=ACCOUNT_TYPE_TO_SEGMENT3,
+            require_strict_compatibility=strict_finance,
         )
         summary = retrieval_summary(cases)
+        # Keep the full candidate set for constrained LLM routing, but expose
+        # only the actual ranked top three to review surfaces and conflict
+        # policy.  The old implementation used the first three *unique*
+        # types from the entire fused list, which falsely marked unanimous
+        # evidence as interleaved.
         candidate_types = [normalize_account_type(value) for value in summary["candidate_types"] if value]
+        top3_candidate_types = [normalize_account_type(value) for value in summary.get("top3_types", []) if value]
         identity_types = [normalize_account_type(value) for value in ((identity or {}).get("account_types") or [])]
         allowed_types = [value for value in dict.fromkeys([*candidate_types, *identity_types]) if value in ACCOUNT_TYPE_TO_SEGMENT3]
         if not allowed_types and vendor_prior and vendor_prior.get("eligible"):
             prior_type = normalize_account_type(vendor_prior.get("dominant_account_type"))
             if prior_type in ACCOUNT_TYPE_TO_SEGMENT3:
                 allowed_types = [prior_type]
+        if not allowed_types and routing_mode == "always":
+            # No history is still classifiable by the constrained LLM. Keep
+            # the full approved taxonomy as the candidate set and retain the
+            # missing-evidence review reason in the result.
+            allowed_types = list(ACCOUNT_TYPE_TO_SEGMENT3)
 
         top_type = normalize_account_type(summary.get("top_account_type") or "")
-        if len(set(candidate_types[:3])) > 1:
+        if len(set(top3_candidate_types)) > 1:
             flags.append("interleaved_account_types")
         if cases and all(case.get("is_synthetic") == "Y" for case in cases):
             flags.append("synthetic_only_evidence")
         force_llm = bool(identity and identity.get("conflict")) or feature["is_software_like"] or feature["line_type_norm"] == "TAX" or not cases
-        if top_type in REVIEW_ONLY_TYPES and len(set(candidate_types[:3])) > 1:
+        if top_type in REVIEW_ONLY_TYPES and len(set(top3_candidate_types)) > 1:
             flags.append("asset_misc_ambiguity")
             force_llm = True
         vendor_agrees = bool(
@@ -1075,15 +1152,30 @@ def classify_invoice(
             and normalize_account_type(vendor_prior.get("dominant_account_type")) == top_type
         )
         strong_retrieval = bool(summary.get("top3_unanimous")) and bool(top_type) and float(summary.get("retrieval_margin") or 0) >= 0.6
-        skip_llm = not force_llm and (strong_retrieval or vendor_agrees) and top_type in ACCOUNT_TYPE_TO_SEGMENT3
+        skip_llm = (
+            routing_mode == "never"
+            or (
+                routing_mode == "uncertain_only"
+                and not force_llm
+                and (strong_retrieval or vendor_agrees)
+                and top_type in ACCOUNT_TYPE_TO_SEGMENT3
+            )
+        )
 
         llm_result: dict[str, Any] | None = None
+        llm_attempted = False
+        llm_called = False
+        llm_failure_reason: str | None = None
         confidence_source = "retrieval_only"
         calibrated_confidence: float | None = None
         calibration_auto_ready = False
         if skip_llm:
             selected_type = top_type
-            reason = "Hybrid retrieval produced a unanimous, well-separated account-type result; LLM was skipped."
+            reason = (
+                "LLM routing mode is never; deterministic evidence was used."
+                if routing_mode == "never"
+                else "Hybrid retrieval produced a unanimous, well-separated account-type result; LLM was skipped."
+            )
             # Retrieval agreement is useful evidence, but it is not a calibrated
             # probability and must never be promoted to an LLM confidence score.
             llm_signal = 0.0
@@ -1092,6 +1184,7 @@ def classify_invoice(
             result.update(
                 {
                     "candidate_types": candidate_types,
+                    "top3_candidate_types": top3_candidate_types,
                     "ranked_candidates": ranking["candidates"],
                     "ranker_confidence_status": ranking["confidence_status"],
                     "retrieved_cases": cases,
@@ -1099,6 +1192,11 @@ def classify_invoice(
                     "vendor_prior": vendor_prior,
                     "conflict_flags": flags,
                     "llm_skipped": True,
+                    "llm_routing_mode": routing_mode,
+                    "llm_route": "no_candidates",
+                    "llm_eligible": True,
+                    "llm_attempted": False,
+                    "llm_skip_reason": "no_approved_candidates",
                 }
             )
             results.append(result)
@@ -1112,11 +1210,13 @@ def classify_invoice(
             if stage_callback:
                 stage_callback(f"line_{feature['line_index']}_llm_running")
             try:
+                llm_attempted = True
                 client = (
                     get_default_classifier_client()
                     if llm_client_factory is OCIResponsesClient
                     else llm_client_factory()
                 )
+                llm_called = True
                 llm_result = _call_llm(client, prompt, allowed_types, description, calibrator)
                 selected_type = normalize_account_type(llm_result["account_type"])
                 reason = llm_result["reason"]
@@ -1124,17 +1224,25 @@ def classify_invoice(
                 calibrated_confidence = llm_result.get("calibrated_confidence")
                 confidence_source = str(llm_result.get("confidence_source") or "diagnostic_only")
                 calibration_auto_ready = bool(llm_result.get("calibration_auto_ready"))
-            except ValueError as exc:
+            except Exception as exc:
+                llm_failure_reason = f"{type(exc).__name__}: {exc}"
                 result = _blank_result(feature, f"LLM decision was invalid or unavailable: {exc}")
                 result.update(
                     {
                         "candidate_types": candidate_types,
+                        "top3_candidate_types": top3_candidate_types,
                         "retrieved_cases": cases,
                         "identity_match": identity,
                         "vendor_prior": vendor_prior,
                         "conflict_flags": flags,
-                        "llm_called": True,
+                        "llm_called": llm_called,
                         "llm_skipped": False,
+                        "llm_routing_mode": routing_mode,
+                        "llm_route": "llm_error",
+                        "llm_eligible": True,
+                        "llm_attempted": llm_attempted,
+                        "llm_skip_reason": None,
+                        "llm_failure_reason": llm_failure_reason,
                     }
                 )
                 results.append(result)
@@ -1164,6 +1272,7 @@ def classify_invoice(
                 {
                     "confidence": 0.0,
                     "candidate_types": candidate_types,
+                    "top3_candidate_types": top3_candidate_types,
                     "ranked_candidates": ranking["candidates"],
                     "ranker_confidence_status": ranking["confidence_status"],
                     "retrieved_cases": cases,
@@ -1172,6 +1281,12 @@ def classify_invoice(
                     "conflict_flags": flags,
                     "llm_called": llm_result is not None,
                     "llm_skipped": llm_result is None,
+                    "llm_routing_mode": routing_mode,
+                    "llm_route": "llm" if llm_result is not None else "retrieval_evidence",
+                    "llm_eligible": True,
+                    "llm_attempted": llm_attempted,
+                    "llm_skip_reason": "routing_policy" if llm_result is None else None,
+                    "llm_failure_reason": llm_failure_reason,
                     "llm_usage": (llm_result or {}).get("usage"),
                     "llm_usage_summary": (llm_result or {}).get("usage_summary"),
                     "llm_usage_records": list((llm_result or {}).get("usage_records") or []),
@@ -1215,7 +1330,7 @@ def classify_invoice(
             else None
         )
         confidence = float(calibrated_confidence) if calibrated_confidence is not None else heuristic_confidence
-        band = "REVIEW"
+        band = "REVIEW_REQUIRED" if input_quality.get("review_reasons") else "REVIEW"
         result = {
             "line_index": feature["line_index"],
             "line_description": description,
@@ -1228,6 +1343,7 @@ def classify_invoice(
             "decision_band": band,
             "decision": band,
             "candidate_types": candidate_types,
+            "top3_candidate_types": top3_candidate_types,
             "ranked_candidates": ranking["candidates"],
             "ranker_confidence_status": ranking["confidence_status"],
             "retrieved_cases": cases,
@@ -1238,9 +1354,16 @@ def classify_invoice(
             "line_amount": feature.get("line_amount"),
             "unit_price": feature.get("unit_price"),
             "quantity_invoiced": feature.get("quantity_invoiced"),
+            "input_quality": input_quality,
             "conflict_flags": flags,
             "llm_called": llm_result is not None,
             "llm_skipped": llm_result is None,
+            "llm_routing_mode": routing_mode,
+            "llm_route": "llm" if llm_result is not None else "retrieval_evidence",
+            "llm_eligible": True,
+            "llm_attempted": llm_attempted,
+            "llm_skip_reason": "routing_policy" if llm_result is None else None,
+            "llm_failure_reason": llm_failure_reason,
             "llm_usage": (llm_result or {}).get("usage"),
             "llm_usage_summary": (llm_result or {}).get("usage_summary"),
             "llm_usage_records": list((llm_result or {}).get("usage_records") or []),
@@ -1288,15 +1411,16 @@ def classify_invoice(
                 }
             )
         else:
-            _add_mapping(result, selected_type)
+            _add_mapping(result, selected_type, strict_finance=strict_finance)
         results.append(result)
         if stage_callback:
             stage_callback(f"line_{feature['line_index']}_complete")
 
-    results = [
-        apply_result_contract(result, input_quality=result.get("input_quality"))
-        for result in results
-    ]
+    normalized_results = []
+    for result in results:
+        result.setdefault("top3_candidate_types", list(result.get("candidate_types") or [])[:3])
+        normalized_results.append(apply_result_contract(result, input_quality=result.get("input_quality")))
+    results = normalized_results
     audit_writer = getattr(db_module, "record_classification_audit", None)
     if callable(audit_writer):
         for result in results:
@@ -1332,14 +1456,36 @@ def classify_line(
     top_k: int = DEFAULT_TOP_K,
     min_similarity_score: float = MIN_SIMILARITY_SCORE,
     stage_callback: Callable[[str], None] | None = None,
+    vendor: str | None = None,
+    line_type: str | None = None,
+    line_amount: Any | None = None,
+    unit_price: Any | None = None,
+    quantity_invoiced: Any | None = None,
+    force_llm: bool = False,
+    llm_client_factory: Callable[[], Any] = OCIResponsesClient,
+    db_module: Any = db_utils,
 ) -> dict[str, Any]:
     """Backward-compatible single-description CLI wrapper."""
-    payload = {"LineItems": [{"LineDescription": line_description}]}
+    line: dict[str, Any] = {"LineDescription": line_description}
+    if line_type is not None:
+        line["LineType"] = line_type
+    if line_amount is not None:
+        line["LineAmount"] = line_amount
+    if unit_price is not None:
+        line["UnitPrice"] = unit_price
+    if quantity_invoiced is not None:
+        line["QuantityInvoiced"] = quantity_invoiced
+    payload: dict[str, Any] = {"LineItems": [line]}
+    if vendor is not None:
+        payload["VendorName"] = vendor
     return classify_invoice(
         payload,
         embedder,
         settings=settings,
+        classification_context={"llm_routing_mode": "always"} if force_llm else None,
         top_k=top_k,
         min_similarity_score=min_similarity_score,
         stage_callback=stage_callback,
+        db_module=db_module,
+        llm_client_factory=llm_client_factory,
     )["lines"][0]

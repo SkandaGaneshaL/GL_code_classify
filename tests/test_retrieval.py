@@ -22,6 +22,19 @@ def test_retrieval_summary_detects_unanimity():
     assert summary["top_account_type"] == "Supplies"
 
 
+def test_retrieval_summary_reports_actual_top_three_types():
+    summary = retrieval_summary(
+        [
+            {"account_type": "Meals", "rrf_score": 0.04},
+            {"account_type": "Meals", "rrf_score": 0.03},
+            {"account_type": "Meals", "rrf_score": 0.02},
+            {"account_type": "Leases", "rrf_score": 0.01},
+        ]
+    )
+    assert summary["top3_types"] == ["Meals", "Meals", "Meals"]
+    assert summary["top3_unanimous"] is True
+
+
 def test_history_filters_default_to_history_and_exclude_evaluation_rows():
     clauses, params = _history_filters(
         dataset_types=("HISTORY",),

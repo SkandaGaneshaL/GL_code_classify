@@ -165,3 +165,25 @@ def test_run_evaluation_wires_retrieval_candidates_into_metric_contract():
 
     metrics = run_evaluation(rows, classifier, "unit")["metrics"]
     assert metrics["retrieval_type_recall_at_1_metric"]["percent"] == "100.00%"
+
+
+def test_mrr_uses_full_ranked_list_and_invoice_accuracy():
+    rows = [
+        EvaluationRow("r1", "paper", "Supplies", False, source_group_id="invoice-1"),
+        EvaluationRow("r2", "meal", "Meals", False, source_group_id="invoice-1"),
+    ]
+    predictions = [
+        {"account_type": "Supplies", "segment3": "60520"},
+        {"account_type": "Unknown", "segment3": None},
+    ]
+    metrics = evaluate_predictions(
+        rows,
+        predictions,
+        retrieval_candidates=[
+            [{"account_type": "Airfare"}, {"account_type": "Meals"}, {"account_type": "Hotel / Accomodation"}, {"account_type": "Supplies"}],
+            [{"account_type": "Meals"}],
+        ],
+    )
+    assert metrics["retrieval_mrr"] == pytest.approx((0.25 + 1.0) / 2)
+    assert metrics["invoice_level_accuracy"]["correct"] == 0
+    assert metrics["invoice_level_accuracy"]["total"] == 1

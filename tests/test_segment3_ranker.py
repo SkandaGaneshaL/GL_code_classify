@@ -74,3 +74,25 @@ def test_training_artifact_requires_separate_held_out_calibration():
     assert rank_candidates(candidates[0], artifact=artifact, coa_version="coa-v1")["confidence_status"] == "unavailable"
     calibrated = calibrate_ranker_artifact(artifact, candidates, ["Supplies", "Meals"])
     assert rank_candidates(candidates[0], artifact=calibrated, coa_version="coa-v1")["confidence_status"] == "calibrated"
+
+
+def test_strict_runtime_compatibility_requires_all_manifest_dimensions():
+    artifact = RankerCalibrationArtifact(
+        ranker_version="ranker-v1",
+        feature_schema_version="features-v1",
+        coa_version="coa-v1",
+        dataset_version="data-v1",
+        calibration_version="cal-v1",
+        model_route="segment3_ranker",
+    )
+    result = rank_candidates(
+        [{"account_type": "Supplies", "retrieval_score": 0.9}],
+        artifact=artifact,
+        coa_version="coa-v1",
+        feature_schema_version="features-v1",
+        dataset_version="data-v1",
+        calibration_version="cal-v1",
+        model_route="wrong-route",
+        require_strict_compatibility=True,
+    )
+    assert result["confidence_status"] == "unavailable"

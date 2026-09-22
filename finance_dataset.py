@@ -5,12 +5,6 @@ from __future__ import annotations
 from collections.abc import Iterable, Mapping
 from typing import Any
 
-try:
-    from .segment3_taxonomy import ACCOUNT_TYPE_TO_SEGMENT3
-except ImportError:
-    from segment3_taxonomy import ACCOUNT_TYPE_TO_SEGMENT3
-
-
 _REQUIRED_FIELDS = frozenset(
     {
         "invoice_distribution_id",
@@ -42,7 +36,8 @@ def _is_synthetic(value: Any) -> bool:
 
 
 def validate_finance_rows(
-    rows: Iterable[Mapping[str, Any]], *, strict: bool = False
+    rows: Iterable[Mapping[str, Any]], *, strict: bool = False,
+    active_coa: Any | None = None, certification: bool = False,
 ) -> dict[str, int]:
     """Validate governed rows and count rows eligible for real-data certification.
 
@@ -51,6 +46,9 @@ def validate_finance_rows(
         strict: Require the complete posted-distribution contract. The legacy
             POC workbook uses the compatibility default; certification loaders
             must pass ``strict=True``.
+        active_coa: Optional COA validator. Certification mode requires it.
+        certification: Enable production certification checks, including
+            active-COA validation and rejection of synthetic rows.
 
     Returns:
         Counts split between real and synthetic records.
@@ -59,6 +57,8 @@ def validate_finance_rows(
         ValueError: If a row lacks a required value or repeats a distribution id.
     """
     materialized = [dict(row) for row in rows]
+    if certification and active_coa is None:
+        raise ValueError("Certification requires the active Finance COA artifact")
     required_fields = set(_REQUIRED_FIELDS)
     if strict:
         required_fields.update(
@@ -69,6 +69,9 @@ def validate_finance_rows(
                 "segment5",
                 "segment6",
                 "natural_account_description",
+                "invoice_source",
+                "line_source",
+                "requester",
             }
         )
     seen_ids: set[str] = set()
@@ -86,7 +89,12 @@ def validate_finance_rows(
             if str(row.get("final_posted")).strip().upper() not in {"Y", "YES", "TRUE", "1"} and row.get("final_posted") is not True:
                 raise ValueError(f"Finance row {index} is not a final posted distribution")
             segment3 = str(row.get("segment3") or "").strip()
-            valid_segments = set(ACCOUNT_TYPE_TO_SEGMENT3.values())
+            # Certification must use an explicit Finance value set. Falling
+            # back to the demo taxonomy here would silently turn a missing or
+            # empty artifact into apparently valid production evidence.
+            valid_segments = set(getattr(active_coa, "segment_values", ()) or ())
+            if not valid_segments:
+                raise ValueError("Certification requires a non-empty active Finance Segment 3 value set")
             if segment3 not in valid_segments:
                 raise ValueError(f"Finance row {index} has an invalid Segment 3 value: {segment3!r}")
         distribution_id = str(row["invoice_distribution_id"]).strip()

@@ -3,13 +3,12 @@
 from __future__ import annotations
 
 import argparse
-import hashlib
 import json
 from dataclasses import replace
 from pathlib import Path
 from typing import Any
 
-from segment3_ranker import fit_ranker_artifact
+from segment3_ranker import calibrate_ranker_artifact, fit_ranker_artifact
 
 
 def load_jsonl(path: Path) -> list[dict[str, Any]]:
@@ -37,6 +36,7 @@ def main() -> None:
     parser.add_argument("--dataset-version", required=True)
     parser.add_argument("--calibration-version", required=True)
     parser.add_argument("--model-route", default="segment3_ranker")
+    parser.add_argument("--calibration-input", type=Path, help="Held-out real calibration JSONL")
     parser.add_argument("--register", action="store_true", help="Register the artifact in Oracle model registry")
     parser.add_argument("--finance-approved", action="store_true")
     args = parser.parse_args()
@@ -44,6 +44,7 @@ def main() -> None:
     rows = load_jsonl(args.input)
     candidates = [row.get("candidates") or row.get("retrieved_candidates") or [] for row in rows]
     gold = [str(row.get("gold_account_type") or row.get("account_type") or "") for row in rows]
+    synthetic = [str(row.get("is_synthetic") or "").strip().upper() in {"Y", "YES", "TRUE", "1"} for row in rows]
     artifact = fit_ranker_artifact(
         candidates,
         gold,
@@ -53,11 +54,28 @@ def main() -> None:
         dataset_version=args.dataset_version,
         calibration_version=args.calibration_version,
         model_route=args.model_route,
+        is_synthetic=synthetic,
     )
+    if args.calibration_input:
+        calibration_rows = load_jsonl(args.calibration_input)
+        calibration_candidates = [row.get("candidates") or row.get("retrieved_candidates") or [] for row in calibration_rows]
+        calibration_gold = [str(row.get("gold_account_type") or row.get("account_type") or "") for row in calibration_rows]
+        calibration_synthetic = [str(row.get("is_synthetic") or "").strip().upper() in {"Y", "YES", "TRUE", "1"} for row in calibration_rows]
+        artifact = calibrate_ranker_artifact(
+            artifact,
+            calibration_candidates,
+            calibration_gold,
+            calibration_version=args.calibration_version,
+            is_synthetic=calibration_synthetic,
+        )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     artifact = replace(artifact, finance_approved=args.finance_approved)
+    if args.finance_approved and not args.calibration_input:
+        raise SystemExit("Finance approval requires an independent real calibration JSONL")
+    if args.finance_approved and not artifact.release_ready():
+        raise SystemExit("Finance approval requires calibrated evidence, at least 200 accepted rows, and the Wilson target")
     artifact.save(args.output)
-    artifact_hash = hashlib.sha256(args.output.read_bytes()).hexdigest()
+    artifact_hash = artifact.artifact_sha256
     if args.register:
         from db_utils import register_model_artifact
 

@@ -56,3 +56,17 @@ def merge_split_suggestions(children: Iterable[Mapping[str, Any]]) -> dict[str, 
         "decision": "REVIEW_REQUIRED",
     }
 
+
+def persist_split_decision(
+    db_module: Any,
+    *,
+    source_line_id: str,
+    decision: Mapping[str, Any],
+    reviewer_id: str | None = None,
+) -> bool:
+    """Persist a clerk split decision when the configured audit sink exists."""
+    writer = getattr(db_module, "record_split_review_decision", None)
+    if not callable(writer):
+        return False
+    writer(source_line_id=source_line_id, decision=dict(decision), reviewer_id=reviewer_id)
+    return True

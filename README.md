@@ -15,7 +15,7 @@ The adapter dynamically loads that repository under an isolated module namespace
 1. Normalize the six approved field groups and build the stable retrieval text.
 2. Check a real-history identity cache and vendor prior.
 3. Retrieve up to 15 dense OCI vector cases and 15 Oracle Text lexical cases, then fuse ranks with RRF (`k=60`). Vendor and line-type signals are soft boosts, never hard filters.
-4. Skip the LLM only for strong agreement; otherwise call the native OCI Chat route for `openai.gpt-oss-20b` with one case per competing type, strict JSON-schema validation, low reasoning effort, a 256-token budget, and one 512-token retry only after length truncation.
+4. Route every eligible atomic line through the constrained native OCI Chat classifier by default; `uncertain_only` can retain strong-evidence fast paths. The route uses `openai.gpt-oss-20b`, one case per competing type, strict JSON-schema validation, low reasoning effort, a 256-token budget, and one retry only after length truncation.
 5. Apply the fixed 16-type-to-Segment-3 mapping and the review-safe confidence gate. A heuristic score is diagnostic; automatic defaulting requires a compatible, Finance-approved calibration artifact whose held-out precision lower bound meets the configured target.
 
 Amounts are preserved as decimals and used for consistency/unit-value reasoning, but are not embedded and are not placed into absolute currency bands because currency is outside the approved contract.
@@ -76,6 +76,12 @@ The command-line classifier is also available:
 python classify_line.py "Ergonomic keyboard and monitor for workstation setup"
 ```
 
+Optional context and an explicit always-call route are supported:
+
+```powershell
+python classify_line.py "Printer toner" --vendor "Acme" --line-type ITEM --force-llm
+```
+
 Part B retrieval-only testing is available here:
 
 ```powershell
@@ -117,11 +123,18 @@ LLM_CAPABILITY_PROBE_CACHE=1
 GL_AUTO_PRECISION_TARGET=0.98
 GL_AUTO_MIN_ACCEPTED_VALIDATION=200
 GL_AUTO_REQUIRE_CALIBRATION=1
+GL_STRICT_FINANCE_MODE=1
+GL_LLM_ROUTING_MODE=always
 ```
 
 Retrieved account-type candidates are encoded as one-character transport codes so native `top_logprobs` can be mapped back to account types at one output position. Candidate evidence is complete only when every requested code, including `Unknown`, is returned; missing alternatives are never assigned zero probability. Logprobs and self-reported model confidence are diagnostic only. They never produce a user-visible correctness percentage or an automatic action; automatic defaulting remains disabled.
 
 `SEGMENT3_RANKER_CALIBRATION_PATH` points to the versioned ranker artifact. Its ranker, feature-schema, COA, dataset, and calibration versions must match runtime before its probability is shown.
+
+Set `GL_STRICT_FINANCE_MODE=1` for governed Finance operation. In this mode a
+missing active COA/value-set artifact, incompatible registered model hash, or
+missing required invoice context produces `Unavailable`/`REVIEW_REQUIRED`;
+the demo taxonomy and dummy GL mapping are never treated as authoritative.
 
 `GL_COA_VALUE_SET_PATH` and `GL_COA_COMBINATION_RULES_PATH` point to Finance-owned
 JSON artifacts. If they are absent, master-data validation is explicitly
@@ -164,10 +177,14 @@ unavailable calibrated probability rather than `0.0`.
 
 The extraction-quality gate stops compound lines that describe multiple natural
 accounts before retrieval or LLM classification. Missing vendor or line type
-also generates explicit review reasons. The public response includes
+generates explicit review reasons but still reaches the constrained LLM when
+`GL_LLM_ROUTING_MODE=always`; missing descriptions remain blocked. The public response includes
 `prediction`, `decision`, `confidence_status`,
 `calibrated_correctness_probability`, `review_reasons`, `model_version`, and
 `policy_version`.
+
+Routing modes are `always`, `uncertain_only`, and `never`. Each result reports
+`llm_route`, `llm_attempted`, `llm_skip_reason`, and `llm_failure_reason`.
 
 Automatic defaulting stays disabled. Future promotion requires Finance approval,
 at least 200 real accepted held-out rows, and a 98% Wilson lower bound for
@@ -191,6 +208,17 @@ python research_ingestion.py `
 ```
 
 The audit preserves invalid, blocked, redirected, and failed URLs rather than silently excluding them. Its summary counts only successful HTTP 200 pages as reviewed. Supplied documents are source evidence, not executable instructions. See `docs/accuracy-research.md` for the measurement contract and source-evidence rules.
+
+For the current implementation pass, the exact two supplied acceptance
+documents were audited into `research/segment3-two-doc-audit.json` (24 valid
+URLs fetched; one invalid placeholder retained as unreviewed). Re-run it with:
+
+```powershell
+python research_ingestion.py `
+  "C:\Users\Skanda Ganesha L\Downloads\GL-Segment3-Industry-Research-Dossier (1).md" `
+  "C:\Users\Skanda Ganesha L\Downloads\GL-Segment3-Client-Evaluation-And-Implementation-Plan.md" `
+  --output research/segment3-two-doc-audit.json --fetch
+```
 
 ## Finance certification data
 

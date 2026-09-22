@@ -5,6 +5,8 @@ import hashlib
 import json
 import math
 import os
+import time
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
 
@@ -12,11 +14,11 @@ import oracledb
 from dotenv import load_dotenv
 
 try:
-    from .config import BASE_DIR, EMBEDDING_MODEL, EMBEDDING_OUTPUT_DIMENSIONS, POC_DIR
+    from .config import BASE_DIR, EMBEDDING_MODEL, EMBEDDING_OUTPUT_DIMENSIONS, POC_DIR, VENDOR_DOMINANCE_THRESHOLD, VENDOR_MIN_REAL_POSTS
     from .feature_pack import build_oracle_text_query
     from .retrieval import reciprocal_rank_fusion
 except ImportError:  # Supports running the files directly from this folder.
-    from config import BASE_DIR, EMBEDDING_MODEL, EMBEDDING_OUTPUT_DIMENSIONS, POC_DIR
+    from config import BASE_DIR, EMBEDDING_MODEL, EMBEDDING_OUTPUT_DIMENSIONS, POC_DIR, VENDOR_DOMINANCE_THRESHOLD, VENDOR_MIN_REAL_POSTS
     from feature_pack import build_oracle_text_query
     from retrieval import reciprocal_rank_fusion
 
@@ -27,6 +29,8 @@ TABLE_NAME = "AG_GL_ACCOUNT_HISTORY_CASES"
 OVERRIDE_TABLE_NAME = "AG_GL_ACCOUNT_CLASSIFICATION_OVERRIDES"
 AUDIT_TABLE_NAME = "AG_GL_CLASSIFICATION_AUDIT"
 MODEL_REGISTRY_TABLE_NAME = "AG_GL_MODEL_REGISTRY"
+SPLIT_REVIEW_TABLE_NAME = "AG_GL_SPLIT_REVIEW_DECISIONS"
+AUDIT_OUTBOX_PATH = BASE_DIR / "audit-outbox.jsonl"
 
 
 def _resolve(path_str: str | None) -> str | None:
@@ -84,6 +88,9 @@ def bulk_upsert_history(rows: Iterable[dict[str, Any]]) -> int:
             "final_posted",
             "natural_account_description",
             "source_group_id",
+            "invoice_source",
+            "line_source",
+            "requester",
         ):
             item.setdefault(key, None)
         item.setdefault("embedding_model", EMBEDDING_MODEL)
@@ -137,6 +144,9 @@ def bulk_upsert_history(rows: Iterable[dict[str, Any]]) -> int:
             FINAL_POSTED = :final_posted,
             NATURAL_ACCOUNT_DESCRIPTION = :natural_account_description,
             SOURCE_GROUP_ID = :source_group_id,
+            INVOICE_SOURCE = :invoice_source,
+            LINE_SOURCE = :line_source,
+            REQUESTER = :requester,
             EMBEDDING_MODEL = :embedding_model,
             EMBEDDING = :embedding,
             DATASET_TYPE = :dataset_type,
@@ -153,7 +163,7 @@ def bulk_upsert_history(rows: Iterable[dict[str, Any]]) -> int:
             LINE_AMOUNT, UNIT_PRICE, QUANTITY_INVOICED, EMBEDDING_MODEL, EMBEDDING,
             DATASET_TYPE, IS_SYNTHETIC, SOURCE_INVOICE_DISTRIBUTION_ID, SYNTHETIC_TYPE,
             VENDOR_NAME, LEGAL_ENTITY_ID, CURRENCY_CODE, FINAL_POSTED,
-            NATURAL_ACCOUNT_DESCRIPTION, SOURCE_GROUP_ID
+            NATURAL_ACCOUNT_DESCRIPTION, SOURCE_GROUP_ID, INVOICE_SOURCE, LINE_SOURCE, REQUESTER
         ) VALUES (
             :source_key, :invoice_id, :invoice_num, :invoice_date, :invoice_distribution_id,
             :invoice_line_number, :distribution_line_number, :dist_code_combination_id,
@@ -164,7 +174,7 @@ def bulk_upsert_history(rows: Iterable[dict[str, Any]]) -> int:
             :line_amount, :unit_price, :quantity_invoiced, :embedding_model, :embedding,
             :dataset_type, :is_synthetic, :source_invoice_distribution_id, :synthetic_type,
             :vendor_name, :legal_entity_id, :currency_code, :final_posted,
-            :natural_account_description, :source_group_id
+            :natural_account_description, :source_group_id, :invoice_source, :line_source, :requester
         )
     """
     conn = get_db_connection()
@@ -457,7 +467,7 @@ def get_vendor_prior(vendor_name_norm: str | None) -> dict[str, Any] | None:
             "dominant_account_type": dominant,
             "dominance": dominance,
             "entropy": entropy,
-            "eligible": total >= 5 and dominance >= 0.90,
+            "eligible": total >= VENDOR_MIN_REAL_POSTS and dominance >= VENDOR_DOMINANCE_THRESHOLD,
         }
     finally:
         conn.close()
@@ -609,46 +619,79 @@ def map_account_type_to_gl(account_type: str) -> dict[str, Any] | None:
 
 
 def record_classification_audit(
-    result: dict[str, Any], *, event_type: str = "CLASSIFICATION_RESULT"
+    result: dict[str, Any], *, event_type: str = "CLASSIFICATION_RESULT",
+    evidence_hash: str | None = None,
 ) -> None:
     """Persist a redacted classification trace for review and shadow metrics."""
     payload = dict(result)
     payload.pop("raw_invoice", None)
     payload.pop("document_bytes", None)
     payload_json = json.dumps(payload, default=str, sort_keys=True)
-    evidence_hash = hashlib.sha256(payload_json.encode("utf-8")).hexdigest()
-    conn = get_db_connection()
-    try:
-        with conn.cursor() as cur:
-            cur.execute(
-                f"""
-                INSERT INTO {AUDIT_TABLE_NAME} (
-                    EVENT_TYPE, EVIDENCE_HASH, MODEL_VERSION, POLICY_VERSION,
-                    DECISION, PREDICTED_ACCOUNT_TYPE,
-                    CALIBRATED_CORRECTNESS_PROBABILITY, PAYLOAD_JSON
-                ) VALUES (
-                    :event_type, :evidence_hash, :model_version, :policy_version,
-                    :decision, :predicted_account_type,
-                    :calibrated_probability, :payload_json
+    evidence_hash = evidence_hash or hashlib.sha256(payload_json.encode("utf-8")).hexdigest()
+    binds = {
+        "event_type": event_type,
+        "evidence_hash": evidence_hash,
+        "model_version": result.get("model_version") or result.get("classifier_version"),
+        "policy_version": result.get("policy_version") or "review-first-v1",
+        "decision": result.get("decision") or "REVIEW_REQUIRED",
+        "predicted_account_type": result.get("account_type"),
+        "calibrated_probability": result.get("calibrated_correctness_probability"),
+        "payload_json": payload_json,
+    }
+    last_error: Exception | None = None
+    for attempt in range(3):
+        conn = None
+        try:
+            conn = get_db_connection()
+            with conn.cursor() as cur:
+                cur.execute(
+                    f"""
+                    INSERT INTO {AUDIT_TABLE_NAME} (
+                        EVENT_TYPE, EVIDENCE_HASH, MODEL_VERSION, POLICY_VERSION,
+                        DECISION, PREDICTED_ACCOUNT_TYPE,
+                        CALIBRATED_CORRECTNESS_PROBABILITY, PAYLOAD_JSON
+                    ) VALUES (
+                        :event_type, :evidence_hash, :model_version, :policy_version,
+                        :decision, :predicted_account_type,
+                        :calibrated_probability, :payload_json
+                    )
+                    """,
+                    binds,
                 )
-                """,
-                {
-                    "event_type": event_type,
-                    "evidence_hash": evidence_hash,
-                    "model_version": result.get("model_version") or result.get("classifier_version"),
-                    "policy_version": result.get("policy_version") or "review-first-v1",
-                    "decision": result.get("decision") or "REVIEW_REQUIRED",
-                    "predicted_account_type": result.get("account_type"),
-                    "calibrated_probability": result.get("calibrated_correctness_probability"),
-                    "payload_json": payload_json,
-                },
-            )
-        conn.commit()
-    except Exception:
-        conn.rollback()
-        raise
-    finally:
-        conn.close()
+            conn.commit()
+            return
+        except Exception as exc:
+            last_error = exc
+            if conn is not None:
+                try:
+                    conn.rollback()
+                except Exception:
+                    pass
+            if attempt < 2:
+                time.sleep(0.2 * (attempt + 1))
+        finally:
+            if conn is not None:
+                conn.close()
+    outbox_record = {
+        "event_type": event_type,
+        "evidence_hash": evidence_hash,
+        "payload": json.loads(payload_json),
+        "queued_at": datetime.now(timezone.utc).isoformat(),
+        "error": str(last_error),
+    }
+    AUDIT_OUTBOX_PATH.parent.mkdir(parents=True, exist_ok=True)
+    with AUDIT_OUTBOX_PATH.open("a", encoding="utf-8") as handle:
+        handle.write(json.dumps(outbox_record, default=str, sort_keys=True) + "\n")
+    raise last_error or RuntimeError("classification audit persistence failed")
+
+
+def record_audit_event(
+    event_type: str, payload: dict[str, Any], evidence_hash: str | None = None
+) -> None:
+    """Persist any redacted pipeline event through the same retry/outbox path."""
+    record_classification_audit(
+        dict(payload), event_type=str(event_type or "PIPELINE_EVENT"), evidence_hash=evidence_hash
+    )
 
 
 def register_model_artifact(
@@ -690,6 +733,63 @@ def register_model_artifact(
                     "dataset_version": dataset_version,
                     "finance_approved": "Y" if finance_approved else "N",
                     "metrics_json": json.dumps(metrics, default=str, sort_keys=True),
+                },
+            )
+        conn.commit()
+    except Exception:
+        conn.rollback()
+        raise
+    finally:
+        conn.close()
+
+
+def get_registered_model_artifact(model_version: str) -> dict[str, Any] | None:
+    """Return registry metadata used to verify a runtime artifact."""
+    conn = get_db_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                f"""
+                SELECT MODEL_VERSION, ARTIFACT_TYPE, ARTIFACT_HASH, DATASET_VERSION,
+                       FINANCE_APPROVED, METRICS_JSON
+                  FROM {MODEL_REGISTRY_TABLE_NAME}
+                 WHERE MODEL_VERSION = :model_version
+                """,
+                {"model_version": model_version},
+            )
+            row = cur.fetchone()
+        if not row:
+            return None
+        return {
+            "model_version": row[0],
+            "artifact_type": row[1],
+            "artifact_hash": row[2],
+            "dataset_version": row[3],
+            "finance_approved": str(row[4]).upper() == "Y",
+            "metrics": json.loads(row[5]) if row[5] else {},
+        }
+    finally:
+        conn.close()
+
+
+def record_split_review_decision(
+    *, source_line_id: str, decision: dict[str, Any], reviewer_id: str | None = None
+) -> None:
+    """Persist an approved or merged split decision for later gold-label review."""
+    conn = get_db_connection()
+    try:
+        with conn.cursor() as cur:
+            cur.execute(
+                f"""
+                INSERT INTO {SPLIT_REVIEW_TABLE_NAME} (
+                    SOURCE_LINE_ID, REVIEWER_ID, DECISION_STATUS, DECISION_JSON
+                ) VALUES (:source_line_id, :reviewer_id, :decision_status, :decision_json)
+                """,
+                {
+                    "source_line_id": str(source_line_id),
+                    "reviewer_id": reviewer_id,
+                    "decision_status": str(decision.get("status") or "REVIEW_REQUIRED"),
+                    "decision_json": json.dumps(decision, default=str, sort_keys=True),
                 },
             )
         conn.commit()

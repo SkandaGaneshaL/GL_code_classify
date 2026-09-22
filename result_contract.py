@@ -35,6 +35,12 @@ def apply_result_contract(
 
     review_reasons = list((input_quality or output.get("input_quality") or {}).get("review_reasons") or [])
     coa_validation = output.get("coa_validation") or {}
+    if coa_validation.get("status") in {"invalid", "unavailable"} and coa_validation.get("reason") == "finance_coa_artifact_required":
+        review_reasons.append("active_coa_artifact_required")
+        for field in ("segment1", "segment2", "segment3", "segment4", "segment5", "segment6", "gl_code"):
+            output[field] = None
+        output["mapping_source"] = "finance_artifact_required"
+        output["mapping_row_count"] = 0
     if coa_validation.get("status") == "invalid":
         reason = str(coa_validation.get("reason") or "active_coa_validation_failed")
         if reason not in review_reasons:

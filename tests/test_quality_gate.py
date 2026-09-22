@@ -29,12 +29,13 @@ def test_atomic_complete_line_can_continue_to_classifier():
         }
     )
 
-    assert assessment == {
-        "decision": "CONTINUE",
-        "blocks_classification": False,
-        "review_reasons": [],
-        "quality_status": "sufficient",
-    }
+    assert assessment["decision"] == "CONTINUE"
+    assert assessment["blocks_classification"] is False
+    assert assessment["llm_eligible"] is True
+    assert assessment["singleton_account_eligible"] is True
+    assert assessment["segment3_output_eligible"] is True
+    assert assessment["review_reasons"] == []
+    assert assessment["quality_status"] == "sufficient"
 
 
 def test_missing_context_requires_review_but_does_not_claim_ambiguity():
@@ -47,5 +48,18 @@ def test_missing_context_requires_review_but_does_not_claim_ambiguity():
     )
 
     assert assessment["decision"] == "REVIEW_REQUIRED"
-    assert assessment["blocks_classification"] is False
+    assert assessment["blocks_classification"] is True
     assert assessment["review_reasons"] == ["missing_vendor", "missing_line_type"]
+
+
+def test_low_extraction_quality_blocks_classification():
+    assessment = assess_line_quality(
+        {
+            "line_description": "Printer toner",
+            "vendor_name_norm": "acme",
+            "line_type_norm": "ITEM",
+            "extraction_quality": 0.2,
+        }
+    )
+    assert assessment["blocks_classification"] is True
+    assert "low_extraction_quality" in assessment["review_reasons"]

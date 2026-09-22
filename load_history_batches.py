@@ -10,13 +10,15 @@ import pandas as pd
 
 try:
     from . import db_utils
-    from .config import BASE_DIR, EMBEDDING_MODEL
+    from .config import BASE_DIR, COA_COMBINATION_RULES_PATH, COA_VALUE_SET_PATH, EMBEDDING_MODEL, COA_VERSION
+    from .coa_validation import COAValidator
     from .embeddings import create_document_embedder, embed_documents, load_oci_settings
     from .feature_pack import build_line_feature
     from .finance_dataset import validate_finance_rows
 except ImportError:  # Supports running the file directly from this folder.
     import db_utils
-    from config import BASE_DIR, EMBEDDING_MODEL
+    from config import BASE_DIR, COA_COMBINATION_RULES_PATH, COA_VALUE_SET_PATH, EMBEDDING_MODEL, COA_VERSION
+    from coa_validation import COAValidator
     from embeddings import create_document_embedder, embed_documents, load_oci_settings
     from feature_pack import build_line_feature
     from finance_dataset import validate_finance_rows
@@ -67,6 +69,9 @@ FINANCE_OPTIONAL_COLUMNS = [
     "FINAL_POSTED",
     "NATURAL_ACCOUNT_DESCRIPTION",
     "SOURCE_GROUP_ID",
+    "INVOICE_SOURCE",
+    "LINE_SOURCE",
+    "REQUESTER",
 ]
 
 
@@ -141,6 +146,11 @@ def read_batch(
         rows.append(row)
 
     if strict_finance:
+        active_coa = COAValidator.from_files(
+            COA_VALUE_SET_PATH,
+            COA_COMBINATION_RULES_PATH,
+            coa_version=COA_VERSION,
+        )
         validate_finance_rows(
             [
                 {
@@ -154,6 +164,9 @@ def read_batch(
                     "legal_entity": row.get("LEGAL_ENTITY_ID"),
                     "ledger": row.get("LEDGER_ID"),
                     "chart_of_accounts": row.get("CHART_OF_ACCOUNTS_ID"),
+                    "invoice_source": row.get("INVOICE_SOURCE"),
+                    "line_source": row.get("LINE_SOURCE"),
+                    "requester": row.get("REQUESTER"),
                     "line_type": row.get("LINE_TYPE"),
                     "line_description": row.get("LINE_DESCRIPTION"),
                     "natural_account_description": row.get("NATURAL_ACCOUNT_DESCRIPTION") or row.get("SEGMENT3_DESCRIPTION"),
@@ -172,6 +185,8 @@ def read_batch(
                 for row in rows
             ],
             strict=True,
+            active_coa=active_coa,
+            certification=True,
         )
 
     LOGGER.info("Selected batch %d: Excel data rows %d-%d", batch_number, start + 1, end)
@@ -219,6 +234,9 @@ def to_db_row(
         "final_posted": row.get("FINAL_POSTED"),
         "natural_account_description": row.get("NATURAL_ACCOUNT_DESCRIPTION") or row.get("SEGMENT3_DESCRIPTION"),
         "source_group_id": row.get("SOURCE_GROUP_ID") or row.get("INVOICE_ID") or row.get("INVOICE_DISTRIBUTION_ID"),
+        "invoice_source": row.get("INVOICE_SOURCE"),
+        "line_source": row.get("LINE_SOURCE"),
+        "requester": row.get("REQUESTER"),
         "embedding_model": EMBEDDING_MODEL,
         "dataset_type": row["DATASET_TYPE"],
         "is_synthetic": row["IS_SYNTHETIC"],
